@@ -48,7 +48,7 @@
 <div class="mt-10">
     <div>
         @if (session('error'))
-            <div class="px-4 py-2 bg-red-500/20 mb-4 border border-red-500/10 rounded-md text-white" role="alert">{{ __('Invalid credentials') }}</div>
+            <div class="px-4 py-2 bg-red-500/20 mb-4 border border-red-500/10 rounded-md text-red-300" role="alert">{{ __('Invalid credentials') }}</div>
         @endif
         <form action="{{ route('auth::login') }}" class="space-y-6" method="POST">
             @csrf

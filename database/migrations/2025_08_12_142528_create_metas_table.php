@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('metas', function (Blueprint $table) {
             $table->id();
+            $table->string('url', 191)->index()->nullable();
+            $table->string('parameter', 191)->index()->nullable();
+            $table->string('language', 12)->index()->nullable();
+            $table->string('name', 191)->nullable();
+            $table->text('title')->nullable();
+            $table->text('keywords')->nullable();
+            $table->text('description')->nullable();
+            $table->string('image', 191)->nullable();
             $table->timestamps();
         });
     }

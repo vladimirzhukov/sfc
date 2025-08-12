@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('user_confirmations', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unique()->unsigned();
+            $table->string('token', 191)->unique();
             $table->timestamps();
         });
     }
