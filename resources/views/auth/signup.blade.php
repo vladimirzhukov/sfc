@@ -54,7 +54,7 @@
                 <div class="mt-2">
                     <input name="email" required type="email" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" id="signUp_email" placeholder="{{ __('Email Address') }}" value="{{ (!empty(old('email')) ? old('email') : '') }}">
                     @if ($errors->has('email'))
-                        <div class="px-4 py-3 mt-2 rounded-md bg-warning-500/20 border border-warning-500/25 text-white">{{ $errors->first('email') }}</div>
+                        <div class="px-4 py-3 mt-2 bg-red-500/20 mb-4 border border-red-500/10 rounded-md text-red-300">{{ $errors->first('email') }}</div>
                     @endif
                 </div>
             </div>
@@ -63,7 +63,7 @@
                 <div class="mt-2">
                     <input name="pass" required type="password" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" id="signUp_password" placeholder="{{ __('Password') }}" minlength="6">
                     @if ($errors->has('pass'))
-                        <div class="px-4 py-3 mt-2 rounded-md bg-warning-500/20 border border-warning-500/25 text-white">{{ $errors->first('pass') }}</div>
+                        <div class="px-4 py-3 mt-2 bg-red-500/20 mb-4 border border-red-500/10 rounded-md text-red-300">{{ $errors->first('pass') }}</div>
                     @endif
                 </div>
             </div>
