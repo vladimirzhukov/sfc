@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\GoogleController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -26,4 +27,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::get('/privacy', [WebController::class, 'privacy'])->name('web::privacy');
     // Dashboard routes
     Route::get('/app', [AppController::class, 'index'])->name('app::index')->middleware('auth');
+    Route::get('/app/profile', [AppController::class, 'profile'])->name('app::profile')->middleware('auth');
+    Route::post('/app/profile/save', [ProfileController::class, 'saveProfile'])->name('app::profile::save')->middleware('auth');
+    Route::post('/app/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('app::profile::avatar');
 });
