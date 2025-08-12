@@ -30,13 +30,13 @@
     <meta property="og:description" content="{{ (!empty($meta->metas[$meta->locale]->description) ? $meta->metas[$meta->locale]->description : (!empty($meta->metas['en']->description) ? $meta->metas['en']->description : '')) }}">
     <meta property="og:locale" content="{{ (!empty($meta->locale) ? $meta->locale : 'en') }}">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="{{ (!empty($meta->image) ? $meta->image : 'https://tarot.ac/assets/img/main_banner.png') }}">
+    <meta property="og:image" content="{{ (!empty($meta->image) ? $meta->image : 'https://sfccy.com/assets/images/wall.png') }}">
     <meta property="og:url" content="{{ str_replace('http://', 'https://', url()->current()) }}">
     <meta property="og:site_name" content="{{ (!empty($meta->metas[$meta->locale]->name) ? $meta->metas[$meta->locale]->name : (!empty($meta->metas['en']->name) ? $meta->metas['en']->name : 'SFC.CY')) }}">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="{{ (!empty($meta->metas[$meta->locale]->title) ? $meta->metas[$meta->locale]->title : (!empty($meta->metas['en']->title) ? $meta->metas['en']->title : 'SFC.CY')) }}">
     <meta property="twitter:description" content="{{ (!empty($meta->metas[$meta->locale]->description) ? $meta->metas[$meta->locale]->description : (!empty($meta->metas['en']->description) ? $meta->metas['en']->description : '')) }}">
-    <meta property="twitter:image" content="{{ (!empty($meta->image) ? $meta->image : 'https://tarot.ac/assets/img/main_banner.png') }}">
+    <meta property="twitter:image" content="{{ (!empty($meta->image) ? $meta->image : 'https://sfccy.com/assets/images/wall.png') }}">
     {{--<meta name="robots" content="noindex, nofollow">--}}
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ str_replace('http://', 'https://', url()->current()) }}">
