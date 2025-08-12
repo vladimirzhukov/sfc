@@ -143,7 +143,7 @@
                         <button type="button" class="relative flex items-center" id="user-menu-button" aria-expanded="false" aria-haspopup="true" @click="profileDropdownOpen = !profileDropdownOpen">
                             <span class="absolute -inset-1.5"></span>
                             <span class="sr-only">{{ __('Open menu') }}</span>
-                            <img class="size-8 rounded-full bg-gray-50 user-avatar" src="{{ (!empty(Auth::user()->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/tarotac/avatars/' . substr(Auth::user()->img, 0, 1) . '/' . substr(Auth::user()->img, 0, 2) . '/' . substr(Auth::user()->img, 0, 3) . '/th_' . Auth::user()->img : '/assets/tarot/no-user-image-icon.png') }}" alt="" />
+                            <img class="size-8 rounded-full bg-gray-50 user-avatar" src="{{ (!empty(Auth::user()->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/avatars/' . substr(Auth::user()->img, 0, 1) . '/' . substr(Auth::user()->img, 0, 2) . '/' . substr(Auth::user()->img, 0, 3) . '/th_' . Auth::user()->img : '/assets/images/no-user-image-icon.png') }}" alt="" />
                             <span class="hidden lg:flex lg:items-center">
                                 <span class="ml-4 rtl:ml-0 rtl:mr-4 text-sm/6 font-semibold text-gray-900" aria-hidden="true">{{ Auth::user()->email }}</span>
                                 <svg class="ml-2 rtl:ml-0 rtl:mr-2 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" /></svg>
