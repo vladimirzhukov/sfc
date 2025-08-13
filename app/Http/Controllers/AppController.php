@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Meta;
@@ -42,6 +43,16 @@ class AppController extends Controller
         $meta = $this->getMeta();
         return view('app.index', [
             'meta' => $meta
+        ]);
+    }
+
+    public function profile()
+    {
+        $meta = $this->getMeta();
+        $countries = Country::where('active', 1)->orderBy('name', 'asc')->get();
+        return view('app.profile', [
+            'meta' => $meta,
+            'countries' => $countries
         ]);
     }
 }
