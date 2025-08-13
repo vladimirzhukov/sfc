@@ -58,7 +58,7 @@ class ProfileController extends Controller
         // Validation rules
         $rules = [
             'username' => 'required|string|max:191|unique:users,name,' . $user->id,
-            'password' => ['nullable', 'confirmed', Password::defaults()],
+            'password' => 'nullable|min:6|max:100',
             'first-name' => 'nullable|string|max:191',
             'last-name' => 'nullable|string|max:191',
             'about' => 'nullable|string|max:2000',
@@ -98,7 +98,7 @@ class ProfileController extends Controller
             'li' => 'nullable|string|max:191',
             'th' => 'nullable|string|max:191',
             'tw' => 'nullable|string|max:191',
-            'wb' => 'nullable|string|max:191|url'
+            'wb' => 'nullable|string|max:191'
         ];
         $validated = $request->validate($rules);
         try {

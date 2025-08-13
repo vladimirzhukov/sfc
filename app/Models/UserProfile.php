@@ -20,9 +20,10 @@ class UserProfile extends Model
         'fm',
         'wa',
         'tg',
-        'pi',
+        'li',
         'th',
-        'tw'
+        'tw',
+        'wb'
     ];
 
     public function user()
