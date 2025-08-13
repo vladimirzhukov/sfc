@@ -1,5 +1,11 @@
 {
-    "Home": "Inicio",
-    "Dashboard": "Tablero",
-    "Profile": "Perfil"
+    "Main": "Principal",
+    "Dashboard": "Panel de Control",
+    "Settings": "Configuraciones",
+    "Profile": "Perfil",
+    "Logout": "Cerrar Sesión",
+    "Search": "Buscar",
+    "Search Results": "Resultados de Búsqueda",
+    "No results found for": "No se encontraron resultados para",
+    "Password": "Contraseña"
 }

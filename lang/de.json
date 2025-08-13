@@ -1,5 +1,11 @@
 {
-    "Home": "Startseite",
+    "Main": "Haupt",
     "Dashboard": "Dashboard",
-    "Profile": "Profil"
+    "Settings": "Einstellungen",
+    "Profile": "Profil",
+    "Logout": "Abmelden",
+    "Search": "Suche",
+    "Search Results": "Suchergebnisse",
+    "No results found for": "Keine Ergebnisse gefunden für",
+    "Password": "Passwort"
 }

@@ -18,7 +18,7 @@
                     <label for="username" class="block text-sm/6 font-medium text-gray-900">{{ __('Username') }}</label>
                     <div class="mt-2">
                         <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                            <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">tarot.ac/@</div>
+                            <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">sfccy.com/@</div>
                             <input type="text" name="username" id="username" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="username" value="{{ Auth::user()->name }}" />
                         </div>
                     </div>
@@ -345,11 +345,11 @@
                 </div>
 
                 <div class="sm:col-span-3">
-                    <label for="pi" class="block text-sm/6 font-medium text-gray-900">Pinterest</label>
+                    <label for="li" class="block text-sm/6 font-medium text-gray-900">LinkedIn</label>
                     <div class="mt-2">
                         <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                            <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">pinterest.com/</div>
-                            <input type="text" name="pi" id="pi" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="username" value="{{ (!empty(Auth::user()->profile->pi) ? Auth::user()->profile->pi : '') }}" />
+                            <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">linkedin.com/</div>
+                            <input type="text" name="li" id="li" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="username" value="{{ (!empty(Auth::user()->profile->li) ? Auth::user()->profile->li : '') }}" />
                         </div>
                     </div>
                 </div>
@@ -370,6 +370,16 @@
                         <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                             <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">x.com/</div>
                             <input type="text" name="tw" id="tw" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="username" value="{{ (!empty(Auth::user()->profile->tw) ? Auth::user()->profile->tw : '') }}" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="wb" class="block text-sm/6 font-medium text-gray-900">Website</label>
+                    <div class="mt-2">
+                        <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                            <div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">https://</div>
+                            <input type="text" name="wb" id="wb" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="site.com" value="{{ (!empty(Auth::user()->profile->wb) ? Auth::user()->profile->wb : '') }}" />
                         </div>
                     </div>
                 </div>
@@ -440,7 +450,7 @@ function makeSecureUrl(path) {
 
 function avatarUpload() {
     return {
-        avatarUrl: '{{ (!empty(Auth::user()->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/tarotac/avatars/' . substr(Auth::user()->img, 0, 1) . '/' . substr(Auth::user()->img, 0, 2) . '/' . substr(Auth::user()->img, 0, 3) . '/th_' . Auth::user()->img : '/assets/tarot/no-user-image-icon.png') }}',
+        avatarUrl: '{{ (!empty(Auth::user()->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/avatars/' . substr(Auth::user()->img, 0, 1) . '/' . substr(Auth::user()->img, 0, 2) . '/' . substr(Auth::user()->img, 0, 3) . '/th_' . Auth::user()->img : '/assets/images/no-user-image-icon.png') }}',
         uploading: false,
         error: '',
         previewUrl: null,

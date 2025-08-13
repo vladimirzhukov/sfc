@@ -5,6 +5,7 @@ use App\Http\Controllers\WebController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\Auth\GoogleController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -30,4 +31,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::get('/app/profile', [AppController::class, 'profile'])->name('app::profile')->middleware('auth');
     Route::post('/app/profile/save', [ProfileController::class, 'saveProfile'])->name('app::profile::save')->middleware('auth');
     Route::post('/app/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('app::profile::avatar');
+    // API routes
+    Route::prefix('api/cities')->group(function() {
+        Route::get('popular/{countryCode}', [CityController::class, 'getPopularCities'])->where('countryCode', '[A-Za-z]{2}');
+        Route::get('search/{countryCode}', [CityController::class, 'searchCities'])->where('countryCode', '[A-Za-z]{2}');
+        Route::get('{cityId}', [CityController::class, 'getCityById'])->where('cityId', '[0-9]+');
+    });
 });

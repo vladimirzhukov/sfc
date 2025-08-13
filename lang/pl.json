@@ -1,5 +1,11 @@
 {
-    "Home": "Strona główna",
+    "Main": "Główne",
     "Dashboard": "Panel sterowania",
-    "Profile": "Profil"
+    "Settings": "Ustawienia",
+    "Profile": "Profil",
+    "Logout": "Wyloguj się",
+    "Search": "Szukaj",
+    "Search Results": "Wyniki wyszukiwania",
+    "No results found for": "Nie znaleziono wyników dla",
+    "Password": "Hasło"
 }

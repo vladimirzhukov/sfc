@@ -57,8 +57,23 @@ class User extends Authenticatable
         ];
     }
 
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
     public function profile()
     {
         return $this->hasOne(UserProfile::class);
+    }
+
+    public function languages()
+    {
+        return $this->hasMany(UserLanguage::class);
     }
 }
