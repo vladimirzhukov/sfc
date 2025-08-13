@@ -73,7 +73,7 @@
             </div>
             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                 @if (Auth::check())
-                    <a href="#" class="text-sm/6 font-semibold text-white">Dashboard</a>
+                    <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Dashboard') }}</a>
                 @else
                     <a href="{{ route('login') }}" class="text-sm/6 font-semibold text-white">Log in <span aria-hidden="true">&rarr;</span></a>
                 @endif
@@ -193,6 +193,7 @@
                         <div>
                             <h3 class="text-sm/6 font-semibold text-white">{{ __('Ecosystem') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
+                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Startups') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Investors') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Event Organizers') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Infrastructure') }}</a></li>
