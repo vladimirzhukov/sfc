@@ -31,6 +31,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::get('/app/profile', [AppController::class, 'profile'])->name('app::profile')->middleware('auth');
     Route::post('/app/profile/save', [ProfileController::class, 'saveProfile'])->name('app::profile::save')->middleware('auth');
     Route::post('/app/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('app::profile::avatar');
+    Route::get('/app/startups', [AppController::class, 'startups'])->name('app::startups')->middleware('auth');
+    Route::get('/app/startups/create', [AppController::class, 'startupsCreate'])->name('app::startups::create')->middleware('auth');
+    Route::get('/app/startups/edit/{id}', [AppController::class, 'startupsEdit'])->name('app::startups::edit')->middleware('auth');
+    Route::get('/app/startups/delete/{id}', [AppController::class, 'startupsDelete'])->name('app::startups::delete')->middleware('auth');
+    Route::post('/app/startups/save', [AppController::class, 'startupsSave'])->name('app::startups::save')->middleware('auth');
+    Route::post('/app/startups/image', [AppController::class, 'startupsImage'])->name('app::startups::image');
     // API routes
     Route::prefix('api/cities')->group(function() {
         Route::get('popular/{countryCode}', [CityController::class, 'getPopularCities'])->where('countryCode', '[A-Za-z]{2}');

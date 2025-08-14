@@ -16,4 +16,7 @@ return [
     'profile_invalid_country' => 'The selected country is invalid.',
     'profile_invalid_city' => 'The selected city is invalid.',
     'profile_update_error' => 'An error occurred while updating your profile.',
+    'startup_create_noto' => 'Add your startup to the Startup Founders Community and connect with like-minded entrepreneurs. Share your journey, seek advice, and collaborate on innovative projects. Details about your startup will be visible to all members, fostering a supportive environment for growth and networking.',
+    'startup_edit_noto' => 'Edit your startup details to keep your profile current and engaging. Update your mission, vision, and any other relevant information to reflect the latest developments in your entrepreneurial journey. This helps maintain an active and vibrant community of startup founders.',
+    'max_categories_message' => 'You can select a maximum of 5 categories for your startup. Please choose the most relevant ones to represent your business effectively.',
 ];

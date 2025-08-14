@@ -656,7 +656,7 @@ class StartupCategories extends Seeder
             ],
             [
                 'id' => 33,
-                'parent_id' => 0,
+                'parent_id' => 3,
                 'slug' => 'payment-processing',
                 'name' => 'Payment Processing',
                 'ord' => 0,
@@ -676,7 +676,7 @@ class StartupCategories extends Seeder
             ],
             [
                 'id' => 34,
-                'parent_id' => 0,
+                'parent_id' => 3,
                 'slug' => 'lending-credit',
                 'name' => 'Lending & Credit',
                 'ord' => 0,
@@ -696,7 +696,7 @@ class StartupCategories extends Seeder
             ],
             [
                 'id' => 35,
-                'parent_id' => 0,
+                'parent_id' => 3,
                 'slug' => 'investment-trading',
                 'name' => 'Investment & Trading',
                 'ord' => 0,
@@ -716,7 +716,7 @@ class StartupCategories extends Seeder
             ],
             [
                 'id' => 36,
-                'parent_id' => 0,
+                'parent_id' => 3,
                 'slug' => 'insurance-technology',
                 'name' => 'Insurance Technology',
                 'ord' => 0,
@@ -736,7 +736,7 @@ class StartupCategories extends Seeder
             ],
             [
                 'id' => 37,
-                'parent_id' => 0,
+                'parent_id' => 3,
                 'slug' => 'personal-finance',
                 'name' => 'Personal Finance',
                 'ord' => 0,
@@ -756,7 +756,7 @@ class StartupCategories extends Seeder
             ],
             [
                 'id' => 38,
-                'parent_id' => 0,
+                'parent_id' => 3,
                 'slug' => 'cryptocurrency-defi',
                 'name' => 'Cryptocurrency & DeFi',
                 'ord' => 0,
@@ -776,7 +776,7 @@ class StartupCategories extends Seeder
             ],
             [
                 'id' => 39,
-                'parent_id' => 0,
+                'parent_id' => 3,
                 'slug' => 'regtech-regulatory-technology',
                 'name' => 'RegTech (Regulatory Technology)',
                 'ord' => 0,
@@ -796,7 +796,7 @@ class StartupCategories extends Seeder
             ],
             [
                 'id' => 40,
-                'parent_id' => 1,
+                'parent_id' => 3,
                 'slug' => 'other-fintech',
                 'name' => 'Other',
                 'ord' => 1,
