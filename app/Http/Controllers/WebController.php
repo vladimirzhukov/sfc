@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WorkingAfternoon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Meta;
@@ -40,8 +41,10 @@ class WebController extends Controller
     public function index()
     {
         $meta = $this->getMeta();
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
         return view('index', [
-            'meta' => $meta
+            'meta' => $meta,
+            'afternoons' => $afternoons
         ]);
     }
 }
