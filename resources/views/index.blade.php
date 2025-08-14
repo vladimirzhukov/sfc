@@ -58,7 +58,7 @@
     <div class="mx-auto max-w-7xl px-6 text-center lg:px-8">
         <div class="mx-auto">
             <h2 class="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white">{{ __('Working afternoons in Cyprus!') }}</h2>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-400">{{ __('web.index_wan') }} <a class="font-semibold text-orange-400" href="#">{{ __('See the details') }}</a>.</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-400">{!! __('web.index_wan') !!} <a class="font-semibold text-orange-400" href="#">{{ __('See the details') }}</a>.</p>
         </div>
         @if ($afternoons->isNotEmpty())
         @php
