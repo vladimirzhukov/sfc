@@ -48,4 +48,6 @@ return [
     'validation_password_min' => 'La contraseña debe tener al menos 6 caracteres.',
     'validation_password_max' => 'La contraseña no puede tener más de 191 caracteres.',
     'validation_terms_accepted' => 'Debes aceptar los términos y condiciones.',
+    'forgot_text_success' => 'Si existe una cuenta con esa dirección de correo electrónico, te hemos enviado un enlace para restablecer tu contraseña. Por favor, revisa tu correo electrónico.',
+    'restore_success' => 'Por favor, establece una nueva contraseña para tu cuenta.',
 ];

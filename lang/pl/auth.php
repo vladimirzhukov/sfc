@@ -48,4 +48,6 @@ return [
     'validation_password_min' => 'Hasło musi mieć co najmniej 6 znaków.',
     'validation_password_max' => 'Hasło nie może być dłuższe niż 191 znaków.',
     'validation_terms_accepted' => 'Musisz zaakceptować warunki i zasady.',
+    'forgot_text_success' => 'Jeśli konto z tym adresem e-mail istnieje, wysłaliśmy Ci link do zresetowania hasła. Sprawdź swoją skrzynkę odbiorczą.',
+    'restore_success' => 'Proszę ustawić nowe hasło dla swojego konta.',
 ];

@@ -48,4 +48,6 @@ return [
     'validation_password_min' => 'Das Passwort muss mindestens 6 Zeichen lang sein.',
     'validation_password_max' => 'Das Passwort darf nicht länger als 191 Zeichen sein.',
     'validation_terms_accepted' => 'Sie müssen die Allgemeinen Geschäftsbedingungen akzeptieren.',
+    'forgot_text_success' => 'Wenn ein Konto mit dieser E-Mail-Adresse existiert, haben wir Ihnen einen Link zum Zurücksetzen Ihres Passworts gesendet. Bitte überprüfen Sie Ihre E-Mails.',
+    'restore_success' => 'Bitte setzen Sie ein neues Passwort für Ihr Konto.',
 ];

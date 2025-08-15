@@ -67,7 +67,7 @@
             <div class="hidden lg:flex lg:gap-x-12">
                 <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Ecosystem') }}</a>
                 <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Events') }}</a>
-                <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Members') }}</a>
+                <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Startups') }}</a>
                 <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Resources') }}</a>
                 <a @click="languagePopup = true" href="javascript:void(0);" class="text-sm/6 font-semibold text-white"><img class="mr-1 rtl:ml-1 rtl:mr-0 inline-block" src="/assets/flags/language/{{ $meta->locale }}.svg" width="24"> {{ strtoupper(!empty($meta->locale) ? $meta->locale : 'en') }} ({{ (!empty($meta->language) ? $meta->language : '') }})</a>
             </div>
@@ -98,7 +98,7 @@
                                 <div class="space-y-2 py-6">
                                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Ecosystem') }}</a>
                                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Events') }}</a>
-                                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Members') }}</a>
+                                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Startups') }}</a>
                                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Resources') }}</a>
                                     <a @click="languagePopup = true" href="javascript:void(0);" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"><img class="mr-1 rtl:ml-1 rtl:mr-0 inline-block" src="/assets/flags/language/{{ $meta->locale }}.svg" width="24"> {{ strtoupper(!empty($meta->locale) ? $meta->locale : 'en') }} ({{ (!empty($meta->language) ? $meta->language : '') }})</a>
                                 </div>
@@ -193,7 +193,7 @@
                         <div>
                             <h3 class="text-sm/6 font-semibold text-white">{{ __('Ecosystem') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Startups') }}</a></li>
+                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Members') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Working Afternoons') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Investors') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Event Organizers') }}</a></li>
@@ -211,24 +211,27 @@
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Paphos') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Larnaca') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Famagusta') }}</a></li>
+                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Other cities') }}</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="md:grid md:grid-cols-2 md:gap-8">
                         <div>
-                            <h3 class="text-sm/6 font-semibold text-white">{{ __('Members') }}</h3>
+                            <h3 class="text-sm/6 font-semibold text-white">{{ __('Startups') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Nicosia') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Limassol') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Paphos') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Larnaca') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Famagusta') }}</a></li>
+                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Other cities') }}</a></li>
                             </ul>
                         </div>
                         <div class="mt-10 md:mt-0">
                             <h3 class="text-sm/6 font-semibold text-white">{{ __('Resources') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('About') }}</a></li>
+                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Startup Playbook') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Partnerships') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Terms of Service') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Privacy Policy') }}</a></li>

@@ -48,4 +48,6 @@ return [
     'validation_password_min' => 'The password must be at least 6 characters.',
     'validation_password_max' => 'The password may not be greater than 191 characters.',
     'validation_terms_accepted' => 'You must accept the terms and conditions.',
+    'forgot_text_success' => 'If an account with that email address exists, we have sent you a link to reset your password. Please check your email.',
+    'restore_success' => 'Please set a new password for your account.',
 ];
