@@ -143,5 +143,9 @@
     "Maximum categories selected.": "Maximale Anzahl an Kategorien ausgewählt.",
     "Maximum categories reached": "Maximale Anzahl an Kategorien erreicht",
     "Photo updated successfully!": "Foto erfolgreich aktualisiert!",
-
+    "Logo": "Logo",
+    "Logo updated successfully!": "Logo erfolgreich aktualisiert!",
+    "Active": "Aktiv",
+    "Startup Visibility:": "Startup-Sichtbarkeit:",
+    "Inactive": "Inaktiv"
 }

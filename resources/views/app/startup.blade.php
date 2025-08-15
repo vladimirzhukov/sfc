@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="sm:col-span-3" x-data="avatarUpload()">
-                    <label for="photo" class="block text-sm/6 font-medium text-gray-900">{{ __('Photo') }}</label>
+                    <label for="photo" class="block text-sm/6 font-medium text-gray-900">{{ __('Logo') }}</label>
                     <div x-show="showSuccess" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95" class="mb-2 rounded-md bg-green-50 p-4">
                         <div class="flex">
                             <div class="shrink-0"><svg class="size-5 text-green-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" /></svg></div>
@@ -90,14 +90,6 @@
                     </div>
                     <div x-show="error" class="mt-2 text-sm text-red-600" x-text="error"></div>
                     <p class="mt-2 text-xs text-gray-500">{{ __('app.profile_avatar_description') }}</p>
-                </div>
-
-                <div class="col-span-full">
-                    <label for="description" class="block text-sm/6 font-medium text-gray-900">{{ __('Description') }}</label>
-                    <div class="mt-2">
-                        <textarea name="description" id="description" rows="3" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="{{ __('Description') }}">{!! (!empty($startup->description) ? $startup->description : '') !!}</textarea>
-                    </div>
-                    <p class="mt-3 text-sm/6 text-gray-600">{{ __('Write a few sentences about your startup.') }}</p>
                 </div>
 
                 <div class="sm:col-span-6" x-data="categorySelector()">
@@ -174,6 +166,38 @@
                         <input type="hidden" name="categories[]" :value="categoryCode">
                     </template>
                 </div>
+
+                <div class="col-span-full">
+                    <label for="description" class="block text-sm/6 font-medium text-gray-900">{{ __('Description') }}</label>
+                    <div class="mt-2">
+                        <textarea name="description" id="description" rows="3" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="{{ __('Description') }}">{!! (!empty($startup->description) ? $startup->description : '') !!}</textarea>
+                    </div>
+                    <p class="mt-3 text-sm/6 text-gray-600">{{ __('Write a few sentences about your startup.') }}</p>
+                </div>
+
+                <div class="col-span-full mt-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="active" name="active" value="1" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" {{ (old('active', $startup->active ?? true)) ? 'checked' : '' }}>
+                        <label for="active" class="ml-2 rtl:mr-2 block text-sm text-gray-900 font-medium">{{ __('Active') }}</label>
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">{{ __('app.startup_active') }}</p>
+                    <div class="mt-3 p-3 bg-blue-50 rounded-md border border-blue-200">
+                        <div class="flex">
+                            <svg class="h-5 w-5 text-blue-400 mt-0.5 mr-2 rtl:ml-2 rtl:mr-0 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div class="text-sm text-blue-800">
+                                <p class="font-medium mb-1">{{ __('Startup Visibility:') }}</p>
+                                <ul class="text-xs space-y-1">
+                                    <div>
+                                        <li>{!! __('app.startup_tip_1') !!}</li>
+                                        <li>{!! __('app.startup_tip_2') !!}</li>
+                                        <li>{!! __('app.startup_tip_3') !!}</li>
+                                        <li>{!! __('app.startup_tip_4') !!}</li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -201,7 +225,7 @@ function makeSecureUrl(path) {
 
 function avatarUpload() {
     return {
-        avatarUrl: '{{ (!empty($service->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/startups/' . substr($service->img, 0, 1) . '/' . substr($service->img, 0, 2) . '/' . substr($service->img, 0, 3) . '/th_' . $service->img : '/assets/images/no-image-icon.png') }}',
+        avatarUrl: '{{ (!empty($startup->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img : '/assets/images/no-image-icon.png') }}',
         uploading: false,
         error: '',
         previewUrl: null,
@@ -241,7 +265,7 @@ function avatarUpload() {
             formData.append('avatar', file);
             formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
 
-            fetch(makeSecureUrl('/app/services/image?serviceID={{ (!empty($service->id) ? $service->id : 0) }}'), {
+            fetch(makeSecureUrl('/app/startups/image?startupID={{ (!empty($startup->id) ? $startup->id : 0) }}'), {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -255,7 +279,7 @@ function avatarUpload() {
                     return response.json();
                 })
                 .then(data => {
-                    @if (!empty($service->id))
+                    @if (!empty($startup->id))
                     if (data.success) {
                         this.avatarUrl = data.avatar_url;
                         this.previewUrl = null;
@@ -266,14 +290,14 @@ function avatarUpload() {
                         });
 
                         // Show success message
-                        this.showSuccessMessage(data.message || '{{ __('Photo updated successfully!') }}');
+                        this.showSuccessMessage(data.message || '{{ __('Logo updated successfully!') }}');
                     } else {
                         this.error = data.message || '{{ __('Upload failed') }}';
                         this.previewUrl = null;
                     }
                     @else
                     if (data.success) {
-                        window.location.replace('/app/services/edit/' + data.id);
+                        window.location.replace('/app/startups/edit/' + data.id);
                     } else {
                         this.error = data.message || '{{ __('Upload failed') }}';
                         this.previewUrl = null;
@@ -323,12 +347,13 @@ function categorySelector() {
                             if (!empty($cats)) {
                                 $cats .= ',';
                             }
-                            $cats .= '{code: "' . $key . '", name: "' . addslashes($category) . '", group: "' . addslashes($parent) . '", description: "' . addslashes($categoryDescriptions[$key] ?? '') . '"}';
+                            $ord = $rawCategories[$key]->ord ?? 0;
+                            $cats .= '{code: "' . $key . '", name: "' . addslashes($category) . '", group: "' . addslashes($parent) . '", description: "' . addslashes($categoryDescriptions[$key] ?? '') . '", ord: ' . $ord . '}';
                         }
                     }
                 }
             @endphp
-            {!! $cats !!}
+                {!! $cats !!}
         ],
 
         get filteredCategories() {
@@ -354,21 +379,18 @@ function categorySelector() {
                 return acc;
             }, {});
 
-            // Sort groups with "Other" always last
+            // Sort groups - categories are already sorted by ord in PHP, so maintain that order
             const sortedGroups = Object.keys(grouped).sort((a, b) => {
-                // Check if either group contains the "Other" subcategory (ID 106)
-                const aHasOtherSubcat = grouped[a].some(cat => cat.code === "106");
-                const bHasOtherSubcat = grouped[b].some(cat => cat.code === "106");
+                // Get the ord value of the first category in each group to determine group ordering
+                const aOrd = grouped[a][0]?.ord || 0;
+                const bOrd = grouped[b][0]?.ord || 0;
 
-                // Check if the group name itself contains "Other" (case insensitive)
-                const aIsOtherGroup = a.toLowerCase().includes('other') || a.toLowerCase().includes('altro') || a.toLowerCase().includes('autre');
-                const bIsOtherGroup = b.toLowerCase().includes('other') || b.toLowerCase().includes('altro') || b.toLowerCase().includes('autre');
+                // If ord values are different, sort by ord (0 before 1)
+                if (aOrd !== bOrd) {
+                    return aOrd - bOrd;
+                }
 
-                // If either group is "Other" or contains "Other" subcategory, put it last
-                if (aIsOtherGroup || aHasOtherSubcat) return 1;
-                if (bIsOtherGroup || bHasOtherSubcat) return -1;
-
-                // Otherwise sort alphabetically
+                // If same ord, sort alphabetically
                 return a.localeCompare(b);
             });
 
@@ -376,18 +398,10 @@ function categorySelector() {
             return sortedGroups.map(groupName => ({
                 groupName,
                 categories: grouped[groupName].sort((a, b) => {
-                    // Always put "Other" subcategory (ID 106) last within each group
-                    if (a.code === "106") return 1;
-                    if (b.code === "106") return -1;
-
-                    // Check for "Other" in category names (case insensitive)
-                    const aIsOther = a.name.toLowerCase().includes('other') || a.name.toLowerCase().includes('altro') || a.name.toLowerCase().includes('autre');
-                    const bIsOther = b.name.toLowerCase().includes('other') || b.name.toLowerCase().includes('altro') || b.name.toLowerCase().includes('autre');
-
-                    if (aIsOther) return 1;
-                    if (bIsOther) return -1;
-
-                    // Otherwise sort alphabetically
+                    // Sort by ord first (0 before 1), then alphabetically
+                    if (a.ord !== b.ord) {
+                        return a.ord - b.ord;
+                    }
                     return a.name.localeCompare(b.name);
                 })
             }));
@@ -417,9 +431,9 @@ function categorySelector() {
         },
 
         selectAll() {
-            // Select first 5 categories from the properly sorted list
-            const availableCategories = this.categories.slice(0, 5);
-            this.selectedCategories = availableCategories.map(cat => cat.code);
+            // Select first 5 categories from the properly sorted list (ord=0 categories first)
+            const regularCategories = this.categories.filter(cat => cat.ord === 0).slice(0, 5);
+            this.selectedCategories = regularCategories.map(cat => cat.code);
         },
 
         clearAll() {

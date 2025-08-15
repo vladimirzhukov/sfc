@@ -16,4 +16,13 @@ return [
     'profile_invalid_country' => 'El país seleccionado es inválido.',
     'profile_invalid_city' => 'La ciudad seleccionada es inválida.',
     'profile_update_error' => 'Ocurrió un error al actualizar tu perfil.',
+    'startup_create_noto' => 'Añade tu startup a la Comunidad de Fundadores de Startups y conéctate con emprendedores afines. Comparte tu viaje, busca consejos y colabora en proyectos innovadores. Los detalles sobre tu startup serán visibles para todos los miembros, fomentando un entorno de apoyo para el crecimiento y la creación de redes.',
+    'startup_edit_noto' => 'Edita los detalles de tu startup para mantener tu perfil actualizado y atractivo. Actualiza tu misión, visión y cualquier otra información relevante para reflejar los últimos desarrollos en tu viaje emprendedor. Esto ayuda a mantener una comunidad activa y vibrante de fundadores de startups.',
+    'max_categories_message' => 'Puedes seleccionar un máximo de 5 categorías para tu startup. Por favor, elige las más relevantes para representar tu negocio de manera efectiva.',
+    'startups_listing' => 'Configura tu lista de startups para mostrar tu negocio de manera efectiva. Incluye detalles esenciales como el nombre, la descripción y las categorías de tu startup. Esto ayudará a otros miembros a entender tu empresa y facilitará conexiones significativas.',
+    'startup_tip_1' => '&bull; Las startups activas aparecen en tu perfil público',
+    'startup_tip_2' => '&bull; Otros miembros pueden ver startups activas',
+    'startup_tip_3' => '&bull; Las startups inactivas están ocultas, pero pueden reactivarse en cualquier momento',
+    'startup_tip_4' => '&bull; Usa esto para pausar temporalmente tu lista de startups sin eliminarla',
+    'startup_active' => 'Cuando esté marcado, esta startup será visible públicamente. Desmarca para desactivar temporalmente la startup.',
 ];

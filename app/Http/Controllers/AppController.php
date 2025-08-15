@@ -64,6 +64,118 @@ class AppController extends Controller
         return $slug;
     }
 
+    private function processCategoriesForView()
+    {
+        $categories = array();
+        $parentCategories = array();
+        $categoryDescriptions = array();
+        $rawCategories = StartupCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
+
+        // Process categories and build arrays
+        foreach ($rawCategories as $category) {
+            if ($category->parent_id == 0) {
+                // Parent categories
+                if (LaravelLocalization::getCurrentLocale() == 'en') {
+                    $parentCategories[$category->id] = $category->name;
+                } else {
+                    $translations = json_decode($category->name_translations, true);
+                    $parentCategories[$category->id] = $translations[LaravelLocalization::getCurrentLocale()] ?? $category->name;
+                }
+            } else {
+                // Subcategories
+                if (LaravelLocalization::getCurrentLocale() == 'en') {
+                    $categories[$category->parent_id][$category->id] = $category->name;
+                    $categoryDescriptions[$category->id] = $category->scom;
+                } else {
+                    $translations = json_decode($category->name_translations, true);
+                    $categories[$category->parent_id][$category->id] = $translations[LaravelLocalization::getCurrentLocale()] ?? $category->name;
+                    $translations = json_decode($category->scom_translations, true);
+                    $categoryDescriptions[$category->id] = $translations[LaravelLocalization::getCurrentLocale()] ?? $category->scom;
+                }
+            }
+        }
+
+        // Sort parent categories using ord field and alphabetically
+        $parentCategoriesWithOrd = [];
+        foreach ($parentCategories as $categoryId => $categoryName) {
+            $category = $rawCategories[$categoryId];
+            $parentCategoriesWithOrd[$categoryId] = [
+                'name' => $categoryName,
+                'ord' => $category->ord
+            ];
+        }
+
+        // Sort: first by ord (0 before 1), then alphabetically by name
+        uasort($parentCategoriesWithOrd, function($a, $b) {
+            if ($a['ord'] != $b['ord']) {
+                return $a['ord'] - $b['ord']; // ord=0 comes before ord=1
+            }
+            return strcasecmp($a['name'], $b['name']); // alphabetical for same ord
+        });
+
+        // Rebuild parentCategories in sorted order
+        $sortedParentCategories = [];
+        foreach ($parentCategoriesWithOrd as $categoryId => $data) {
+            $sortedParentCategories[$categoryId] = $data['name'];
+        }
+        $parentCategories = $sortedParentCategories;
+
+        // Sort subcategories using ord field and alphabetically
+        $sortedCategories = array();
+        foreach ($categories as $parentId => $subcategories) {
+            $subcategoriesWithOrd = [];
+
+            foreach ($subcategories as $categoryId => $categoryName) {
+                $category = $rawCategories[$categoryId];
+                $subcategoriesWithOrd[$categoryId] = [
+                    'name' => $categoryName,
+                    'ord' => $category->ord
+                ];
+            }
+
+            // Sort: first by ord (0 before 1), then alphabetically by name
+            uasort($subcategoriesWithOrd, function($a, $b) {
+                if ($a['ord'] != $b['ord']) {
+                    return $a['ord'] - $b['ord']; // ord=0 comes before ord=1
+                }
+                return strcasecmp($a['name'], $b['name']); // alphabetical for same ord
+            });
+
+            // Rebuild subcategories in sorted order
+            $sortedSubcategories = [];
+            foreach ($subcategoriesWithOrd as $categoryId => $data) {
+                $sortedSubcategories[$categoryId] = $data['name'];
+            }
+            $sortedCategories[$parentId] = $sortedSubcategories;
+        }
+
+        // Prepare formatted categories for JavaScript with proper sorting
+        $formattedCategories = [];
+
+        // Process categories in the same order as parentCategories to maintain proper sorting
+        foreach ($parentCategories as $parentId => $parentName) {
+            if (isset($sortedCategories[$parentId])) {
+                foreach ($sortedCategories[$parentId] as $categoryId => $categoryName) {
+                    $formattedCategories[] = [
+                        'code' => (string)$categoryId,
+                        'name' => $categoryName,
+                        'group' => $parentName,
+                        'description' => $categoryDescriptions[$categoryId] ?? '',
+                        'ord' => $rawCategories[$categoryId]->ord
+                    ];
+                }
+            }
+        }
+
+        return [
+            'categories' => $sortedCategories,
+            'parentCategories' => $parentCategories,
+            'categoryDescriptions' => $categoryDescriptions,
+            'rawCategories' => $rawCategories,
+            'formattedCategories' => $formattedCategories
+        ];
+    }
+
     public function index()
     {
         $meta = $this->getMeta();
@@ -97,89 +209,11 @@ class AppController extends Controller
     public function startupsCreate()
     {
         $meta = $this->getMeta();
-        $categories = array();
-        $parentCategories = array();
-        $categoryDescriptions = array();
-        $rawCategories = StartupCategory::orderBy('ord', 'asc')->get()->keyBy('id');
+        $categoryData = $this->processCategoriesForView();
 
-        foreach ($rawCategories as $category) {
-            if ($category->parent_id == 0) {
-                if (LaravelLocalization::getCurrentLocale() == 'en') {
-                    $parentCategories[$category->id] = $category->name;
-                } else {
-                    $translations = json_decode($category->name_translations, true);
-                    $parentCategories[$category->id] = $translations[LaravelLocalization::getCurrentLocale()] ?? $category->name;
-                }
-            } else {
-                if (LaravelLocalization::getCurrentLocale() == 'en') {
-                    $categories[$category->parent_id][$category->id] = $category->name;
-                    $categoryDescriptions[$category->id] = $category->scom;
-                } else {
-                    $translations = json_decode($category->name_translations, true);
-                    $categories[$category->parent_id][$category->id] = $translations[LaravelLocalization::getCurrentLocale()] ?? $category->name;
-                    $translations = json_decode($category->scom_translations, true);
-                    $categoryDescriptions[$category->id] = $translations[LaravelLocalization::getCurrentLocale()] ?? $category->scom;
-                }
-            }
-        }
-
-        // Sort parent categories but keep "Other" (ID 7) for last
-        $otherCategory = null;
-        if (isset($parentCategories[13])) {
-            $otherCategory = $parentCategories[13];
-            unset($parentCategories[13]);
-        }
-
-        asort($parentCategories);
-
-        // Add "Other" category at the end if it exists
-        if ($otherCategory !== null) {
-            $parentCategories[13] = $otherCategory;
-        }
-
-        // Sort subcategories
-        $list = array();
-        foreach ($categories as $key => $category) {
-            // Handle "Other" subcategory (ID 8) separately
-            $otherSubcategory = null;
-            if (isset($category[106])) {
-                $otherSubcategory = $category[106];
-                unset($category[106]);
-            }
-
-            asort($category);
-
-            // Add "Other" subcategory at the end if it exists
-            if ($otherSubcategory !== null) {
-                $category[106] = $otherSubcategory;
-            }
-
-            $list[$key] = $category;
-        }
-        $categories = $list;
-
-        // Prepare categories for JavaScript
-        $formattedCategories = [];
-        foreach ($categories as $parentId => $subcategories) {
-            $groupName = $parentCategories[$parentId];
-            foreach ($subcategories as $categoryId => $categoryName) {
-                $formattedCategories[] = [
-                    'code' => (string)$categoryId,
-                    'name' => $categoryName,
-                    'group' => $groupName,
-                    'description' => $categoryDescriptions[$categoryId] ?? ''
-                ];
-            }
-        }
-
-        return view('app.startup', [
-            'meta' => $meta,
-            'categories' => $categories,
-            'parentCategories' => $parentCategories,
-            'categoryDescriptions' => $categoryDescriptions,
-            'rawCategories' => $rawCategories,
-            'formattedCategories' => $formattedCategories
-        ]);
+        return view('app.startup', array_merge([
+            'meta' => $meta
+        ], $categoryData));
     }
 
     public function startupsEdit($id)
@@ -188,91 +222,14 @@ class AppController extends Controller
         if (empty($startup->id) || $startup->user_id != Auth::user()->id) {
             return redirect()->route('app::index')->with('error', __('Startup not found or access denied'));
         }
+
         $meta = $this->getMeta();
-        $categories = array();
-        $parentCategories = array();
-        $categoryDescriptions = array();
-        $rawCategories = StartupCategory::orderBy('ord', 'asc')->get()->keyBy('id');
+        $categoryData = $this->processCategoriesForView();
 
-        foreach ($rawCategories as $category) {
-            if ($category->parent_id == 0) {
-                if (LaravelLocalization::getCurrentLocale() == 'en') {
-                    $parentCategories[$category->id] = $category->name;
-                } else {
-                    $translations = json_decode($category->name_translations, true);
-                    $parentCategories[$category->id] = $translations[LaravelLocalization::getCurrentLocale()] ?? $category->name;
-                }
-            } else {
-                if (LaravelLocalization::getCurrentLocale() == 'en') {
-                    $categories[$category->parent_id][$category->id] = $category->name;
-                    $categoryDescriptions[$category->id] = $category->scom;
-                } else {
-                    $translations = json_decode($category->name_translations, true);
-                    $categories[$category->parent_id][$category->id] = $translations[LaravelLocalization::getCurrentLocale()] ?? $category->name;
-                    $translations = json_decode($category->scom_translations, true);
-                    $categoryDescriptions[$category->id] = $translations[LaravelLocalization::getCurrentLocale()] ?? $category->scom;
-                }
-            }
-        }
-
-        // Sort parent categories but keep "Other" (ID 7) for last
-        $otherCategory = null;
-        if (isset($parentCategories[13])) {
-            $otherCategory = $parentCategories[13];
-            unset($parentCategories[13]);
-        }
-
-        asort($parentCategories);
-
-        // Add "Other" category at the end if it exists
-        if ($otherCategory !== null) {
-            $parentCategories[13] = $otherCategory;
-        }
-
-        // Sort subcategories
-        $list = array();
-        foreach ($categories as $key => $category) {
-            // Handle "Other" subcategory (ID 8) separately
-            $otherSubcategory = null;
-            if (isset($category[106])) {
-                $otherSubcategory = $category[106];
-                unset($category[106]);
-            }
-
-            asort($category);
-
-            // Add "Other" subcategory at the end if it exists
-            if ($otherSubcategory !== null) {
-                $category[106] = $otherSubcategory;
-            }
-
-            $list[$key] = $category;
-        }
-        $categories = $list;
-
-        // Prepare categories for JavaScript
-        $formattedCategories = [];
-        foreach ($categories as $parentId => $subcategories) {
-            $groupName = $parentCategories[$parentId];
-            foreach ($subcategories as $categoryId => $categoryName) {
-                $formattedCategories[] = [
-                    'code' => (string)$categoryId,
-                    'name' => $categoryName,
-                    'group' => $groupName,
-                    'description' => $categoryDescriptions[$categoryId] ?? ''
-                ];
-            }
-        }
-
-        return view('app.startup', [
+        return view('app.startup', array_merge([
             'meta' => $meta,
-            'startup' => $startup,
-            'categories' => $categories,
-            'parentCategories' => $parentCategories,
-            'categoryDescriptions' => $categoryDescriptions,
-            'rawCategories' => $rawCategories,
-            'formattedCategories' => $formattedCategories
-        ]);
+            'startup' => $startup
+        ], $categoryData));
     }
 
     public function startupsDelete($id)
@@ -339,8 +296,8 @@ class AppController extends Controller
         try {
             if ($startup->img) {
                 Storage::disk('do')->delete([
-                    'fcccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/' . $startup->img,
-                    'fcccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img
+                    'sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/' . $startup->img,
+                    'sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img
                 ]);
                 $startup->img = null;
             }
@@ -349,15 +306,15 @@ class AppController extends Controller
             $manager = new ImageManager(new Driver());
             $mainImage = $manager->read($file)->cover(300, 300)->toWebp(85);
             $thumbnail = $manager->read($file)->cover(100, 100)->toWebp(80);
-            Storage::disk('do')->put('fcccy/startups/' . substr($name, 0, 1) . '/' . substr($name, 0, 2) . '/' . substr($name, 0, 3) . '/' . $name, $mainImage, 'public');
-            Storage::disk('do')->put('fcccy/startups/' . substr($name, 0, 1) . '/' . substr($name, 0, 2) . '/' . substr($name, 0, 3) . '/th_' . $name, $thumbnail, 'public');
+            Storage::disk('do')->put('sfccy/startups/' . substr($name, 0, 1) . '/' . substr($name, 0, 2) . '/' . substr($name, 0, 3) . '/' . $name, $mainImage, 'public');
+            Storage::disk('do')->put('sfccy/startups/' . substr($name, 0, 1) . '/' . substr($name, 0, 2) . '/' . substr($name, 0, 3) . '/th_' . $name, $thumbnail, 'public');
             $startup->img = $name;
             $startup->save();
             return response()->json([
                 'success' => true,
-                'avatar_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/fcccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/' . $startup->img,
-                'thumbnail_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/fcccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img,
-                'message' => __('Avatar updated successfully'),
+                'avatar_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/' . $startup->img,
+                'thumbnail_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img,
+                'message' => __('Logo updated successfully!'),
                 'id' => $startup->id
             ], 200);
         } catch (\Exception $e) {

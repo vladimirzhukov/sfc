@@ -19,4 +19,10 @@ return [
     'startup_create_noto' => 'Add your startup to the Startup Founders Community and connect with like-minded entrepreneurs. Share your journey, seek advice, and collaborate on innovative projects. Details about your startup will be visible to all members, fostering a supportive environment for growth and networking.',
     'startup_edit_noto' => 'Edit your startup details to keep your profile current and engaging. Update your mission, vision, and any other relevant information to reflect the latest developments in your entrepreneurial journey. This helps maintain an active and vibrant community of startup founders.',
     'max_categories_message' => 'You can select a maximum of 5 categories for your startup. Please choose the most relevant ones to represent your business effectively.',
+    'startups_listing' => 'Configure your startup listing to showcase your business effectively. Include essential details such as your startup\'s name, description, and categories. This will help other members understand your venture and facilitate meaningful connections.',
+    'startup_tip_1' => '&bull; Active startups appear in your public profile',
+    'startup_tip_2' => '&bull; Other members can view active startups',
+    'startup_tip_3' => '&bull; Inactive startups are hidden but can be reactivated anytime',
+    'startup_tip_4' => '&bull; Use this to temporarily pause your startup listing without deleting it',
+    'startup_active' => 'When checked, this startup will be visible in public. Uncheck to temporarily disable the startup.',
 ];

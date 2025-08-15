@@ -16,4 +16,13 @@ return [
     'profile_invalid_country' => 'Das ausgewählte Land ist ungültig.',
     'profile_invalid_city' => 'Die ausgewählte Stadt ist ungültig.',
     'profile_update_error' => 'Ein Fehler ist beim Aktualisieren Ihres Profils aufgetreten.',
+    'startup_create_noto' => 'Fügen Sie Ihr Startup der Startup Founders Community hinzu und vernetzen Sie sich mit gleichgesinnten Unternehmern. Teilen Sie Ihre Reise, suchen Sie Rat und arbeiten Sie an innovativen Projekten zusammen. Details zu Ihrem Startup werden für alle Mitglieder sichtbar sein und fördern ein unterstützendes Umfeld für Wachstum und Networking.',
+    'startup_edit_noto' => 'Bearbeiten Sie die Details Ihres Startups, um Ihr Profil aktuell und ansprechend zu halten. Aktualisieren Sie Ihre Mission, Vision und alle anderen relevanten Informationen, um die neuesten Entwicklungen in Ihrer unternehmerischen Reise widerzuspiegeln. Dies hilft, eine aktive und lebendige Gemeinschaft von Startup-Gründern aufrechtzuerhalten.',
+    'max_categories_message' => 'Sie können maximal 5 Kategorien für Ihr Startup auswählen. Bitte wählen Sie die relevantesten aus, um Ihr Geschäft effektiv darzustellen.',
+    'startups_listing' => 'Konfigurieren Sie Ihre Startup-Liste, um Ihr Unternehmen effektiv zu präsentieren. Fügen Sie wesentliche Details wie den Namen, die Beschreibung und die Kategorien Ihres Startups hinzu. Dies hilft anderen Mitgliedern, Ihr Unternehmen zu verstehen und sinnvolle Verbindungen herzustellen.',
+    'startup_tip_1' => '&bull; Aktive Startups erscheinen in deinem öffentlichen Profil',
+    'startup_tip_2' => '&bull; Andere Mitglieder können aktive Startups ansehen',
+    'startup_tip_3' => '&bull; Inaktive Startups sind verborgen, können aber jederzeit reaktiviert werden',
+    'startup_tip_4' => '&bull; Verwenden Sie dies, um Ihre Startup-Liste vorübergehend zu pausieren, ohne sie zu löschen',
+    'startup_active' => 'Wenn aktiviert, wird dieses Startup öffentlich sichtbar sein. Deaktivieren Sie es, um das Startup vorübergehend zu deaktivieren.',
 ];

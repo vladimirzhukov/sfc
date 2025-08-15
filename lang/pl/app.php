@@ -16,4 +16,13 @@ return [
     'profile_invalid_country' => 'Wybrany kraj jest nieprawidłowy.',
     'profile_invalid_city' => 'Wybrane miasto jest nieprawidłowe.',
     'profile_update_error' => 'Wystąpił błąd podczas aktualizacji profilu.',
+    'startup_create_noto' => 'Dodaj swoją startup do Społeczności Założycieli Startupów i połącz się z przedsiębiorcami o podobnych zainteresowaniach. Podziel się swoją podróżą, szukaj porad i współpracuj nad innowacyjnymi projektami. Szczegóły dotyczące Twojego startupu będą widoczne dla wszystkich członków, co sprzyja wspierającemu środowisku wzrostu i nawiązywania kontaktów.',
+    'startup_edit_noto' => 'Edytuj szczegóły swojego startupu, aby utrzymać swój profil aktualny i angażujący. Zaktualizuj swoją misję, wizję i wszelkie inne istotne informacje, aby odzwierciedlić najnowsze wydarzenia w Twojej podróży przedsiębiorczej. To pomaga utrzymać aktywną i dynamiczną społeczność założycieli startupów.',
+    'max_categories_message' => 'Możesz wybrać maksymalnie 5 kategorii dla swojego startupu. Proszę wybierz te najbardziej odpowiednie, aby skutecznie reprezentować swój biznes.',
+    'startups_listing' => 'Skonfiguruj swoją listę startupów, aby skutecznie zaprezentować swój biznes. Dodaj istotne szczegóły, takie jak nazwa, opis i kategorie Twojego startupu. Pomoże to innym członkom zrozumieć Twoje przedsięwzięcie i ułatwi nawiązywanie znaczących połączeń.',
+    'startup_tip_1' => '&bull; Aktywne startupy pojawiają się w Twoim publicznym profilu',
+    'startup_tip_2' => '&bull; Inni członkowie mogą przeglądać aktywne startupy',
+    'startup_tip_3' => '&bull; Nieaktywne startupy są ukryte, ale mogą być w każdej chwili reaktywowane',
+    'startup_tip_4' => '&bull; Użyj tego, aby tymczasowo wstrzymać swoją listę startupów bez jej usuwania',
+    'startup_active' => 'Gdy zaznaczone, ten startup będzie widoczny publicznie. Odznacz, aby tymczasowo wyłączyć startup.',
 ];

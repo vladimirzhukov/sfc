@@ -13,7 +13,7 @@
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
                 <h1 class="text-base font-semibold text-gray-900">{{ __('Startups') }}</h1>
-                <p class="mt-2 text-sm text-gray-700">{{ __('app.services_listing') }}</p>
+                <p class="mt-2 text-sm text-gray-700">{{ __('app.startups_listing') }}</p>
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 <a href="{{ route('app::startups::create') }}" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer">{{ __('Add Startup') }}</a>
@@ -32,38 +32,31 @@
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                        @foreach($services as $service)
+                        @foreach($startups as $startup)
                             <tr>
                                 <td class="py-5 pr-3 pl-4 text-sm sm:pl-0 w-1/3">
                                     <div class="flex items-center">
                                         <div class="size-11 shrink-0">
-                                            <img src="{{ (!empty($service->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/tarotac/services/' . substr($service->img, 0, 1) . '/' . substr($service->img, 0, 2) . '/' . substr($service->img, 0, 3) . '/th_' . $service->img : '/assets/img/no-image-icon.png') }}" alt="{{ $service->name }}" class="size-11 rounded-full" />
+                                            <img src="{{ (!empty($startup->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img : '/assets/img/no-image-icon.png') }}" alt="{{ $startup->name }}" class="size-11 rounded-full" />
                                         </div>
                                         <div class="ml-4 rtl:mr-4 rtl:ml-0">
-                                            <div class="font-medium text-gray-900">{{ $service->name }}</div>
-                                            <div class="mt-1 text-gray-500">{{ mb_substr($service->description, 0, 100) }}...</div>
+                                            <div class="font-medium text-gray-900">{{ $startup->name }}</div>
+                                            <div class="mt-1 text-gray-500">{{ mb_substr($startup->description, 0, 100) }}...</div>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
-                                    @if ($service->price > 0)
-                                        <span class="text-gray-900 font-semibold"> {{ $currencies[$service->currency]->symbol }}{{ round($service->price, 2) }} {{ $service->currency }}</span>
-                                    @else
-                                        <span class="text-gray-500 font-semibold">{{ __('FREE') }}</span>
-                                    @endif
-                                </td>
-                                <td class="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
-                                    @if (!empty($service->categories) && $service->categories != '[]')
+                                    @if (!empty($startup->categories) && $startup->categories != '[]')
                                         @php
-                                            $categories = explode('][', trim($service->categories, '[]'));
+                                            $categories = explode('][', trim($startup->categories, '[]'));
                                         @endphp
                                         @foreach ($categories as $category)
                                             @php
                                                 if (LaravelLocalization::getCurrentLocale() != 'en') {
-                                                    $names = json_decode($serviceCategories[$category]->name_translations, true);
-                                                    $name = $names[LaravelLocalization::getCurrentLocale()] ?? $serviceCategories[$category]->name;
+                                                    $names = json_decode($startupCategories[$category]->name_translations, true);
+                                                    $name = $names[LaravelLocalization::getCurrentLocale()] ?? $startupCategories[$category]->name;
                                                 } else {
-                                                    $name = $serviceCategories[$category]->name;
+                                                    $name = $startupCategories[$category]->name;
                                                 }
                                             @endphp
                                             <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 mr-2">{{ $name }}</span>
@@ -71,13 +64,13 @@
                                     @endif
                                 </td>
                                 <td class="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
-                                    @if (!empty($service->active))
+                                    @if (!empty($startup->active))
                                         <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">{{ __('Active') }}</span>
                                     @else
                                         <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/20 ring-inset">{{ __('Inactive') }}</span>
                                     @endif
                                 </td>
-                                <td class="relative py-5 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0"><a href="{{ route('app::services::edit', ['id' => $service->id]) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a></td>
+                                <td class="relative py-5 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0"><a href="{{ route('app::startups::edit', ['id' => $startup->id]) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a></td>
                             </tr>
                         @endforeach
                         </tbody>
