@@ -14,10 +14,29 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
+use League\HTMLToMarkdown\HtmlConverter;
+use League\CommonMark\CommonMarkConverter;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class AppController extends Controller
 {
+    private $htmlConverter;
+    private $markdownConverter;
+
+    public function __construct()
+    {
+        $this->htmlConverter = new HtmlConverter([
+            'header_style' => 'atx',
+            'suppress_errors' => true,
+            'strip_tags' => true,
+            'remove_nodes' => 'script style',
+        ]);
+        $this->markdownConverter = new CommonMarkConverter([
+            'html_input' => 'strip',
+            'allow_unsafe_links' => false,
+        ]);
+    }
+
     private function getMeta($parameter = null)
     {
         $meta = new \StdClass();
@@ -62,6 +81,26 @@ class AppController extends Controller
             $counter++;
         }
         return $slug;
+    }
+
+    private function sanitizeHtml($html)
+    {
+        $html = preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/mi', '', $html);
+        $html = preg_replace('/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/mi', '', $html);
+        $html = preg_replace('/\s*on\w+\s*=\s*["\'][^"\']*["\']/i', '', $html);
+        $html = preg_replace('/href\s*=\s*["\']javascript:[^"\']*["\']/i', '', $html);
+        return $html;
+    }
+
+    /**
+     * Convert Markdown to HTML for display (if needed elsewhere)
+     */
+    public function markdownToHtml($markdown)
+    {
+        if (empty($markdown)) {
+            return '';
+        }
+        return $this->markdownConverter->convert($markdown)->getContent();
     }
 
     private function processCategoriesForView()
@@ -223,6 +262,10 @@ class AppController extends Controller
             return redirect()->route('app::index')->with('error', __('Startup not found or access denied'));
         }
 
+        if (!empty($startup->description)) {
+            $startup->description_html = $this->markdownConverter->convert($startup->description)->getContent();
+        }
+
         $meta = $this->getMeta();
         $categoryData = $this->processCategoriesForView();
 
@@ -245,7 +288,7 @@ class AppController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:191',
-                'description' => 'nullable|string',
+                'description' => 'nullable|string|max:50000',
                 'categories' => 'array|max:5', // Max 5 categories
                 'categories.*' => 'string',
                 'active' => 'boolean'
@@ -260,7 +303,12 @@ class AppController extends Controller
                 }
             }
             $startup->name = $request->name ?? null;
-            $startup->description = $request->description ?? null;
+            if (!empty($request->description)) {
+                $cleanHtml = $this->sanitizeHtml($request->description);
+                $startup->description = $this->htmlConverter->convert($cleanHtml);
+            } else {
+                $startup->description = null;
+            }
             $startup->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
             $startup->active = $request->boolean('active');
             if (!$startup->slug || $startup->isDirty('name')) {

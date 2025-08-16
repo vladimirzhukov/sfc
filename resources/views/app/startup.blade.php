@@ -1,5 +1,25 @@
 @extends('layouts.app')
 
+@section('styles')
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<style>
+.ql-container {
+    border-radius: 0 0 0.375rem 0.375rem !important;
+}
+.ql-toolbar {
+    border-radius: 0.375rem 0.375rem 0 0 !important;
+}
+.ql-container, .ql-toolbar {
+    border-color: rgb(209 213 219) !important;
+}
+.ql-container.ql-focused {
+    outline: 2px solid rgb(99 102 241) !important;
+    outline-offset: -2px !important;
+    border-color: rgb(99 102 241) !important;
+}
+</style>
+@endsection
+
 @section('content')
 <nav class="flex mb-8" aria-label="Breadcrumb">
     <ol role="list" class="flex items-center space-x-4">
@@ -96,9 +116,9 @@
                     <label class="block text-sm/6 font-medium text-gray-900">{{ __('Startup Categories') }} ({{ __('Maximum 5') }})</label>
                     <div class="relative mt-2">
                         <button type="button" @click="open = !open" class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-3 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" :aria-expanded="open">
-                            <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-                                <span class="block truncate" x-text="selectedCategories.length > 0 ? `{{ __('Categories selected') }}: ${selectedCategories.length}/5` : '{{ __('Select startup categories') }} ({{ __('max 5') }})...'"></span>
-                            </span>
+                        <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6">
+                            <span class="block truncate" x-text="selectedCategories.length > 0 ? `{{ __('Categories selected') }}: ${selectedCategories.length}/5` : '{{ __('Select startup categories') }} ({{ __('max 5') }})...'"></span>
+                        </span>
                             <svg class="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4 transition-transform duration-200" :class="{ 'rotate-180': open }" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd" /></svg>
                         </button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" @click.away="open = false" class="absolute z-10 bg-white max-h-80 w-full overflow-auto rounded-md shadow-lg border-1 border-gray-300 mt-1">
@@ -139,13 +159,13 @@
                     <div x-data="{ forceShow: true }" x-show="(selectedCategories.length > 0) || forceShow" class="mt-3">
                         <div class="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
                             <template x-for="categoryCode in selectedCategories" :key="categoryCode">
-                                <span class="inline-flex items-center gap-x-1.5 rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-700">
-                                    <span x-text="categories.find(cat => cat.code == categoryCode)?.name || `Code: ${categoryCode}`"></span>
-                                    <button type="button" @click="removeCategory(categoryCode); if(selectedCategories.length === 0) forceShow = false;" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-indigo-600/20 cursor-pointer">
-                                        <span class="sr-only">{{ __('Remove') }}</span>
-                                        <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-indigo-700/50 group-hover:stroke-indigo-700/75"><path d="m4 4 6 6m0-6-6 6" /></svg>
-                                    </button>
-                                </span>
+                            <span class="inline-flex items-center gap-x-1.5 rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-700">
+                                <span x-text="categories.find(cat => cat.code == categoryCode)?.name || `Code: ${categoryCode}`"></span>
+                                <button type="button" @click="removeCategory(categoryCode); if(selectedCategories.length === 0) forceShow = false;" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-indigo-600/20 cursor-pointer">
+                                    <span class="sr-only">{{ __('Remove') }}</span>
+                                    <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-indigo-700/50 group-hover:stroke-indigo-700/75"><path d="m4 4 6 6m0-6-6 6" /></svg>
+                                </button>
+                            </span>
                             </template>
                         </div>
                         <p class="mt-2 text-xs text-gray-600">{{ __('Selected') }} <span x-text="selectedCategories.length"></span> {{ __('of 5 categories') }}.
@@ -170,7 +190,10 @@
                 <div class="col-span-full">
                     <label for="description" class="block text-sm/6 font-medium text-gray-900">{{ __('Description') }}</label>
                     <div class="mt-2">
-                        <textarea name="description" id="description" rows="3" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="{{ __('Description') }}">{!! (!empty($startup->description) ? $startup->description : '') !!}</textarea>
+                        <textarea name="description" id="description" rows="3" class="hidden" placeholder="{{ __('Description') }}">{!! (!empty($startup->description) ? $startup->description : '') !!}</textarea>
+                        <div id="editor">
+                            {!! (!empty($startup->description_html) ? $startup->description_html : '<p>' . __('Enter your startup description...') . '</p>') !!}
+                        </div>
                     </div>
                     <p class="mt-3 text-sm/6 text-gray-600">{{ __('Write a few sentences about your startup.') }}</p>
                 </div>
@@ -208,18 +231,39 @@
 @endsection
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script>
+const toolbarOptions = [
+    ['bold', 'italic'],
+    ['blockquote'],
+    [{'header': 1}, {'header': 2}],
+    [{'list': 'ordered'}, {'list': 'bullet'}],
+    ['clean']
+];
+const quill = new Quill('#editor', {
+    modules: {
+        toolbar: toolbarOptions
+    },
+    theme: 'snow',
+    placeholder: '{{ __('Enter your startup description...') }}'
+});
+quill.on('text-change', () => {
+    const html = quill.root.innerHTML;
+    document.getElementById('description').value = html;
+});
+</script>
 <script>
 function makeSecureUrl(path) {
     @if (env('APP_ENV') == 'production')
-        if (path.startsWith('/')) {
-            return `https://${window.location.host}{{ ((LaravelLocalization::getCurrentLocale() != 'en') ? substr($_SERVER['REQUEST_URI'], 0, 3) : '') }}${path}`;
-        }
-        return path.replace(/^http:/, 'https:');
+    if (path.startsWith('/')) {
+        return `https://${window.location.host}{{ ((LaravelLocalization::getCurrentLocale() != 'en') ? substr($_SERVER['REQUEST_URI'], 0, 3) : '') }}${path}`;
+    }
+    return path.replace(/^http:/, 'https:');
     @else
-        if (path.startsWith('/')) {
-            return `http://${window.location.host}{{ ((LaravelLocalization::getCurrentLocale() != 'en') ? substr($_SERVER['REQUEST_URI'], 0, 3) : '') }}${path}`;
-        }
-        return path;
+    if (path.startsWith('/')) {
+        return `http://${window.location.host}{{ ((LaravelLocalization::getCurrentLocale() != 'en') ? substr($_SERVER['REQUEST_URI'], 0, 3) : '') }}${path}`;
+    }
+    return path;
     @endif
 }
 
