@@ -192,7 +192,7 @@
                     <div class="mt-2">
                         <textarea name="description" id="description" rows="3" class="hidden" placeholder="{{ __('Description') }}">{!! (!empty($startup->description) ? $startup->description : '') !!}</textarea>
                         <div id="editor">
-                            {!! (!empty($startup->description_html) ? $startup->description_html : '<p>' . __('Enter your startup description...') . '</p>') !!}
+                            {!! (!empty($startup->description_html) ? $startup->description_html : '') !!}
                         </div>
                     </div>
                     <p class="mt-3 text-sm/6 text-gray-600">{{ __('Write a few sentences about your startup.') }}</p>

@@ -5,16 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\City;
 use App\Models\Country;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
+use League\HTMLToMarkdown\HtmlConverter;
+use League\CommonMark\CommonMarkConverter;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
 class ProfileController extends Controller
 {
+    private $htmlConverter;
+    private $markdownConverter;
+
+    public function __construct()
+    {
+        $this->htmlConverter = new HtmlConverter([
+            'header_style' => 'atx',
+            'suppress_errors' => true,
+            'strip_tags' => true,
+            'remove_nodes' => 'script style',
+        ]);
+        $this->markdownConverter = new CommonMarkConverter([
+            'html_input' => 'strip',
+            'allow_unsafe_links' => false,
+        ]);
+    }
+
     public function updateAvatar(Request $request)
     {
         $request->validate([
@@ -52,6 +71,15 @@ class ProfileController extends Controller
         }
     }
 
+    private function sanitizeHtml($html)
+    {
+        $html = preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/mi', '', $html);
+        $html = preg_replace('/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/mi', '', $html);
+        $html = preg_replace('/\s*on\w+\s*=\s*["\'][^"\']*["\']/i', '', $html);
+        $html = preg_replace('/href\s*=\s*["\']javascript:[^"\']*["\']/i', '', $html);
+        return $html;
+    }
+
     public function saveProfile(Request $request)
     {
         $user = Auth::user();
@@ -61,7 +89,7 @@ class ProfileController extends Controller
             'password' => 'nullable|min:6|max:100',
             'first-name' => 'nullable|string|max:191',
             'last-name' => 'nullable|string|max:191',
-            'about' => 'nullable|string|max:2000',
+            'about' => 'nullable|string|max:4000',
             'pe' => 'nullable|email|max:191',
             'pp' => 'nullable|string|max:20',
             'country' => [
@@ -133,7 +161,6 @@ class ProfileController extends Controller
             $profileData = [
                 'first_name' => $validated['first-name'] ?? null,
                 'last_name' => $validated['last-name'] ?? null,
-                'about' => $validated['about'] ?? null,
                 'public_email' => $validated['pe'] ?? null,
                 'public_phone' => $validated['pp'] ?? null,
                 // Social media fields
@@ -149,6 +176,12 @@ class ProfileController extends Controller
                 'tw' => $validated['tw'] ?? null,
                 'wb' => $validated['wb'] ?? null
             ];
+            if (!empty($validated['about'])) {
+                $cleanHtml = $this->sanitizeHtml($validated['about']);
+                $profileData['about'] = $this->htmlConverter->convert($cleanHtml);
+            } else {
+                $profileData['about'] = null;
+            }
             $user->profile()->updateOrCreate(
                 ['user_id' => $user->id],
                 $profileData

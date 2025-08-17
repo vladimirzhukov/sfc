@@ -37,7 +37,7 @@
                                 <td class="py-5 pr-3 pl-4 text-sm sm:pl-0 w-1/3">
                                     <div class="flex items-center">
                                         <div class="size-11 shrink-0">
-                                            <img src="{{ (!empty($startup->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img : '/assets/img/no-image-icon.png') }}" alt="{{ $startup->name }}" class="size-11 rounded-full" />
+                                            <img src="{{ (!empty($startup->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img : '/assets/images/no-image-icon.png') }}" alt="{{ $startup->name }}" class="size-11 rounded-full" />
                                         </div>
                                         <div class="ml-4 rtl:mr-4 rtl:ml-0">
                                             <div class="font-medium text-gray-900">{{ $startup->name }}</div>

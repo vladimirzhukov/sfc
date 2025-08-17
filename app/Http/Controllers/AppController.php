@@ -227,8 +227,12 @@ class AppController extends Controller
     {
         $meta = $this->getMeta();
         $countries = Country::where('active', 1)->orderBy('name', 'asc')->get();
+        if (!empty(Auth::user()->profile->about)) {
+            $about_html = $this->markdownConverter->convert(Auth::user()->profile->about)->getContent();
+        }
         return view('app.profile', [
             'meta' => $meta,
+            'about_html' => $about_html,
             'countries' => $countries
         ]);
     }
@@ -288,7 +292,7 @@ class AppController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:191',
-                'description' => 'nullable|string|max:50000',
+                'description' => 'nullable|string|max:4000',
                 'categories' => 'array|max:5', // Max 5 categories
                 'categories.*' => 'string',
                 'active' => 'boolean'

@@ -1,5 +1,25 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <style>
+        .ql-container {
+            border-radius: 0 0 0.375rem 0.375rem !important;
+        }
+        .ql-toolbar {
+            border-radius: 0.375rem 0.375rem 0 0 !important;
+        }
+        .ql-container, .ql-toolbar {
+            border-color: rgb(209 213 219) !important;
+        }
+        .ql-container.ql-focused {
+            outline: 2px solid rgb(99 102 241) !important;
+            outline-offset: -2px !important;
+            border-color: rgb(99 102 241) !important;
+        }
+    </style>
+@endsection
+
 @section('content')
 <nav class="flex mb-8" aria-label="Breadcrumb">
     <ol role="list" class="flex items-center space-x-4">
@@ -99,7 +119,10 @@
                 <div class="col-span-full">
                     <label for="about" class="block text-sm/6 font-medium text-gray-900">{{ __('About') }}</label>
                     <div class="mt-2">
-                        <textarea name="about" id="about" rows="3" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">{!! (!empty(Auth::user()->profile->about) ? Auth::user()->profile->about : '') !!}</textarea>
+                        <textarea name="about" id="about" rows="3" class="hidden">{!! (!empty(Auth::user()->profile->about) ? Auth::user()->profile->about : '') !!}</textarea>
+                        <div id="editor">
+                            {!! (!empty($about_html) ? $about_html : '') !!}
+                        </div>
                     </div>
                     <p class="mt-3 text-sm/6 text-gray-600">{{ __('Write a few sentences about yourself.') }}</p>
                 </div>
@@ -433,6 +456,27 @@
 @endsection
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script>
+const toolbarOptions = [
+    ['bold', 'italic'],
+    ['blockquote'],
+    [{'header': 1}, {'header': 2}],
+    [{'list': 'ordered'}, {'list': 'bullet'}],
+    ['clean']
+];
+const quill = new Quill('#editor', {
+    modules: {
+        toolbar: toolbarOptions
+    },
+    theme: 'snow',
+    placeholder: '{{ __('Write a few sentences about yourself.') }}'
+});
+quill.on('text-change', () => {
+    const html = quill.root.innerHTML;
+    document.getElementById('about').value = html;
+});
+</script>
 <script>
 function makeSecureUrl(path) {
     @if (env('APP_ENV') == 'production')
