@@ -25,4 +25,13 @@ return [
     'startup_tip_3' => '&bull; Nieaktywne startupy są ukryte, ale mogą być w każdej chwili reaktywowane',
     'startup_tip_4' => '&bull; Użyj tego, aby tymczasowo wstrzymać swoją listę startupów bez jej usuwania',
     'startup_active' => 'Gdy zaznaczone, ten startup będzie widoczny publicznie. Odznacz, aby tymczasowo wyłączyć startup.',
+    'service_create_noto' => 'Dodaj swoją usługę do Społeczności Założycieli Startupów i połącz się z przedsiębiorcami o podobnych zainteresowaniach. Podziel się swoją podróżą, szukaj porad i współpracuj nad innowacyjnymi projektami. Szczegóły dotyczące Twojej usługi będą widoczne dla wszystkich członków, co sprzyja wspierającemu środowisku wzrostu i nawiązywania kontaktów.',
+    'service_edit_noto' => 'Edytuj szczegóły swojej usługi, aby utrzymać swój profil aktualny i angażujący. Zaktualizuj swoją misję, wizję i wszelkie inne istotne informacje, aby odzwierciedlić najnowsze wydarzenia w Twojej podróży przedsiębiorczej. To pomaga utrzymać aktywną i dynamiczną społeczność założycieli startupów.',
+    'service_max_categories_message' => 'Możesz wybrać maksymalnie 5 kategorii dla swojej usługi. Proszę wybierz te najbardziej odpowiednie, aby skutecznie reprezentować swój biznes.',
+    'service_listing' => 'Skonfiguruj swoją listę usług, aby skutecznie zaprezentować swój biznes. Dodaj istotne szczegóły, takie jak nazwa, opis i kategorie Twojej usługi. Pomoże to innym członkom zrozumieć Twoją ofertę i ułatwi nawiązywanie znaczących połączeń.',
+    'service_tip_1' => '&bull; Aktywne usługi pojawiają się w Twoim publicznym profilu',
+    'service_tip_2' => '&bull; Inni członkowie mogą przeglądać aktywne usługi',
+    'service_tip_3' => '&bull; Nieaktywne usługi są ukryte, ale mogą być w każdej chwili reaktywowane',
+    'service_tip_4' => '&bull; Użyj tego, aby tymczasowo wstrzymać swoją listę usług bez jej usuwania',
+    'service_active' => 'Gdy zaznaczone, ta usługa będzie widoczna publicznie. Odznacz, aby tymczasowo wyłączyć usługę.',
 ];

@@ -10,6 +10,9 @@ use App\Models\PageContent;
 use App\Models\Country;
 use App\Models\Startup;
 use App\Models\StartupCategory;
+use App\Models\City;
+use App\Models\ServiceCategory;
+use App\Models\Service;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -70,7 +73,26 @@ class AppController extends Controller
         $slug = $baseSlug;
         $counter = 1;
         while (true) {
-            $query = Startup::where('user_id', $userId)->where('slug', $slug);
+            $query = Startup::where('slug', $slug);
+            if ($excludeId) {
+                $query->where('id', '!=', $excludeId);
+            }
+            if (!$query->exists()) {
+                break;
+            }
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+        return $slug;
+    }
+
+    private function generateUniqueServiceSlug($name, $userId, $excludeId = null)
+    {
+        $baseSlug = Str::slug($name);
+        $slug = $baseSlug;
+        $counter = 1;
+        while (true) {
+            $query = Service::where('slug', $slug);
             if ($excludeId) {
                 $query->where('id', '!=', $excludeId);
             }
@@ -103,12 +125,16 @@ class AppController extends Controller
         return $this->markdownConverter->convert($markdown)->getContent();
     }
 
-    private function processCategoriesForView()
+    private function processCategoriesForView($type = 'startup')
     {
         $categories = array();
         $parentCategories = array();
         $categoryDescriptions = array();
-        $rawCategories = StartupCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
+        if ($type == 'service') {
+            $rawCategories = ServiceCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
+        } else {
+            $rawCategories = StartupCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
+        }
 
         // Process categories and build arrays
         foreach ($rawCategories as $category) {
@@ -218,8 +244,10 @@ class AppController extends Controller
     public function index()
     {
         $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
         return view('app.index', [
-            'meta' => $meta
+            'meta' => $meta,
+            'cities' => $cities
         ]);
     }
 
@@ -240,8 +268,13 @@ class AppController extends Controller
     public function startups()
     {
         $meta = $this->getMeta();
-        $startups = Startup::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $startups = Startup::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()->keyBy('id');
         $startupCategories = StartupCategory::orderBy('ord', 'asc')->get()->keyBy('id');
+        foreach ($startups as $key => $startup) {
+            if (!empty($startup->description)) {
+                $startups[$key]->description_html = $this->markdownConverter->convert($startup->description)->getContent();
+            }
+        }
         return view('app.startups', [
             'meta' => $meta,
             'startups' => $startups,
@@ -368,6 +401,151 @@ class AppController extends Controller
                 'thumbnail_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img,
                 'message' => __('Logo updated successfully!'),
                 'id' => $startup->id
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Failed to process image') . ': ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function services()
+    {
+        $meta = $this->getMeta();
+        $services = Service::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()->keyBy('id');
+        $serviceCategories = ServiceCategory::orderBy('ord', 'asc')->get()->keyBy('id');
+        foreach ($services as $key => $service) {
+            if (!empty($service->description)) {
+                $services[$key]->description_html = $this->markdownConverter->convert($service->description)->getContent();
+            }
+        }
+        return view('app.services', [
+            'meta' => $meta,
+            'services' => $services,
+            'serviceCategories' => $serviceCategories
+        ]);
+    }
+
+    public function servicesCreate()
+    {
+        $meta = $this->getMeta();
+        $categoryData = $this->processCategoriesForView('service');
+
+        return view('app.service', array_merge([
+            'meta' => $meta
+        ], $categoryData));
+    }
+
+    public function servicesEdit($id)
+    {
+        $service = Service::findOrFail($id);
+        if (empty($service->id) || $service->user_id != Auth::user()->id) {
+            return redirect()->route('app::index')->with('error', __('Service not found or access denied'));
+        }
+
+        if (!empty($service->description)) {
+            $service->description_html = $this->markdownConverter->convert($service->description)->getContent();
+        }
+
+        $meta = $this->getMeta();
+        $categoryData = $this->processCategoriesForView('service');
+
+        return view('app.service', array_merge([
+            'meta' => $meta,
+            'service' => $service
+        ], $categoryData));
+    }
+
+    public function servicesDelete($id)
+    {
+        $meta = $this->getMeta();
+        return view('app.services', [
+            'meta' => $meta
+        ]);
+    }
+
+    public function servicesSave(Request $request)
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string|max:191',
+                'description' => 'nullable|string|max:4000',
+                'categories' => 'array|max:5', // Max 5 categories
+                'categories.*' => 'string',
+                'active' => 'boolean'
+            ]);
+            if (empty($request->id)) {
+                $service = new Service();
+                $service->user_id = Auth::user()->id;
+            } else {
+                $service = Startup::findOrFail($request->id);
+                if ($service->user_id != Auth::user()->id) {
+                    return redirect()->route('app::startups')->withErrors(__('Service not found or access denied'));
+                }
+            }
+            $service->name = $request->name ?? null;
+            if (!empty($request->description)) {
+                $cleanHtml = $this->sanitizeHtml($request->description);
+                $service->description = $this->htmlConverter->convert($cleanHtml);
+            } else {
+                $service->description = null;
+            }
+            $service->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
+            $service->active = $request->boolean('active');
+            if (!$service->slug || $service->isDirty('name')) {
+                $service->slug = $this->generateUniqueServiceSlug($request->input('name'), Auth::user()->id, $startup->id ?? null);
+            }
+            $service->save();
+            return redirect()->route('app::services::edit', ['id' => $service->id])->with(['success' => __('Service saved')]);
+        } catch (\Exception $e) {
+            return redirect()->route('app::services::edit', ['id' => $service->id ?? null])->with(['error' => __('Failed to save service') . ': ' . $e->getMessage()]);
+        }
+    }
+
+    public function servicesImage(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:20480'
+        ]);
+
+        if (empty($request->serviceID)) {
+            $service = new Service();
+            $service->user_id = Auth::user()->id;
+            $service->save();
+        } else {
+            $service = Service::find($request->serviceID);
+            if (empty($service->id) || $service->user_id != Auth::user()->id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('Service not found or access denied')
+                ], 404);
+            }
+        }
+
+        try {
+            if ($service->img) {
+                Storage::disk('do')->delete([
+                    'sfccy/services/' . substr($service->img, 0, 1) . '/' . substr($service->img, 0, 2) . '/' . substr($service->img, 0, 3) . '/' . $service->img,
+                    'sfccy/services/' . substr($service->img, 0, 1) . '/' . substr($service->img, 0, 2) . '/' . substr($service->img, 0, 3) . '/th_' . $service->img
+                ]);
+                $service->img = null;
+            }
+            $file = $request->file('avatar');
+            $name = Str::random(16) . '.webp';
+            $manager = new ImageManager(new Driver());
+            $mainImage = $manager->read($file)->cover(300, 300)->toWebp(85);
+            $thumbnail = $manager->read($file)->cover(100, 100)->toWebp(80);
+            Storage::disk('do')->put('sfccy/services/' . substr($name, 0, 1) . '/' . substr($name, 0, 2) . '/' . substr($name, 0, 3) . '/' . $name, $mainImage, 'public');
+            Storage::disk('do')->put('sfccy/services/' . substr($name, 0, 1) . '/' . substr($name, 0, 2) . '/' . substr($name, 0, 3) . '/th_' . $name, $thumbnail, 'public');
+            $service->img = $name;
+            $service->save();
+            return response()->json([
+                'success' => true,
+                'avatar_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/services/' . substr($service->img, 0, 1) . '/' . substr($service->img, 0, 2) . '/' . substr($service->img, 0, 3) . '/' . $service->img,
+                'thumbnail_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/services/' . substr($service->img, 0, 1) . '/' . substr($service->img, 0, 2) . '/' . substr($service->img, 0, 3) . '/th_' . $service->img,
+                'message' => __('Image updated successfully!'),
+                'id' => $service->id
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

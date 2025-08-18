@@ -25,4 +25,13 @@ return [
     'startup_tip_3' => '&bull; Las startups inactivas están ocultas, pero pueden reactivarse en cualquier momento',
     'startup_tip_4' => '&bull; Usa esto para pausar temporalmente tu lista de startups sin eliminarla',
     'startup_active' => 'Cuando esté marcado, esta startup será visible públicamente. Desmarca para desactivar temporalmente la startup.',
+    'service_create_noto' => 'Añade tu servicio a la Comunidad de Fundadores de Startups y conéctate con emprendedores afines. Comparte tu viaje, busca consejos y colabora en proyectos innovadores. Los detalles sobre tu servicio serán visibles para todos los miembros, fomentando un entorno de apoyo para el crecimiento y la creación de redes.',
+    'service_edit_noto' => 'Edita los detalles de tu servicio para mantener tu perfil actualizado y atractivo. Actualiza tu misión, visión y cualquier otra información relevante para reflejar los últimos desarrollos en tu viaje emprendedor. Esto ayuda a mantener una comunidad activa y vibrante de fundadores de startups.',
+    'service_max_categories_message' => 'Puedes seleccionar un máximo de 5 categorías para tu servicio. Por favor, elige las más relevantes para representar tu negocio de manera efectiva.',
+    'service_listing' => 'Configura tu lista de servicios para mostrar tu negocio de manera efectiva. Incluye detalles esenciales como el nombre, la descripción y las categorías de tu servicio. Esto ayudará a otros miembros a entender tu oferta y facilitará conexiones significativas.',
+    'service_tip_1' => '&bull; Los servicios activos aparecen en tu perfil público',
+    'service_tip_2' => '&bull; Otros miembros pueden ver servicios activos',
+    'service_tip_3' => '&bull; Los servicios inactivos están ocultos, pero pueden reactivarse en cualquier momento',
+    'service_tip_4' => '&bull; Usa esto para pausar temporalmente tu lista de servicios sin eliminarla',
+    'service_active' => 'Cuando esté marcado, este servicio será visible públicamente. Desmarca para desactivar temporalmente el servicio.',
 ];

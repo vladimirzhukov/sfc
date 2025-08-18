@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WorkingAfternoon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Meta;
 use App\Models\PageContent;
+use App\Models\City;
+use App\Models\WorkingAfternoon;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class WebController extends Controller
@@ -41,10 +42,12 @@ class WebController extends Controller
     public function index()
     {
         $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
         $afternoons = WorkingAfternoon::where('country_id', 55)->get();
         return view('index', [
             'meta' => $meta,
-            'afternoons' => $afternoons
+            'afternoons' => $afternoons,
+            'cities' => $cities
         ]);
     }
 }

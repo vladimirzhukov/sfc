@@ -25,4 +25,13 @@ return [
     'startup_tip_3' => '&bull; Inactive startups are hidden but can be reactivated anytime',
     'startup_tip_4' => '&bull; Use this to temporarily pause your startup listing without deleting it',
     'startup_active' => 'When checked, this startup will be visible in public. Uncheck to temporarily disable the startup.',
+    'service_create_noto' => 'Add your service to the Startup Founders Community and connect with like-minded entrepreneurs. Share your journey, seek advice, and collaborate on innovative projects. Details about your service will be visible to all members, fostering a supportive environment for growth and networking.',
+    'service_edit_noto' => 'Edit your service details to keep your profile current and engaging. Update your mission, vision, and any other relevant information to reflect the latest developments in your entrepreneurial journey. This helps maintain an active and vibrant community of startup founders.',
+    'service_max_categories_message' => 'You can select a maximum of 5 categories for your service. Please choose the most relevant ones to represent your business effectively.',
+    'service_listing' => 'Configure your service listing to showcase your business effectively. Include essential details such as your service\'s name, description, and categories. This will help other members understand your offering and facilitate meaningful connections.',
+    'service_tip_1' => '&bull; Active services appear in your public profile',
+    'service_tip_2' => '&bull; Other members can view active services',
+    'service_tip_3' => '&bull; Inactive services are hidden but can be reactivated anytime',
+    'service_tip_4' => '&bull; Use this to temporarily pause your service listing without deleting it',
+    'service_active' => 'When checked, this service will be visible in public. Uncheck to temporarily disable the service.',
 ];

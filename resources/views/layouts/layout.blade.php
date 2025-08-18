@@ -206,12 +206,12 @@
                         <div class="mt-10 md:mt-0">
                             <h3 class="text-sm/6 font-semibold text-white">{{ __('Events') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Nicosia') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Limassol') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Paphos') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Larnaca') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Famagusta') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Other cities') }}</a></li>
+                                @if ($cities->isNotEmpty())
+                                    @foreach ($cities as $city)
+                                        <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ $city->name }}</a></li>
+                                    @endforeach
+                                @endif
+                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('All cities') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -219,12 +219,12 @@
                         <div>
                             <h3 class="text-sm/6 font-semibold text-white">{{ __('Startups') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Nicosia') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Limassol') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Paphos') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Larnaca') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Famagusta') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Other cities') }}</a></li>
+                                @if ($cities->isNotEmpty())
+                                    @foreach ($cities as $city)
+                                        <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ $city->name }}</a></li>
+                                    @endforeach
+                                @endif
+                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('All cities') }}</a></li>
                             </ul>
                         </div>
                         <div class="mt-10 md:mt-0">

@@ -37,6 +37,24 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::get('/app/startups/delete/{id}', [AppController::class, 'startupsDelete'])->name('app::startups::delete')->middleware('auth');
     Route::post('/app/startups/save', [AppController::class, 'startupsSave'])->name('app::startups::save')->middleware('auth');
     Route::post('/app/startups/image', [AppController::class, 'startupsImage'])->name('app::startups::image');
+    Route::get('/app/business', [AppController::class, 'business'])->name('app::business')->middleware('auth');
+    Route::get('/app/business/create', [AppController::class, 'businessCreate'])->name('app::business::create')->middleware('auth');
+    Route::get('/app/business/edit/{id}', [AppController::class, 'businessEdit'])->name('app::business::edit')->middleware('auth');
+    Route::get('/app/business/delete/{id}', [AppController::class, 'businessDelete'])->name('app::business::delete')->middleware('auth');
+    Route::post('/app/business/save', [AppController::class, 'businessSave'])->name('app::business::save')->middleware('auth');
+    Route::post('/app/business/image', [AppController::class, 'businessImage'])->name('app::business::image');
+    Route::get('/app/events', [AppController::class, 'events'])->name('app::events')->middleware('auth');
+    Route::get('/app/events/create', [AppController::class, 'eventsCreate'])->name('app::events::create')->middleware('auth');
+    Route::get('/app/events/edit/{id}', [AppController::class, 'eventsEdit'])->name('app::events::edit')->middleware('auth');
+    Route::get('/app/events/delete/{id}', [AppController::class, 'eventsDelete'])->name('app::events::delete')->middleware('auth');
+    Route::post('/app/events/save', [AppController::class, 'eventsSave'])->name('app::events::save')->middleware('auth');
+    Route::post('/app/events/image', [AppController::class, 'eventsImage'])->name('app::events::image');
+    Route::get('/app/services', [AppController::class, 'services'])->name('app::services')->middleware('auth');
+    Route::get('/app/services/create', [AppController::class, 'servicesCreate'])->name('app::services::create')->middleware('auth');
+    Route::get('/app/services/edit/{id}', [AppController::class, 'servicesEdit'])->name('app::services::edit')->middleware('auth');
+    Route::get('/app/services/delete/{id}', [AppController::class, 'servicesDelete'])->name('app::services::delete')->middleware('auth');
+    Route::post('/app/services/save', [AppController::class, 'servicesSave'])->name('app::services::save')->middleware('auth');
+    Route::post('/app/services/image', [AppController::class, 'servicesImage'])->name('app::services::image');
     // API routes
     Route::prefix('api/cities')->group(function() {
         Route::get('popular/{countryCode}', [CityController::class, 'getPopularCities'])->where('countryCode', '[A-Za-z]{2}');

@@ -25,4 +25,13 @@ return [
     'startup_tip_3' => '&bull; Inaktive Startups sind verborgen, können aber jederzeit reaktiviert werden',
     'startup_tip_4' => '&bull; Verwenden Sie dies, um Ihre Startup-Liste vorübergehend zu pausieren, ohne sie zu löschen',
     'startup_active' => 'Wenn aktiviert, wird dieses Startup öffentlich sichtbar sein. Deaktivieren Sie es, um das Startup vorübergehend zu deaktivieren.',
+    'service_create_noto' => 'Fügen Sie Ihren Service der Startup Founders Community hinzu und vernetzen Sie sich mit gleichgesinnten Unternehmern. Teilen Sie Ihre Reise, suchen Sie Rat und arbeiten Sie an innovativen Projekten zusammen. Details zu Ihrem Service werden für alle Mitglieder sichtbar sein und fördern ein unterstützendes Umfeld für Wachstum und Networking.',
+    'service_edit_noto' => 'Bearbeiten Sie die Details Ihres Services, um Ihr Profil aktuell und ansprechend zu halten. Aktualisieren Sie Ihre Mission, Vision und alle anderen relevanten Informationen, um die neuesten Entwicklungen in Ihrer unternehmerischen Reise widerzuspiegeln. Dies hilft, eine aktive und lebendige Gemeinschaft von Startup-Gründern aufrechtzuerhalten.',
+    'service_max_categories_message' => 'Sie können maximal 5 Kategorien für Ihren Service auswählen. Bitte wählen Sie die relevantesten aus, um Ihr Geschäft effektiv darzustellen.',
+    'service_listing' => 'Konfigurieren Sie Ihre Service-Liste, um Ihr Geschäft effektiv zu präsentieren. Fügen Sie wesentliche Details wie den Namen, die Beschreibung und die Kategorien Ihres Services hinzu. Dies hilft anderen Mitgliedern, Ihr Angebot zu verstehen und sinnvolle Verbindungen herzustellen.',
+    'service_tip_1' => '&bull; Aktive Services erscheinen in deinem öffentlichen Profil',
+    'service_tip_2' => '&bull; Andere Mitglieder können aktive Services ansehen',
+    'service_tip_3' => '&bull; Inaktive Services sind verborgen, können aber jederzeit reaktiviert werden',
+    'service_tip_4' => '&bull; Verwenden Sie dies, um Ihre Service-Liste vorübergehend zu pausieren, ohne sie zu löschen',
+    'service_active' => 'Wenn aktiviert, wird dieser Service öffentlich sichtbar sein. Deaktivieren Sie es, um den Service vorübergehend zu deaktivieren.',
 ];
