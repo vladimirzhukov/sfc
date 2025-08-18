@@ -34,4 +34,13 @@ return [
     'service_tip_3' => '&bull; Inaktive Services sind verborgen, können aber jederzeit reaktiviert werden',
     'service_tip_4' => '&bull; Verwenden Sie dies, um Ihre Service-Liste vorübergehend zu pausieren, ohne sie zu löschen',
     'service_active' => 'Wenn aktiviert, wird dieser Service öffentlich sichtbar sein. Deaktivieren Sie es, um den Service vorübergehend zu deaktivieren.',
+    'event_create_noto' => 'Fügen Sie Ihr Event der Startup Founders Community hinzu und vernetzen Sie sich mit gleichgesinnten Unternehmern. Teilen Sie Ihre Reise, suchen Sie Rat und arbeiten Sie an innovativen Projekten zusammen. Details zu Ihrem Event werden für alle Mitglieder sichtbar sein und fördern ein unterstützendes Umfeld für Wachstum und Networking.',
+    'event_edit_noto' => 'Bearbeiten Sie die Details Ihres Events, um Ihr Profil aktuell und ansprechend zu halten. Aktualisieren Sie Ihre Mission, Vision und alle anderen relevanten Informationen, um die neuesten Entwicklungen in Ihrer unternehmerischen Reise widerzuspiegeln. Dies hilft, eine aktive und lebendige Gemeinschaft von Startup-Gründern aufrechtzuerhalten.',
+    'event_max_categories_message' => 'Sie können maximal 5 Kategorien für Ihr Event auswählen. Bitte wählen Sie die relevantesten aus, um Ihr Geschäft effektiv darzustellen.',
+    'event_listing' => 'Konfigurieren Sie Ihre Event-Liste, um Ihr Geschäft effektiv zu präsentieren. Fügen Sie wesentliche Details wie den Namen, die Beschreibung und die Kategorien Ihres Events hinzu. Dies hilft anderen Mitgliedern, Ihr Angebot zu verstehen und sinnvolle Verbindungen herzustellen.',
+    'event_tip_1' => '&bull; Aktive Events erscheinen in deinem öffentlichen Profil',
+    'event_tip_2' => '&bull; Andere Mitglieder können aktive Events ansehen',
+    'event_tip_3' => '&bull; Inaktive Events sind verborgen, können aber jederzeit reaktiviert werden',
+    'event_tip_4' => '&bull; Verwenden Sie dies, um Ihre Event-Liste vorübergehend zu pausieren, ohne sie zu löschen',
+    'event_active' => 'Wenn aktiviert, wird dieses Event öffentlich sichtbar sein. Deaktivieren Sie es, um das Event vorübergehend zu deaktivieren.',
 ];

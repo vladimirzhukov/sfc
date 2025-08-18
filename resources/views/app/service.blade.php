@@ -178,7 +178,7 @@
                             <svg class="h-5 w-5 text-amber-400 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.732 15.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
                             <div class="text-sm text-amber-800">
                                 <p class="font-medium">{{ __('Maximum categories reached') }}</p>
-                                <p class="text-xs mt-1">{{ __('app.max_categories_message') }}</p>
+                                <p class="text-xs mt-1">{{ __('app.service_max_categories_message') }}</p>
                             </div>
                         </div>
                     </div>

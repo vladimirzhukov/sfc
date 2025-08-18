@@ -2,6 +2,7 @@
 
 @section('styles')
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
 .ql-container {
     border-radius: 0 0 0.375rem 0.375rem !important;
@@ -17,6 +18,12 @@
     outline-offset: -2px !important;
     border-color: rgb(99 102 241) !important;
 }
+input[type="date"]::-webkit-calendar-picker-indicator {
+
+}
+input[type="date"] {
+    --webkit-calendar-first-day-of-week: 1;
+}
 </style>
 @endsection
 
@@ -25,16 +32,16 @@
     <ol role="list" class="flex items-center space-x-4">
         <li><div><a href="{{ route('web::index') }}" class="text-gray-400 hover:text-gray-500"><svg class="size-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" /></svg><span class="sr-only">{{ __('Home') }}</span></a></div></li>
         <li><div class="flex items-center"><svg class="size-5 shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" /></svg><a href="{{ route('app::index') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">{{ __('Dashboard') }}</a></div></li>
-        <li><div class="flex items-center"><svg class="size-5 shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" /></svg><a href="{{ route('app::startups') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ __('Startups') }}</a></div></li>
-        <li><div class="flex items-center"><svg class="size-5 shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" /></svg><a href="{{ ((Route::currentRouteName() == 'app::startups::create') ? route('app::startups::create') : route('app::startups::edit', ['id' => $startup->id])) }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ ((Route::currentRouteName() == 'app::startups::create') ? __('Create Startup') : __('Edit Startup')) }}</a></div></li>
+        <li><div class="flex items-center"><svg class="size-5 shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" /></svg><a href="{{ route('app::events') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ __('Events') }}</a></div></li>
+        <li><div class="flex items-center"><svg class="size-5 shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" /></svg><a href="{{ ((Route::currentRouteName() == 'app::events::create') ? route('app::events::create') : route('app::events::edit', ['id' => $event->id])) }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ ((Route::currentRouteName() == 'app::events::create') ? __('Create Event') : __('Edit Event')) }}</a></div></li>
     </ol>
 </nav>
-<form action="{{ route('app::startups::save') }}" method="POST">
+<form action="{{ route('app::events::save') }}" method="POST">
     @if (session('success'))
         <div x-data="{ show: true }" x-show="show" x-transition class="rounded-md bg-green-50 p-4 mb-4">
             <div class="flex">
                 <div class="shrink-0"><svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 text-green-400"><path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" fill-rule="evenodd" /></svg></div>
-                <div class="ml-3"><p class="text-sm font-medium text-green-800">{{ __('Startup saved successfully!') }}</p></div>
+                <div class="ml-3"><p class="text-sm font-medium text-green-800">{{ __('Event saved successfully!') }}</p></div>
                 <div class="ml-auto pl-3">
                     <div class="-mx-1.5 -my-1.5">
                         <button type="button" @click="show = false" class="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50 focus:outline-hidden">
@@ -63,20 +70,20 @@
         </div>
     @endif
     @csrf
-    <input type="hidden" name="id" value="{{ (!empty($startup->id) ? $startup->id : '') }}">
+    <input type="hidden" name="id" value="{{ (!empty($event->id) ? $event->id : '') }}">
     <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-6">
-            <h2 class="text-base/7 font-semibold text-gray-900">{{ ((Route::currentRouteName() == 'app::startups::create') ? __('Create Startup') : __('Edit Startup')) }}</h2>
-            @if (Route::currentRouteName() == 'app::startups::create')
-                <p class="mt-1 text-sm/6 text-gray-600">{{ __('app.startup_create_noto') }}</p>
+            <h2 class="text-base/7 font-semibold text-gray-900">{{ ((Route::currentRouteName() == 'app::events::create') ? __('Create Event') : __('Edit Event')) }}</h2>
+            @if (Route::currentRouteName() == 'app::events::create')
+                <p class="mt-1 text-sm/6 text-gray-600">{{ __('app.event_create_noto') }}</p>
             @else
-                <p class="mt-1 text-sm/6 text-gray-600">{{ __('app.startup_edit_noto') }}</p>
+                <p class="mt-1 text-sm/6 text-gray-600">{{ __('app.event_edit_noto') }}</p>
             @endif
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div class="sm:col-span-3">
-                    <label for="name" class="block text-sm/6 font-medium text-gray-900">{{ __('Startup title') }}</label>
+                    <label for="name" class="block text-sm/6 font-medium text-gray-900">{{ __('Event title') }}</label>
                     <div class="mt-2">
-                        <input type="text" name="name" id="name" autocomplete="title" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="{{ __('Startup title') }}" value="{{ (!empty($startup->name) ? $startup->name : '') }}" />
+                        <input type="text" name="name" id="name" autocomplete="title" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="{{ __('Event title') }}" value="{{ (!empty($event->name) ? $event->name : '') }}" />
                     </div>
                 </div>
 
@@ -113,12 +120,12 @@
                 </div>
 
                 <div class="sm:col-span-6" x-data="categorySelector()">
-                    <label class="block text-sm/6 font-medium text-gray-900">{{ __('Startup Categories') }} ({{ __('Maximum 5') }})</label>
+                    <label class="block text-sm/6 font-medium text-gray-900">{{ __('Event Categories') }} ({{ __('Maximum 5') }})</label>
                     <div class="relative mt-2">
                         <button type="button" @click="open = !open" class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-3 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" :aria-expanded="open">
-                        <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-                            <span class="block truncate" x-text="selectedCategories.length > 0 ? `{{ __('Categories selected') }}: ${selectedCategories.length}/5` : '{{ __('Select startup categories') }} ({{ __('max 5') }})...'"></span>
-                        </span>
+                    <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6">
+                        <span class="block truncate" x-text="selectedCategories.length > 0 ? `{{ __('Categories selected') }}: ${selectedCategories.length}/5` : '{{ __('Select event categories') }} ({{ __('max 5') }})...'"></span>
+                    </span>
                             <svg class="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4 transition-transform duration-200" :class="{ 'rotate-180': open }" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd" /></svg>
                         </button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" @click.away="open = false" class="absolute z-10 bg-white max-h-80 w-full overflow-auto rounded-md shadow-lg border-1 border-gray-300 mt-1">
@@ -178,7 +185,7 @@
                             <svg class="h-5 w-5 text-amber-400 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.732 15.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
                             <div class="text-sm text-amber-800">
                                 <p class="font-medium">{{ __('Maximum categories reached') }}</p>
-                                <p class="text-xs mt-1">{{ __('app.max_categories_message') }}</p>
+                                <p class="text-xs mt-1">{{ __('app.event_max_categories_message') }}</p>
                             </div>
                         </div>
                     </div>
@@ -190,17 +197,111 @@
                 <div class="col-span-full">
                     <label for="description" class="block text-sm/6 font-medium text-gray-900">{{ __('Description') }}</label>
                     <div class="mt-2">
-                        <textarea name="description" id="description" rows="3" class="hidden" placeholder="{{ __('Description') }}">{!! (!empty($startup->description) ? $startup->description : '') !!}</textarea>
+                        <textarea name="description" id="description" rows="3" class="hidden" placeholder="{{ __('Description') }}">{!! (!empty($event->description) ? $event->description : '') !!}</textarea>
                         <div id="editor">
-                            {!! (!empty($startup->description_html) ? $startup->description_html : '') !!}
+                            {!! (!empty($event->description_html) ? $event->description_html : '') !!}
                         </div>
                     </div>
-                    <p class="mt-3 text-sm/6 text-gray-600">{{ __('Write a few sentences about your startup.') }}</p>
+                    <p class="mt-3 text-sm/6 text-gray-600">{{ __('Write a few sentences about your event.') }}</p>
                 </div>
 
-                <div class="col-span-full mt-4">
+                <div class="sm:col-span-6">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div>
+                            <label for="start_date" class="block text-sm/6 font-medium text-gray-900">{{ __('Start Date') }}</label>
+                            <div class="mt-2">
+                                <input type="date" name="start_date" id="start_date" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($event->start_date) ? date('Y-m-d', strtotime($event->start_date)) : '') }}" />
+                            </div>
+                        </div>
+                        <div>
+                            <label for="start_time" class="block text-sm/6 font-medium text-gray-900">{{ __('Start Time') }}</label>
+                            <div class="mt-2">
+                                <input type="time" name="start_time" id="start_time" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($event->start_date) ? date('H:i', strtotime($event->start_date)) : '') }}" />
+                            </div>
+                        </div>
+                        <div>
+                            <label for="end_date" class="block text-sm/6 font-medium text-gray-900">{{ __('End Date') }}</label>
+                            <div class="mt-2">
+                                <input type="date" name="end_date" id="end_date" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($event->end_date) ? date('Y-m-d', strtotime($event->end_date)) : '') }}" />
+                            </div>
+                        </div>
+                        <div>
+                            <label for="end_time" class="block text-sm/6 font-medium text-gray-900">{{ __('End Time') }}</label>
+                            <div class="mt-2">
+                                <input type="time" name="end_time" id="end_time" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($event->end_date) ? date('H:i', strtotime($event->end_date)) : '') }}" />
+                            </div>
+                        </div>
+                    </div>
+                    <div id="date-time-error" class="mt-2 text-sm text-red-600 hidden"></div>
+                    <div class="mt-3 text-sm text-gray-600 flex items-center gap-2">
+                        <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span id="timezone-display">GMT+03:00 Nicosia</span>
+                        <input type="hidden" name="timezone" id="timezone" value="">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-6" x-data="locationPicker()">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <svg class="size-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            <h3 class="text-base font-medium text-gray-900">{{ __('Add Event Location') }}</h3>
+                        </div>
+                        <p class="text-sm text-gray-600">{{ __('Offline location or virtual link') }}</p>
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="location_type" value="offline" @change="isOnline = false" :checked="!isOnline" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                                <span class="ml-2 text-sm text-gray-700">{{ __('Offline location') }}</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="location_type" value="online" @change="isOnline = true" :checked="isOnline" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                                <span class="ml-2 text-sm text-gray-700">{{ __('Virtual link') }}</span>
+                            </label>
+                            <input type="hidden" name="is_online" :value="isOnline ? 1 : 0">
+                        </div>
+                        <div x-show="isOnline" x-transition class="space-y-2">
+                            <label for="link" class="block text-sm font-medium text-gray-700">{{ __('Virtual Event Link') }}</label>
+                            <input type="url" name="link" id="link" placeholder="https://..." class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($event->link) ? $event->link : '') }}" />
+                        </div>
+                        <div x-show="!isOnline" x-transition class="space-y-4">
+                            <div class="relative">
+                                <label for="location" class="block text-sm font-medium text-gray-700">{{ __('Event Location') }}</label>
+                                <input type="text" name="location" id="location" placeholder="{{ __('Enter event location...') }}" class="mt-1 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" @input="searchLocations($event.target.value)" @focus="showDropdown = true" @keydown.escape="showDropdown = false" @keydown.arrow-down.prevent="navigateResults(1)" @keydown.arrow-up.prevent="navigateResults(-1)" @keydown.enter.prevent="selectResult()" x-model="locationQuery" autocomplete="off" value="{{ (!empty($event->location) ? $event->location : '') }}" />
+                                <div x-show="showDropdown && searchResults.length > 0" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" @click.away="showDropdown = false" class="absolute z-20 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md border border-gray-300 overflow-auto">
+                                    <template x-for="(result, index) in searchResults" :key="index">
+                                        <div @click="selectLocation(result, index)" :class="{'bg-indigo-50': selectedIndex === index}" class="px-4 py-3 cursor-pointer hover:bg-gray-50 border-b border-gray-100 last:border-b-0">
+                                            <div class="flex items-start space-x-3">
+                                                <svg class="size-5 text-gray-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="font-medium text-gray-900" x-text="result.name"></div>
+                                                    <div class="text-sm text-gray-500" x-text="result.address"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template x-if="searchResults.length === 0 && locationQuery.length > 2 && !isSearching">
+                                        <div class="px-4 py-3 text-sm text-gray-500 text-center">
+                                            <div class="flex items-center justify-center space-x-2">
+                                                <svg class="size-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                                                <span>{{ __('Use') }} "<span x-text="locationQuery" class="font-medium"></span>"</span>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">{{ __('Choose Location on Map') }}</label>
+                                <div id="map" class="h-64 w-full rounded-lg border border-gray-300 z-10"></div>
+                                <p class="text-xs text-gray-500">{{ __('Click on the map to set the exact location, or search for an address above.') }}</p>
+                            </div>
+                            <input type="hidden" name="lat" id="lat" :value="coordinates.lat" />
+                            <input type="hidden" name="lon" id="lon" :value="coordinates.lon" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-full">
                     <div class="flex items-center">
-                        <input type="checkbox" id="active" name="active" value="1" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" {{ (old('active', $startup->active ?? true)) ? 'checked' : '' }}>
+                        <input type="checkbox" id="active" name="active" value="1" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" {{ (old('active', $event->active ?? true)) ? 'checked' : '' }}>
                         <label for="active" class="ml-2 rtl:mr-2 block text-sm text-gray-900 font-medium">{{ __('Active') }}</label>
                     </div>
                     <p class="mt-1 text-xs text-gray-500">{{ __('app.startup_active') }}</p>
@@ -232,6 +333,7 @@
 
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const toolbarOptions = [
@@ -252,9 +354,342 @@ document.addEventListener('DOMContentLoaded', function() {
         const html = quill.root.innerHTML;
         document.getElementById('description').value = html;
     });
+
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const offset = new Date().getTimezoneOffset();
+    const offsetHours = Math.abs(Math.floor(offset / 60));
+    const offsetMinutes = Math.abs(offset % 60);
+    const offsetSign = offset > 0 ? '-' : '+';
+
+    document.getElementById('timezone-display').textContent =
+        `GMT${offsetSign}${offsetHours.toString().padStart(2, '0')}:${offsetMinutes.toString().padStart(2, '0')} ${timezone.split('/').pop()}`;
+    document.getElementById('timezone').value = timezone;
+
+    let map, marker;
+    const defaultLat = 35.1856;
+    const defaultLng = 33.3823;
+
+    function initMap() {
+        map = L.map('map').setView([defaultLat, defaultLng], 13);
+
+        window.eventMap = map;
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        map.on('click', function(e) {
+            setMarker(e.latlng.lat, e.latlng.lng);
+            reverseGeocode(e.latlng.lat, e.latlng.lng);
+        });
+
+        map.on('click', function(e) {
+            setMarker(e.latlng.lat, e.latlng.lng, true);
+        });
+    }
+
+    function setMarker(lat, lng, draggable = false) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+
+        marker = L.marker([lat, lng], { draggable: draggable }).addTo(map);
+
+        const locationPicker = document.querySelector('[x-data*="locationPicker"]');
+        if (locationPicker && locationPicker._x_dataStack) {
+            locationPicker._x_dataStack[0].coordinates.lat = lat;
+            locationPicker._x_dataStack[0].coordinates.lon = lng;
+        }
+
+        const latInput = document.getElementById('lat');
+        const lonInput = document.getElementById('lon');
+        if (latInput) latInput.value = lat;
+        if (lonInput) lonInput.value = lng;
+
+        if (draggable) {
+            marker.on('dragend', function(e) {
+                const position = e.target.getLatLng();
+                setMarker(position.lat, position.lng, true);
+                reverseGeocode(position.lat, position.lng);
+            });
+        }
+    }
+
+    window.setEventMapMarker = setMarker;
+
+    function reverseGeocode(lat, lng) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&countrycodes=cy&format=json&addressdetails=1`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.display_name) {
+                    const locationInput = document.getElementById('location');
+                    if (locationInput) {
+                        locationInput.value = data.display_name;
+
+                        const locationPicker = document.querySelector('[x-data*="locationPicker"]');
+                        if (locationPicker && locationPicker._x_dataStack) {
+                            locationPicker._x_dataStack[0].locationQuery = data.display_name;
+                        }
+                    }
+                }
+            })
+            .catch(error => console.error('Reverse geocoding error:', error));
+    }
+
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                const mapContainer = document.getElementById('map');
+                if (mapContainer && mapContainer.offsetParent !== null && !map) {
+                    setTimeout(() => {
+                        initMap();
+                        setTimeout(() => {
+                            if (map) {
+                                map.invalidateSize();
+                            }
+                        }, 100);
+                    }, 100);
+                }
+            }
+        });
+    });
+
+    const mapContainer = document.getElementById('map');
+    if (mapContainer) {
+        observer.observe(mapContainer, { attributes: true });
+
+        if (mapContainer.offsetParent !== null) {
+            initMap();
+        }
+    }
+
+    setTimeout(() => {
+        initMap();
+        setTimeout(() => {
+            if (map) {
+                map.invalidateSize();
+            }
+        }, 100);
+    }, 100);
+
+    function setDateTimeConstraints() {
+        const now = new Date();
+        const today = now.toISOString().split('T')[0];
+        const currentTime = now.toTimeString().slice(0, 5);
+
+        const startDate = document.getElementById('start_date');
+        const startTime = document.getElementById('start_time');
+        const endDate = document.getElementById('end_date');
+        const endTime = document.getElementById('end_time');
+
+        if (startDate) {
+            startDate.min = today;
+            startDate.addEventListener('change', function() {
+                if (this.value === today && startTime) {
+                    startTime.min = currentTime;
+                } else if (startTime) {
+                    startTime.removeAttribute('min');
+                }
+
+                if (endDate) {
+                    endDate.min = this.value;
+                    if (endDate.value && endDate.value < this.value) {
+                        endDate.value = this.value;
+                    }
+                }
+            });
+        }
+
+        if (endDate) {
+            endDate.min = today;
+            endDate.addEventListener('change', function() {
+                const startDateValue = startDate ? startDate.value : today;
+
+                if (this.value === startDateValue && endTime && startTime) {
+                    const startTimeValue = startTime.value;
+                    if (startTimeValue) {
+                        endTime.min = startTimeValue;
+                    }
+                } else if (endTime) {
+                    endTime.removeAttribute('min');
+                }
+            });
+        }
+
+        if (startTime) {
+            startTime.addEventListener('change', function() {
+                const startDateValue = startDate ? startDate.value : '';
+                const endDateValue = endDate ? endDate.value : '';
+
+                if (startDateValue === today) {
+                    if (this.value < currentTime) {
+                        this.value = currentTime;
+                    }
+                }
+
+                if (endDateValue === startDateValue && endTime) {
+                    endTime.min = this.value;
+                    if (endTime.value && endTime.value <= this.value) {
+                        const [hours, minutes] = this.value.split(':');
+                        const newHour = (parseInt(hours) + 1).toString().padStart(2, '0');
+                        endTime.value = `${newHour}:${minutes}`;
+                    }
+                }
+            });
+        }
+
+        if (endTime) {
+            endTime.addEventListener('change', function() {
+                const startTimeValue = startTime ? startTime.value : '';
+                const startDateValue = startDate ? startDate.value : '';
+                const endDateValue = endDate ? endDate.value : '';
+
+                if (startDateValue === endDateValue && startTimeValue) {
+                    if (this.value <= startTimeValue) {
+                        const [hours, minutes] = startTimeValue.split(':');
+                        const newHour = (parseInt(hours) + 1).toString().padStart(2, '0');
+                        this.value = `${newHour}:${minutes}`;
+                    }
+                }
+            });
+        }
+    }
+    setDateTimeConstraints();
+
+    function showDateTimeError(message) {
+        const errorDiv = document.getElementById('date-time-error');
+        if (errorDiv) {
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            setTimeout(() => {
+                errorDiv.classList.add('hidden');
+            }, 3000);
+        }
+    }
+
+    @if(!empty($event->lat) && !empty($event->lon))
+    setTimeout(() => {
+        if (window.eventMap && window.setEventMapMarker) {
+            window.eventMap.setView([{{ $event->lat }}, {{ $event->lon }}], 15);
+            window.setEventMapMarker({{ $event->lat }}, {{ $event->lon }}, true);
+        }
+    }, 500);
+    @endif
 });
 </script>
 <script>
+function locationPicker() {
+    return {
+        isOnline: {{ (!empty($event->is_online) ? 'true' : 'false') }},
+        locationQuery: '{{ (!empty($event->location) ? $event->location : '') }}',
+        searchResults: [],
+        showDropdown: false,
+        selectedIndex: -1,
+        isSearching: false,
+        searchTimeout: null,
+        coordinates: {
+            lat: {{ (!empty($event->lat) ? $event->lat : 0) }},
+            lon: {{ (!empty($event->lon) ? $event->lon : 0) }}
+        },
+
+        searchLocations(query) {
+            this.locationQuery = query;
+            clearTimeout(this.searchTimeout);
+
+            if (query.length < 3) {
+                this.searchResults = [];
+                this.showDropdown = false;
+                return;
+            }
+
+            this.isSearching = true;
+            this.searchTimeout = setTimeout(() => {
+                this.performSearch(query);
+            }, 300);
+        },
+
+        async performSearch(query) {
+            const searchQuery = `${query}, Cyprus`;
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(searchQuery)}&format=json&limit=5&addressdetails=1&countrycodes=cy&bounded=1&viewbox=32.2566,35.7013,34.5999,34.5718`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const cyprusResults = data.filter(result => {
+                        const address = result.display_name.toLowerCase();
+                        return address.includes('cyprus') || address.includes('κύπρος') || address.includes('kibris');
+                    });
+
+                    this.searchResults = cyprusResults.map(result => ({
+                        name: this.extractLocationName(result),
+                        address: result.display_name,
+                        lat: parseFloat(result.lat),
+                        lon: parseFloat(result.lon),
+                        raw: result
+                    }));
+
+                    this.showDropdown = this.searchResults.length > 0;
+                    this.selectedIndex = -1;
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                    this.searchResults = [];
+                })
+                .finally(() => {
+                    this.isSearching = false;
+                });
+        },
+
+        extractLocationName(result) {
+            const addressParts = result.display_name.split(',');
+
+            if (result.name && result.name !== result.display_name) {
+                return result.name;
+            }
+
+            // Try to get a short, meaningful name
+            if (addressParts.length > 0) {
+                return addressParts[0].trim();
+            }
+
+            return result.display_name;
+        },
+
+        selectLocation(location, index) {
+            this.locationQuery = location.address;
+            this.coordinates.lat = location.lat;
+            this.coordinates.lon = location.lon;
+            this.showDropdown = false;
+            this.selectedIndex = -1;
+
+            if (window.eventMap) {
+                window.eventMap.setView([location.lat, location.lon], 15);
+                window.setEventMapMarker(location.lat, location.lon);
+            }
+        },
+
+        navigateResults(direction) {
+            if (this.searchResults.length === 0) return;
+
+            this.selectedIndex += direction;
+
+            if (this.selectedIndex < 0) {
+                this.selectedIndex = this.searchResults.length - 1;
+            } else if (this.selectedIndex >= this.searchResults.length) {
+                this.selectedIndex = 0;
+            }
+        },
+
+        selectResult() {
+            if (this.selectedIndex >= 0 && this.selectedIndex < this.searchResults.length) {
+                this.selectLocation(this.searchResults[this.selectedIndex], this.selectedIndex);
+            } else if (this.searchResults.length === 0 && this.locationQuery.length > 2) {
+                this.showDropdown = false;
+            }
+        }
+    }
+}
+
 function makeSecureUrl(path) {
     @if (env('APP_ENV') == 'production')
     if (path.startsWith('/')) {
@@ -271,7 +706,7 @@ function makeSecureUrl(path) {
 
 function avatarUpload() {
     return {
-        avatarUrl: '{{ (!empty($startup->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img : '/assets/images/no-image-icon.png') }}',
+        avatarUrl: '{{ (!empty($event->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/' . substr($event->img, 0, 1) . '/' . substr($event->img, 0, 2) . '/' . substr($event->img, 0, 3) . '/th_' . $event->img : '/assets/images/no-image-icon.png') }}',
         uploading: false,
         error: '',
         previewUrl: null,
@@ -293,12 +728,11 @@ function avatarUpload() {
                 return;
             }
 
-            if (file.size > 20 * 1024 * 1024) { // 20MB limit
+            if (file.size > 20 * 1024 * 1024) {
                 this.error = '{{ __('File size must be less than 20MB') }}';
                 return;
             }
 
-            // Show preview
             const reader = new FileReader();
             reader.onload = (e) => {
                 this.previewUrl = e.target.result;
@@ -311,7 +745,7 @@ function avatarUpload() {
             formData.append('avatar', file);
             formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
 
-            fetch(makeSecureUrl('/app/startups/image?startupID={{ (!empty($startup->id) ? $startup->id : 0) }}'), {
+            fetch(makeSecureUrl('/app/events/image?eventID={{ (!empty($event->id) ? $event->id : 0) }}'), {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -325,17 +759,15 @@ function avatarUpload() {
                     return response.json();
                 })
                 .then(data => {
-                    @if (!empty($startup->id))
+                    @if (!empty($event->id))
                     if (data.success) {
                         this.avatarUrl = data.avatar_url;
                         this.previewUrl = null;
 
-                        // Update all avatar instances on page
                         document.querySelectorAll('.service-avatar').forEach(img => {
                             img.src = data.avatar_url;
                         });
 
-                        // Show success message
                         this.showSuccessMessage(data.message || '{{ __('Logo updated successfully!') }}');
                     } else {
                         this.error = data.message || '{{ __('Upload failed') }}';
@@ -343,7 +775,7 @@ function avatarUpload() {
                     }
                     @else
                     if (data.success) {
-                        window.location.replace('/app/startups/edit/' + data.id);
+                        window.location.replace('/app/events/edit/' + data.id);
                     } else {
                         this.error = data.message || '{{ __('Upload failed') }}';
                         this.previewUrl = null;
@@ -365,7 +797,6 @@ function avatarUpload() {
             this.successMessage = message;
             this.showSuccess = true;
 
-            // Auto-hide after 5 seconds
             setTimeout(() => {
                 this.hideSuccess();
             }, 5000);
@@ -385,27 +816,25 @@ function categorySelector() {
         selectedCategories: [],
         categories: [
             @php
-                $cats = '';
-                // Use the properly sorted categories from the controller
-                foreach ($parentCategories as $pkey => $parent) {
-                    if (isset($categories[$pkey])) {
-                        foreach ($categories[$pkey] as $key => $category) {
-                            if (!empty($cats)) {
-                                $cats .= ',';
-                            }
-                            $ord = $rawCategories[$key]->ord ?? 0;
-                            $cats .= '{code: "' . $key . '", name: "' . addslashes($category) . '", group: "' . addslashes($parent) . '", description: "' . addslashes($categoryDescriptions[$key] ?? '') . '", ord: ' . $ord . '}';
+            $cats = '';
+            foreach ($parentCategories as $pkey => $parent) {
+                if (isset($categories[$pkey])) {
+                    foreach ($categories[$pkey] as $key => $category) {
+                        if (!empty($cats)) {
+                            $cats .= ',';
                         }
+                        $ord = $rawCategories[$key]->ord ?? 0;
+                        $cats .= '{code: "' . $key . '", name: "' . addslashes($category) . '", group: "' . addslashes($parent) . '", description: "' . addslashes($categoryDescriptions[$key] ?? '') . '", ord: ' . $ord . '}';
                     }
                 }
+            }
             @endphp
-                {!! $cats !!}
+            {!! $cats !!}
         ],
 
         get filteredCategories() {
             let categories = this.categories;
 
-            // Apply search filter if search term exists
             if (this.search) {
                 const searchTerm = this.search.toLowerCase();
                 categories = categories.filter(category =>
@@ -416,7 +845,6 @@ function categorySelector() {
                 );
             }
 
-            // Group categories by parent
             const grouped = categories.reduce((acc, category) => {
                 if (!acc[category.group]) {
                     acc[category.group] = [];
@@ -425,26 +853,20 @@ function categorySelector() {
                 return acc;
             }, {});
 
-            // Sort groups - categories are already sorted by ord in PHP, so maintain that order
             const sortedGroups = Object.keys(grouped).sort((a, b) => {
-                // Get the ord value of the first category in each group to determine group ordering
                 const aOrd = grouped[a][0]?.ord || 0;
                 const bOrd = grouped[b][0]?.ord || 0;
 
-                // If ord values are different, sort by ord (0 before 1)
                 if (aOrd !== bOrd) {
                     return aOrd - bOrd;
                 }
 
-                // If same ord, sort alphabetically
                 return a.localeCompare(b);
             });
 
-            // Return grouped and sorted categories
             return sortedGroups.map(groupName => ({
                 groupName,
                 categories: grouped[groupName].sort((a, b) => {
-                    // Sort by ord first (0 before 1), then alphabetically
                     if (a.ord !== b.ord) {
                         return a.ord - b.ord;
                     }
@@ -477,7 +899,6 @@ function categorySelector() {
         },
 
         selectAll() {
-            // Select first 5 categories from the properly sorted list (ord=0 categories first)
             const regularCategories = this.categories.filter(cat => cat.ord === 0).slice(0, 5);
             this.selectedCategories = regularCategories.map(cat => cat.code);
         },
@@ -501,8 +922,7 @@ function categorySelector() {
         },
 
         init() {
-            // Initialize with existing categories if editing
-            this.selectedCategories = [{!! (!empty($startup->categories) ? str_replace(array(']', '['), '"', str_replace('][', '","', $startup->categories)) : '') !!}];
+            this.selectedCategories = [{!! (!empty($event->categories) ? str_replace(array(']', '['), '"', str_replace('][', '","', $event->categories)) : '') !!}];
         }
     }
 }

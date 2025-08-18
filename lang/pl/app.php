@@ -34,4 +34,13 @@ return [
     'service_tip_3' => '&bull; Nieaktywne usługi są ukryte, ale mogą być w każdej chwili reaktywowane',
     'service_tip_4' => '&bull; Użyj tego, aby tymczasowo wstrzymać swoją listę usług bez jej usuwania',
     'service_active' => 'Gdy zaznaczone, ta usługa będzie widoczna publicznie. Odznacz, aby tymczasowo wyłączyć usługę.',
+    'event_create_noto' => 'Dodaj swoje wydarzenie do Społeczności Założycieli Startupów i połącz się z przedsiębiorcami o podobnych zainteresowaniach. Podziel się swoją podróżą, szukaj porad i współpracuj nad innowacyjnymi projektami. Szczegóły dotyczące Twojego wydarzenia będą widoczne dla wszystkich członków, co sprzyja wspierającemu środowisku wzrostu i nawiązywania kontaktów.',
+    'event_edit_noto' => 'Edytuj szczegóły swojego wydarzenia, aby utrzymać swój profil aktualny i angażujący. Zaktualizuj swoją misję, wizję i wszelkie inne istotne informacje, aby odzwierciedlić najnowsze wydarzenia w Twojej podróży przedsiębiorczej. To pomaga utrzymać aktywną i dynamiczną społeczność założycieli startupów.',
+    'event_max_categories_message' => 'Możesz wybrać maksymalnie 5 kategorii dla swojego wydarzenia. Proszę wybierz te najbardziej odpowiednie, aby skutecznie reprezentować swój biznes.',
+    'event_listing' => 'Skonfiguruj swoją listę wydarzeń, aby skutecznie zaprezentować swój biznes. Dodaj istotne szczegóły, takie jak nazwa, opis i kategorie Twojego wydarzenia. Pomoże to innym członkom zrozumieć Twoją ofertę i ułatwi nawiązywanie znaczących połączeń.',
+    'event_tip_1' => '&bull; Aktywne wydarzenia pojawiają się w Twoim publicznym profilu',
+    'event_tip_2' => '&bull; Inni członkowie mogą przeglądać aktywne wydarzenia',
+    'event_tip_3' => '&bull; Nieaktywne wydarzenia są ukryte, ale mogą być w każdej chwili reaktywowane',
+    'event_tip_4' => '&bull; Użyj tego, aby tymczasowo wstrzymać swoją listę wydarzeń bez jej usuwania',
+    'event_active' => 'Gdy zaznaczone, to wydarzenie będzie widoczne publicznie. Odznacz, aby tymczasowo wyłączyć wydarzenie.',
 ];

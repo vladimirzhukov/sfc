@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,8 @@ use App\Models\StartupCategory;
 use App\Models\City;
 use App\Models\ServiceCategory;
 use App\Models\Service;
+use App\Models\Event;
+use App\Models\EventCategory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -105,6 +108,25 @@ class AppController extends Controller
         return $slug;
     }
 
+    private function generateUniqueEventSlug($name, $userId, $excludeId = null)
+    {
+        $baseSlug = Str::slug($name);
+        $slug = $baseSlug;
+        $counter = 1;
+        while (true) {
+            $query = Event::where('slug', $slug);
+            if ($excludeId) {
+                $query->where('id', '!=', $excludeId);
+            }
+            if (!$query->exists()) {
+                break;
+            }
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+        return $slug;
+    }
+
     private function sanitizeHtml($html)
     {
         $html = preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/mi', '', $html);
@@ -132,6 +154,8 @@ class AppController extends Controller
         $categoryDescriptions = array();
         if ($type == 'service') {
             $rawCategories = ServiceCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
+        } elseif ($type == 'event') {
+            $rawCategories = EventCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
         } else {
             $rawCategories = StartupCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
         }
@@ -494,7 +518,7 @@ class AppController extends Controller
             $service->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
             $service->active = $request->boolean('active');
             if (!$service->slug || $service->isDirty('name')) {
-                $service->slug = $this->generateUniqueServiceSlug($request->input('name'), Auth::user()->id, $startup->id ?? null);
+                $service->slug = $this->generateUniqueServiceSlug($request->input('name'), Auth::user()->id, $service->id ?? null);
             }
             $service->save();
             return redirect()->route('app::services::edit', ['id' => $service->id])->with(['success' => __('Service saved')]);
@@ -546,6 +570,185 @@ class AppController extends Controller
                 'thumbnail_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/services/' . substr($service->img, 0, 1) . '/' . substr($service->img, 0, 2) . '/' . substr($service->img, 0, 3) . '/th_' . $service->img,
                 'message' => __('Image updated successfully!'),
                 'id' => $service->id
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Failed to process image') . ': ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function events()
+    {
+        $meta = $this->getMeta();
+        $events = Event::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()->keyBy('id');
+        $eventCategories = ServiceCategory::orderBy('ord', 'asc')->get()->keyBy('id');
+        foreach ($events as $key => $event) {
+            if (!empty($event->description)) {
+                $events[$key]->description_html = $this->markdownConverter->convert($event->description)->getContent();
+            }
+        }
+        return view('app.events', [
+            'meta' => $meta,
+            'events' => $events,
+            'eventCategories' => $eventCategories
+        ]);
+    }
+
+    public function eventsCreate()
+    {
+        $meta = $this->getMeta();
+        $categoryData = $this->processCategoriesForView('event');
+
+        return view('app.event', array_merge([
+            'meta' => $meta
+        ], $categoryData));
+    }
+
+    public function eventsEdit($id)
+    {
+        $event = Event::findOrFail($id);
+        if (empty($event->id) || $event->user_id != Auth::user()->id) {
+            return redirect()->route('app::index')->with('error', __('Event not found or access denied'));
+        }
+
+        if (!empty($event->description)) {
+            $event->description_html = $this->markdownConverter->convert($event->description)->getContent();
+        }
+
+        $meta = $this->getMeta();
+        $categoryData = $this->processCategoriesForView('event');
+
+        return view('app.event', array_merge([
+            'meta' => $meta,
+            'event' => $event
+        ], $categoryData));
+    }
+
+    public function eventsDelete($id)
+    {
+        $meta = $this->getMeta();
+        return view('app.events', [
+            'meta' => $meta
+        ]);
+    }
+
+    public function eventsSave(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:191',
+                'categories' => 'array|max:5',
+                'categories.*' => 'string',
+                'description' => 'nullable|string|max:4000',
+                'img' => 'nullable|string|max:191',
+                'start_date' => 'required|date',
+                'start_time' => 'required|date_format:H:i',
+                'end_date' => 'required|date|after_or_equal:start_date',
+                'end_time' => 'required|date_format:H:i',
+                'timezone' => 'required|string|max:50',
+                'is_online' => 'required|boolean',
+                'location' => 'nullable|required_if:is_online,0|string|max:191',
+                'link' => 'nullable|required_if:is_online,1|url|max:191',
+                'lat' => 'nullable|required_if:is_online,0|numeric|between:-90,90',
+                'lon' => 'nullable|required_if:is_online,0|numeric|between:-180,180',
+                'active' => 'boolean'
+            ]);
+            if (empty($request->id)) {
+                $event = new Event();
+                $event->user_id = Auth::user()->id;
+            } else {
+                $event = Event::findOrFail($request->id);
+                if ($event->user_id != Auth::user()->id) {
+                    return redirect()->route('app::events')->withErrors(__('Event not found or access denied'));
+                }
+            }
+
+            $userTimezone = $validated['timezone'];
+            $startDateTime = Carbon::createFromFormat(
+                'Y-m-d H:i',
+                $validated['start_date'] . ' ' . $validated['start_time'],
+                $userTimezone
+            )->utc();
+            $endDateTime = Carbon::createFromFormat(
+                'Y-m-d H:i',
+                $validated['end_date'] . ' ' . $validated['end_time'],
+                $userTimezone
+            )->utc();
+            if ($endDateTime->lte($startDateTime)) {
+                return back()->withErrors(['end_time' => __('End time must be after start time.')]);
+            }
+            $event->start_date = $startDateTime;
+            $event->end_date = $endDateTime;
+            $event->timezone = $userTimezone;
+            $event->name = $request->name ?? null;
+            if (!empty($request->description)) {
+                $cleanHtml = $this->sanitizeHtml($request->description);
+                $event->description = $this->htmlConverter->convert($cleanHtml);
+            } else {
+                $event->description = null;
+            }
+            $event->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
+            $event->lat = $validated['is_online'] ? 0 : ($validated['lat'] ?? 0);
+            $event->lon = $validated['is_online'] ? 0 : ($validated['lon'] ?? 0);
+            $event->is_online = $validated['is_online'] ? 1 : 0;
+            $event->location = $validated['is_online'] ? null : $validated['location'];
+            $event->link = $validated['is_online'] ? $validated['link'] : null;
+            $event->active = $request->boolean('active');
+            if (!$event->slug || $event->isDirty('name')) {
+                $event->slug = $this->generateUniqueEventSlug($request->input('name'), Auth::user()->id, $event->id ?? null);
+            }
+            $event->save();
+            return redirect()->route('app::events::edit', ['id' => $event->id])->with(['success' => __('Event saved')]);
+        } catch (\Exception $e) {
+            return redirect()->route('app::events::edit', ['id' => $event->id ?? null])->with(['error' => __('Failed to save event') . ': ' . $e->getMessage()]);
+        }
+    }
+
+    public function eventsImage(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:20480'
+        ]);
+
+        if (empty($request->eventID)) {
+            $event = new Event();
+            $event->user_id = Auth::user()->id;
+            $event->save();
+        } else {
+            $event = Event::find($request->eventID);
+            if (empty($event->id) || $event->user_id != Auth::user()->id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('Service not found or access denied')
+                ], 404);
+            }
+        }
+
+        try {
+            if ($event->img) {
+                Storage::disk('do')->delete([
+                    'sfccy/events/' . substr($event->img, 0, 1) . '/' . substr($event->img, 0, 2) . '/' . substr($event->img, 0, 3) . '/' . $event->img,
+                    'sfccy/events/' . substr($event->img, 0, 1) . '/' . substr($event->img, 0, 2) . '/' . substr($event->img, 0, 3) . '/th_' . $event->img
+                ]);
+                $event->img = null;
+            }
+            $file = $request->file('avatar');
+            $name = Str::random(16) . '.webp';
+            $manager = new ImageManager(new Driver());
+            $mainImage = $manager->read($file)->cover(300, 300)->toWebp(85);
+            $thumbnail = $manager->read($file)->cover(100, 100)->toWebp(80);
+            Storage::disk('do')->put('sfccy/events/' . substr($name, 0, 1) . '/' . substr($name, 0, 2) . '/' . substr($name, 0, 3) . '/' . $name, $mainImage, 'public');
+            Storage::disk('do')->put('sfccy/events/' . substr($name, 0, 1) . '/' . substr($name, 0, 2) . '/' . substr($name, 0, 3) . '/th_' . $name, $thumbnail, 'public');
+            $event->img = $name;
+            $event->save();
+            return response()->json([
+                'success' => true,
+                'avatar_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/' . substr($event->img, 0, 1) . '/' . substr($event->img, 0, 2) . '/' . substr($event->img, 0, 3) . '/' . $event->img,
+                'thumbnail_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/' . substr($event->img, 0, 1) . '/' . substr($event->img, 0, 2) . '/' . substr($event->img, 0, 3) . '/th_' . $event->img,
+                'message' => __('Image updated successfully!'),
+                'id' => $event->id
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

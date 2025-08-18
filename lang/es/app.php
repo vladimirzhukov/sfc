@@ -34,4 +34,13 @@ return [
     'service_tip_3' => '&bull; Los servicios inactivos están ocultos, pero pueden reactivarse en cualquier momento',
     'service_tip_4' => '&bull; Usa esto para pausar temporalmente tu lista de servicios sin eliminarla',
     'service_active' => 'Cuando esté marcado, este servicio será visible públicamente. Desmarca para desactivar temporalmente el servicio.',
+    'event_create_noto' => 'Añade tu evento a la Comunidad de Fundadores de Startups y conéctate con emprendedores afines. Comparte tu viaje, busca consejos y colabora en proyectos innovadores. Los detalles sobre tu evento serán visibles para todos los miembros, fomentando un entorno de apoyo para el crecimiento y la creación de redes.',
+    'event_edit_noto' => 'Edita los detalles de tu evento para mantener tu perfil actualizado y atractivo. Actualiza tu misión, visión y cualquier otra información relevante para reflejar los últimos desarrollos en tu viaje emprendedor. Esto ayuda a mantener una comunidad activa y vibrante de fundadores de startups.',
+    'event_max_categories_message' => 'Puedes seleccionar un máximo de 5 categorías para tu evento. Por favor, elige las más relevantes para representar tu negocio de manera efectiva.',
+    'event_listing' => 'Configura tu lista de eventos para mostrar tu negocio de manera efectiva. Incluye detalles esenciales como el nombre, la descripción y las categorías de tu evento. Esto ayudará a otros miembros a entender tu oferta y facilitará conexiones significativas.',
+    'event_tip_1' => '&bull; Los eventos activos aparecen en tu perfil público',
+    'event_tip_2' => '&bull; Otros miembros pueden ver eventos activos',
+    'event_tip_3' => '&bull; Los eventos inactivos están ocultos, pero pueden reactivarse en cualquier momento',
+    'event_tip_4' => '&bull; Usa esto para pausar temporalmente tu lista de eventos sin eliminarla',
+    'event_active' => 'Cuando esté marcado, este evento será visible públicamente. Desmarca para desactivar temporalmente el evento.',
 ];
