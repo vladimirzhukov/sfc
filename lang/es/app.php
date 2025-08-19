@@ -56,4 +56,5 @@ return [
     'index_business' => 'Comparte y gestiona información sobre tus actividades comerciales y empresas con la Comunidad de Fundadores de Startups en Chipre.',
     'index_services' => 'Comparte y gestiona información sobre tus servicios personales, habilidades y experiencia con la Comunidad de Fundadores de Startups en Chipre.',
     'index_events' => 'Comparte y gestiona información sobre tus eventos, encuentros e iniciativas con la Comunidad de Fundadores de Startups en Chipre.',
+    'community_members' => 'Conoce a nuestros miembros de la comunidad que están contribuyendo activamente al ecosistema de startups en Chipre.',
 ];

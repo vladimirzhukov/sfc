@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -295,9 +296,11 @@ class AppController extends Controller
     {
         $meta = $this->getMeta();
         $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $members = UserProfile::orderBy('created_at', 'desc')->limit(10)->get()->keyBy('user_id');
         return view('app.index', [
             'meta' => $meta,
-            'cities' => $cities
+            'cities' => $cities,
+            'members' => $members
         ]);
     }
 
@@ -305,6 +308,7 @@ class AppController extends Controller
     {
         $meta = $this->getMeta();
         $countries = Country::where('active', 1)->orderBy('name', 'asc')->get();
+        $about_html = null;
         if (!empty(Auth::user()->profile->about)) {
             $about_html = $this->markdownConverter->convert(Auth::user()->profile->about)->getContent();
         }
@@ -312,6 +316,16 @@ class AppController extends Controller
             'meta' => $meta,
             'about_html' => $about_html,
             'countries' => $countries
+        ]);
+    }
+
+    public function community()
+    {
+        $meta = $this->getMeta();
+        $members = UserProfile::orderBy('created_at', 'desc')->paginate(20);
+        return view('app.community', [
+            'meta' => $meta,
+            'members' => $members
         ]);
     }
 

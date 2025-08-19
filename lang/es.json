@@ -240,5 +240,12 @@
     "Business saved": "Empresa guardada",
     "Failed to save business": "Error al guardar la empresa",
     "Business title": "Título de la Empresa",
-    "Event title": "Título del Evento"
+    "Event title": "Título del Evento",
+    "Community": "Comunidad",
+    "Community Members": "Miembros de la Comunidad",
+    "All community members": "Todos los miembros de la comunidad",
+    "Online": "En línea",
+    "Never": "Nunca",
+    "Last seen": "Última vez visto",
+    "Reset Password": "Restablecer Contraseña"
 }

@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
             \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class
         ]);
+        $middleware->alias([
+            'last.seen' => \App\Http\Middleware\UpdateLastSeen::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

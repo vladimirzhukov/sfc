@@ -56,4 +56,5 @@ return [
     'index_business' => 'Podziel się i zarządzaj informacjami o swoich działalnościach biznesowych i firmach ze Społecznością Założycieli Startupów na Cyprze.',
     'index_services' => 'Podziel się i zarządzaj informacjami o swoich osobistych usługach, umiejętnościach i doświadczeniu ze Społecznością Założycieli Startupów na Cyprze.',
     'index_events' => 'Podziel się i zarządzaj informacjami o swoich wydarzeniach, spotkaniach i inicjatywach ze Społecznością Założycieli Startupów na Cyprze.',
+    'community_members' => 'Poznaj naszych członków społeczności, którzy aktywnie przyczyniają się do ekosystemu startupów na Cyprze.',
 ];

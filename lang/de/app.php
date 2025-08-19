@@ -56,4 +56,5 @@ return [
     'index_business' => 'Teilen und verwalten Sie Informationen über Ihre Geschäftstätigkeiten und Unternehmen mit der Startup Founders Community in Zypern.',
     'index_services' => 'Teilen und verwalten Sie Informationen über Ihre persönlichen Dienstleistungen, Fähigkeiten und Fachkenntnisse mit der Startup Founders Community in Zypern.',
     'index_events' => 'Teilen und verwalten Sie Informationen über Ihre Veranstaltungen, Treffen und Initiativen mit der Startup Founders Community in Zypern.',
+    'community_members' => 'Lerne unsere Community-Mitglieder kennen, die aktiv zum Startup-Ökosystem in Zypern beitragen.',
 ];

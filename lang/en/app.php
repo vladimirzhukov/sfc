@@ -56,4 +56,5 @@ return [
     'index_business' => 'Share and manage information about your business activities and companies with the Startup Founders Community in Cyprus.',
     'index_services' => 'Share and manage information about your personal services, skills, and expertise with the Startup Founders Community in Cyprus.',
     'index_events' => 'Share and manage information about your events, meetups, and initiatives with the Startup Founders Community in Cyprus.',
+    'community_members' => 'Meet our community members who are actively contributing to the startup ecosystem in Cyprus.',
 ];
