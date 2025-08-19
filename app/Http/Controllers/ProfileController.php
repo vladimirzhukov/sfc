@@ -80,6 +80,28 @@ class ProfileController extends Controller
         return $html;
     }
 
+    private function isMarkdown($content)
+    {
+        $markdownPatterns = [
+            '/^#{1,6}\s/m',             // Headers (with multiline modifier)
+            '/\*\*.*?\*\*/',            // Bold
+            '/\*[^*]+\*/',              // Italic (improved pattern)
+            '/```/',                    // Code blocks
+            '/^\s*[\*\-\+]\s/m',        // Unordered lists (with multiline modifier)
+            '/^\s*\d+\.\s/m',           // Ordered lists (with multiline modifier)
+            '/\[.*?\]\(.*?\)/',         // Links
+            '/!\[.*?\]\(.*?\)/',        // Images
+            '/^>\s/m',                  // Blockquotes (with multiline modifier)
+        ];
+        $markdownCount = 0;
+        foreach ($markdownPatterns as $pattern) {
+            if (preg_match($pattern, $content)) {
+                $markdownCount++;
+            }
+        }
+        return $markdownCount >= 2;
+    }
+
     public function saveProfile(Request $request)
     {
         $user = Auth::user();
@@ -177,8 +199,12 @@ class ProfileController extends Controller
                 'wb' => $validated['wb'] ?? null
             ];
             if (!empty($validated['about'])) {
-                $cleanHtml = $this->sanitizeHtml($validated['about']);
-                $profileData['about'] = $this->htmlConverter->convert($cleanHtml);
+                if ($this->isMarkdown($request->description)) {
+                    $profileData['about'] = $validated['about'];
+                } else {
+                    $cleanHtml = $this->sanitizeHtml($validated['about']);
+                    $profileData['about'] = $this->htmlConverter->convert($cleanHtml);
+                }
             } else {
                 $profileData['about'] = null;
             }

@@ -52,4 +52,8 @@ return [
     'business_tip_3' => '&bull; Inaktive Unternehmen sind verborgen, können aber jederzeit reaktiviert werden',
     'business_tip_4' => '&bull; Verwenden Sie dies, um Ihre Unternehmensliste vorübergehend zu pausieren, ohne sie zu löschen',
     'business_active' => 'Wenn aktiviert, wird dieses Unternehmen öffentlich sichtbar sein. Deaktivieren Sie es, um das Unternehmen vorübergehend zu deaktivieren.',
+    'index_startups' => 'Teilen und verwalten Sie Informationen über Ihre Startups und Unternehmungen mit der Startup Founders Community in Zypern.',
+    'index_business' => 'Teilen und verwalten Sie Informationen über Ihre Geschäftstätigkeiten und Unternehmen mit der Startup Founders Community in Zypern.',
+    'index_services' => 'Teilen und verwalten Sie Informationen über Ihre persönlichen Dienstleistungen, Fähigkeiten und Fachkenntnisse mit der Startup Founders Community in Zypern.',
+    'index_events' => 'Teilen und verwalten Sie Informationen über Ihre Veranstaltungen, Treffen und Initiativen mit der Startup Founders Community in Zypern.',
 ];

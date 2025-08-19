@@ -72,6 +72,28 @@ class AppController extends Controller
         return $meta;
     }
 
+    private function isMarkdown($content)
+    {
+        $markdownPatterns = [
+            '/^#{1,6}\s/m',             // Headers (with multiline modifier)
+            '/\*\*.*?\*\*/',            // Bold
+            '/\*[^*]+\*/',              // Italic (improved pattern)
+            '/```/',                    // Code blocks
+            '/^\s*[\*\-\+]\s/m',        // Unordered lists (with multiline modifier)
+            '/^\s*\d+\.\s/m',           // Ordered lists (with multiline modifier)
+            '/\[.*?\]\(.*?\)/',         // Links
+            '/!\[.*?\]\(.*?\)/',        // Images
+            '/^>\s/m',                  // Blockquotes (with multiline modifier)
+        ];
+        $markdownCount = 0;
+        foreach ($markdownPatterns as $pattern) {
+            if (preg_match($pattern, $content)) {
+                $markdownCount++;
+            }
+        }
+        return $markdownCount >= 2;
+    }
+
     private function generateUniqueStartupSlug($name, $userId, $excludeId = null)
     {
         $baseSlug = Str::slug($name);
@@ -369,8 +391,12 @@ class AppController extends Controller
             }
             $startup->name = $request->name ?? null;
             if (!empty($request->description)) {
-                $cleanHtml = $this->sanitizeHtml($request->description);
-                $startup->description = $this->htmlConverter->convert($cleanHtml);
+                if ($this->isMarkdown($request->description)) {
+                    $startup->description = $request->description;
+                } else {
+                    $cleanHtml = $this->sanitizeHtml($request->description);
+                    $startup->description = $this->htmlConverter->convert($cleanHtml);
+                }
             } else {
                 $startup->description = null;
             }
@@ -514,8 +540,12 @@ class AppController extends Controller
             }
             $service->name = $request->name ?? null;
             if (!empty($request->description)) {
-                $cleanHtml = $this->sanitizeHtml($request->description);
-                $service->description = $this->htmlConverter->convert($cleanHtml);
+                if ($this->isMarkdown($request->description)) {
+                    $service->description = $request->description;
+                } else {
+                    $cleanHtml = $this->sanitizeHtml($request->description);
+                    $service->description = $this->htmlConverter->convert($cleanHtml);
+                }
             } else {
                 $service->description = null;
             }
@@ -688,8 +718,12 @@ class AppController extends Controller
             $event->timezone = $userTimezone;
             $event->name = $request->name ?? null;
             if (!empty($request->description)) {
-                $cleanHtml = $this->sanitizeHtml($request->description);
-                $event->description = $this->htmlConverter->convert($cleanHtml);
+                if ($this->isMarkdown($request->description)) {
+                    $event->description = $request->description;
+                } else {
+                    $cleanHtml = $this->sanitizeHtml($request->description);
+                    $event->description = $this->htmlConverter->convert($cleanHtml);
+                }
             } else {
                 $event->description = null;
             }
@@ -844,8 +878,12 @@ class AppController extends Controller
             }
             $business->name = $request->name ?? null;
             if (!empty($request->description)) {
-                $cleanHtml = $this->sanitizeHtml($request->description);
-                $business->description = $this->htmlConverter->convert($cleanHtml);
+                if ($this->isMarkdown($request->description)) {
+                    $business->description = $request->description;
+                } else {
+                    $cleanHtml = $this->sanitizeHtml($request->description);
+                    $business->description = $this->htmlConverter->convert($cleanHtml);
+                }
             } else {
                 $business->description = null;
             }

@@ -52,4 +52,8 @@ return [
     'business_tip_3' => '&bull; Nieaktywne biznesy są ukryte, ale mogą być w każdej chwili reaktywowane',
     'business_tip_4' => '&bull; Użyj tego, aby tymczasowo wstrzymać swoją listę biznesów bez jej usuwania',
     'business_active' => 'Gdy zaznaczone, ten biznes będzie widoczny publicznie. Odznacz, aby tymczasowo wyłączyć biznes.',
+    'index_startups' => 'Podziel się i zarządzaj informacjami o swoich startupach i przedsięwzięciach ze Społecznością Założycieli Startupów na Cyprze.',
+    'index_business' => 'Podziel się i zarządzaj informacjami o swoich działalnościach biznesowych i firmach ze Społecznością Założycieli Startupów na Cyprze.',
+    'index_services' => 'Podziel się i zarządzaj informacjami o swoich osobistych usługach, umiejętnościach i doświadczeniu ze Społecznością Założycieli Startupów na Cyprze.',
+    'index_events' => 'Podziel się i zarządzaj informacjami o swoich wydarzeniach, spotkaniach i inicjatywach ze Społecznością Założycieli Startupów na Cyprze.',
 ];

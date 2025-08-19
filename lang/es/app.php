@@ -52,4 +52,8 @@ return [
     'business_tip_3' => '&bull; Los negocios inactivos están ocultos, pero pueden reactivarse en cualquier momento',
     'business_tip_4' => '&bull; Usa esto para pausar temporalmente tu lista de negocios sin eliminarla',
     'business_active' => 'Cuando esté marcado, este negocio será visible públicamente. Desmarca para desactivar temporalmente el negocio.',
+    'index_startups' => 'Comparte y gestiona información sobre tus startups y emprendimientos con la Comunidad de Fundadores de Startups en Chipre.',
+    'index_business' => 'Comparte y gestiona información sobre tus actividades comerciales y empresas con la Comunidad de Fundadores de Startups en Chipre.',
+    'index_services' => 'Comparte y gestiona información sobre tus servicios personales, habilidades y experiencia con la Comunidad de Fundadores de Startups en Chipre.',
+    'index_events' => 'Comparte y gestiona información sobre tus eventos, encuentros e iniciativas con la Comunidad de Fundadores de Startups en Chipre.',
 ];

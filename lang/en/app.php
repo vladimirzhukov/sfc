@@ -52,4 +52,8 @@ return [
     'business_tip_3' => '&bull; Inactive businesses are hidden but can be reactivated anytime',
     'business_tip_4' => '&bull; Use this to temporarily pause your business listing without deleting it',
     'business_active' => 'When checked, this business will be visible in public. Uncheck to temporarily disable the business.',
+    'index_startups' => 'Share and manage information about your startups and ventures with the Startup Founders Community in Cyprus.',
+    'index_business' => 'Share and manage information about your business activities and companies with the Startup Founders Community in Cyprus.',
+    'index_services' => 'Share and manage information about your personal services, skills, and expertise with the Startup Founders Community in Cyprus.',
+    'index_events' => 'Share and manage information about your events, meetups, and initiatives with the Startup Founders Community in Cyprus.',
 ];
