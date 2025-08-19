@@ -98,7 +98,7 @@
                     </div>
                     <div class="mt-2 flex items-center gap-x-3">
                         <div class="relative">
-                            <img x-show="previewUrl || avatarUrl" :src="previewUrl || avatarUrl" class="size-12 rounded-full object-cover ring-2 ring-gray-200 service-avatar" alt="Startup Image">
+                            <img x-show="previewUrl || avatarUrl" :src="previewUrl || avatarUrl" class="size-12 rounded-full object-cover ring-2 ring-gray-200 service-avatar" alt="Service Image">
                             <svg x-show="!previewUrl && !avatarUrl" class="size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" /></svg>
                             <div x-show="uploading" class="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center"><svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></div>
                         </div>
@@ -323,7 +323,7 @@ function avatarUpload() {
                     return response.json();
                 })
                 .then(data => {
-                    @if (!empty($startup->id))
+                    @if (!empty($service->id))
                     if (data.success) {
                         this.avatarUrl = data.avatar_url;
                         this.previewUrl = null;

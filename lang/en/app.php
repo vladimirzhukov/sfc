@@ -43,4 +43,13 @@ return [
     'event_tip_3' => '&bull; Inactive events are hidden but can be reactivated anytime',
     'event_tip_4' => '&bull; Use this to temporarily pause your event listing without deleting it',
     'event_active' => 'When checked, this event will be visible in public. Uncheck to temporarily disable the event.',
+    'business_create_noto' => 'Add your business to the Startup Founders Community and connect with like-minded entrepreneurs. Share your journey, seek advice, and collaborate on innovative projects. Details about your business will be visible to all members, fostering a supportive environment for growth and networking.',
+    'business_edit_noto' => 'Edit your business details to keep your profile current and engaging. Update your mission, vision, and any other relevant information to reflect the latest developments in your entrepreneurial journey. This helps maintain an active and vibrant community of startup founders.',
+    'business_max_categories_message' => 'You can select a maximum of 5 categories for your business. Please choose the most relevant ones to represent your business effectively.',
+    'business_listing' => 'Configure your business listing to showcase your business effectively. Include essential details such as your business\'s name, description, and categories. This will help other members understand your venture and facilitate meaningful connections.',
+    'business_tip_1' => '&bull; Active businesses appear in your public profile',
+    'business_tip_2' => '&bull; Other members can view active businesses',
+    'business_tip_3' => '&bull; Inactive businesses are hidden but can be reactivated anytime',
+    'business_tip_4' => '&bull; Use this to temporarily pause your business listing without deleting it',
+    'business_active' => 'When checked, this business will be visible in public. Uncheck to temporarily disable the business.',
 ];

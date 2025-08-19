@@ -43,4 +43,13 @@ return [
     'event_tip_3' => '&bull; Los eventos inactivos están ocultos, pero pueden reactivarse en cualquier momento',
     'event_tip_4' => '&bull; Usa esto para pausar temporalmente tu lista de eventos sin eliminarla',
     'event_active' => 'Cuando esté marcado, este evento será visible públicamente. Desmarca para desactivar temporalmente el evento.',
+    'business_create_noto' => 'Añade tu negocio a la Comunidad de Fundadores de Startups y conéctate con emprendedores afines. Comparte tu viaje, busca consejos y colabora en proyectos innovadores. Los detalles sobre tu negocio serán visibles para todos los miembros, fomentando un entorno de apoyo para el crecimiento y la creación de redes.',
+    'business_edit_noto' => 'Edita los detalles de tu negocio para mantener tu perfil actualizado y atractivo. Actualiza tu misión, visión y cualquier otra información relevante para reflejar los últimos desarrollos en tu viaje emprendedor. Esto ayuda a mantener una comunidad activa y vibrante de fundadores de startups.',
+    'business_max_categories_message' => 'Puedes seleccionar un máximo de 5 categorías para tu negocio. Por favor, elige las más relevantes para representar tu negocio de manera efectiva.',
+    'business_listing' => 'Configura tu lista de negocios para mostrar tu negocio de manera efectiva. Incluye detalles esenciales como el nombre, la descripción y las categorías de tu negocio. Esto ayudará a otros miembros a entender tu empresa y facilitará conexiones significativas.',
+    'business_tip_1' => '&bull; Los negocios activos aparecen en tu perfil público',
+    'business_tip_2' => '&bull; Otros miembros pueden ver negocios activos',
+    'business_tip_3' => '&bull; Los negocios inactivos están ocultos, pero pueden reactivarse en cualquier momento',
+    'business_tip_4' => '&bull; Usa esto para pausar temporalmente tu lista de negocios sin eliminarla',
+    'business_active' => 'Cuando esté marcado, este negocio será visible públicamente. Desmarca para desactivar temporalmente el negocio.',
 ];

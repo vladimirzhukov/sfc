@@ -43,4 +43,13 @@ return [
     'event_tip_3' => '&bull; Inaktive Events sind verborgen, können aber jederzeit reaktiviert werden',
     'event_tip_4' => '&bull; Verwenden Sie dies, um Ihre Event-Liste vorübergehend zu pausieren, ohne sie zu löschen',
     'event_active' => 'Wenn aktiviert, wird dieses Event öffentlich sichtbar sein. Deaktivieren Sie es, um das Event vorübergehend zu deaktivieren.',
+    'business_create_noto' => 'Fügen Sie Ihr Unternehmen der Startup Founders Community hinzu und vernetzen Sie sich mit gleichgesinnten Unternehmern. Teilen Sie Ihre Reise, suchen Sie Rat und arbeiten Sie an innovativen Projekten zusammen. Details zu Ihrem Unternehmen werden für alle Mitglieder sichtbar sein und fördern ein unterstützendes Umfeld für Wachstum und Networking.',
+    'business_edit_noto' => 'Bearbeiten Sie die Details Ihres Unternehmens, um Ihr Profil aktuell und ansprechend zu halten. Aktualisieren Sie Ihre Mission, Vision und alle anderen relevanten Informationen, um die neuesten Entwicklungen in Ihrer unternehmerischen Reise widerzuspiegeln. Dies hilft, eine aktive und lebendige Gemeinschaft von Startup-Gründern aufrechtzuerhalten.',
+    'business_max_categories_message' => 'Sie können maximal 5 Kategorien für Ihr Unternehmen auswählen. Bitte wählen Sie die relevantesten aus, um Ihr Geschäft effektiv darzustellen.',
+    'business_listing' => 'Konfigurieren Sie Ihre Unternehmensliste, um Ihr Geschäft effektiv zu präsentieren. Fügen Sie wesentliche Details wie den Namen, die Beschreibung und die Kategorien Ihres Unternehmens hinzu. Dies hilft anderen Mitgliedern, Ihr Unternehmen zu verstehen und sinnvolle Verbindungen herzustellen.',
+    'business_tip_1' => '&bull; Aktive Unternehmen erscheinen in deinem öffentlichen Profil',
+    'business_tip_2' => '&bull; Andere Mitglieder können aktive Unternehmen ansehen',
+    'business_tip_3' => '&bull; Inaktive Unternehmen sind verborgen, können aber jederzeit reaktiviert werden',
+    'business_tip_4' => '&bull; Verwenden Sie dies, um Ihre Unternehmensliste vorübergehend zu pausieren, ohne sie zu löschen',
+    'business_active' => 'Wenn aktiviert, wird dieses Unternehmen öffentlich sichtbar sein. Deaktivieren Sie es, um das Unternehmen vorübergehend zu deaktivieren.',
 ];

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,8 +15,11 @@ use App\Models\ServiceCategory;
 use App\Models\Service;
 use App\Models\Event;
 use App\Models\EventCategory;
+use App\Models\Business;
+use App\Models\BusinessCategory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 use League\HTMLToMarkdown\HtmlConverter;
@@ -156,6 +158,8 @@ class AppController extends Controller
             $rawCategories = ServiceCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
         } elseif ($type == 'event') {
             $rawCategories = EventCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
+        } elseif ($type == 'business') {
+            $rawCategories = BusinessCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
         } else {
             $rawCategories = StartupCategory::orderBy('ord', 'asc')->orderBy('name', 'asc')->get()->keyBy('id');
         }
@@ -721,7 +725,7 @@ class AppController extends Controller
             if (empty($event->id) || $event->user_id != Auth::user()->id) {
                 return response()->json([
                     'success' => false,
-                    'message' => __('Service not found or access denied')
+                    'message' => __('Event not found or access denied')
                 ], 404);
             }
         }
@@ -749,6 +753,162 @@ class AppController extends Controller
                 'thumbnail_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/' . substr($event->img, 0, 1) . '/' . substr($event->img, 0, 2) . '/' . substr($event->img, 0, 3) . '/th_' . $event->img,
                 'message' => __('Image updated successfully!'),
                 'id' => $event->id
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Failed to process image') . ': ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function business()
+    {
+        $meta = $this->getMeta();
+        $businesses = Business::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()->keyBy('id');
+        $businessCategories = BusinessCategory::orderBy('ord', 'asc')->get()->keyBy('id');
+        foreach ($businesses as $key => $business) {
+            if (!empty($business->description)) {
+                $businesses[$key]->description_html = $this->markdownConverter->convert($business->description)->getContent();
+            }
+        }
+        return view('app.businesses', [
+            'meta' => $meta,
+            'businesses' => $businesses,
+            'businessCategories' => $businessCategories
+        ]);
+    }
+
+    public function businessCreate()
+    {
+        $meta = $this->getMeta();
+        $categoryData = $this->processCategoriesForView('business');
+
+        return view('app.business', array_merge([
+            'meta' => $meta
+        ], $categoryData));
+    }
+
+    public function businessEdit($id)
+    {
+        $business = Business::findOrFail($id);
+        if (empty($business->id) || $business->user_id != Auth::user()->id) {
+            return redirect()->route('app::index')->with('error', __('Business not found or access denied'));
+        }
+
+        if (!empty($business->description)) {
+            $business->description_html = $this->markdownConverter->convert($business->description)->getContent();
+        }
+
+        $meta = $this->getMeta();
+        $categoryData = $this->processCategoriesForView('business');
+
+        return view('app.business', array_merge([
+            'meta' => $meta,
+            'business' => $business
+        ], $categoryData));
+    }
+
+    public function businessDelete($id)
+    {
+        $meta = $this->getMeta();
+        return view('app.events', [
+            'meta' => $meta
+        ]);
+    }
+
+    public function businessSave(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:191',
+                'categories' => 'array|max:5',
+                'categories.*' => 'string',
+                'description' => 'nullable|string|max:4000',
+                'img' => 'nullable|string|max:191',
+                'is_online' => 'required|boolean',
+                'location' => 'nullable|required_if:is_online,0|string|max:191',
+                'link' => 'nullable|required_if:is_online,1|url|max:191',
+                'lat' => 'nullable|required_if:is_online,0|numeric|between:-90,90',
+                'lon' => 'nullable|required_if:is_online,0|numeric|between:-180,180',
+                'active' => 'boolean'
+            ]);
+            if (empty($request->id)) {
+                $business = new Business();
+                $business->user_id = Auth::user()->id;
+            } else {
+                $business = Business::findOrFail($request->id);
+                if ($business->user_id != Auth::user()->id) {
+                    return redirect()->route('app::business')->withErrors(__('Business not found or access denied'));
+                }
+            }
+            $business->name = $request->name ?? null;
+            if (!empty($request->description)) {
+                $cleanHtml = $this->sanitizeHtml($request->description);
+                $business->description = $this->htmlConverter->convert($cleanHtml);
+            } else {
+                $business->description = null;
+            }
+            $business->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
+            $business->lat = $validated['is_online'] ? 0 : ($validated['lat'] ?? 0);
+            $business->lon = $validated['is_online'] ? 0 : ($validated['lon'] ?? 0);
+            $business->is_online = $validated['is_online'] ? 1 : 0;
+            $business->location = $validated['is_online'] ? null : $validated['location'];
+            $business->link = $validated['is_online'] ? $validated['link'] : null;
+            $business->active = $request->boolean('active');
+            if (!$business->slug || $business->isDirty('name')) {
+                $business->slug = $this->generateUniqueEventSlug($request->input('name'), Auth::user()->id, $business->id ?? null);
+            }
+            $business->save();
+            return redirect()->route('app::business::edit', ['id' => $business->id])->with(['success' => __('Business saved')]);
+        } catch (\Exception $e) {
+            return redirect()->route('app::business::edit', ['id' => $business->id ?? null])->with(['error' => __('Failed to save business') . ': ' . $e->getMessage()]);
+        }
+    }
+
+    public function businessImage(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:20480'
+        ]);
+
+        if (empty($request->businessID)) {
+            $business = new Business();
+            $business->user_id = Auth::user()->id;
+            $business->save();
+        } else {
+            $business = Business::find($request->businessID);
+            if (empty($business->id) || $business->user_id != Auth::user()->id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('Business not found or access denied')
+                ], 404);
+            }
+        }
+
+        try {
+            if ($business->img) {
+                Storage::disk('do')->delete([
+                    'sfccy/business/' . substr($business->img, 0, 1) . '/' . substr($business->img, 0, 2) . '/' . substr($business->img, 0, 3) . '/' . $business->img,
+                    'sfccy/business/' . substr($business->img, 0, 1) . '/' . substr($business->img, 0, 2) . '/' . substr($business->img, 0, 3) . '/th_' . $business->img
+                ]);
+                $business->img = null;
+            }
+            $file = $request->file('avatar');
+            $name = Str::random(16) . '.webp';
+            $manager = new ImageManager(new Driver());
+            $mainImage = $manager->read($file)->cover(300, 300)->toWebp(85);
+            $thumbnail = $manager->read($file)->cover(100, 100)->toWebp(80);
+            Storage::disk('do')->put('sfccy/business/' . substr($name, 0, 1) . '/' . substr($name, 0, 2) . '/' . substr($name, 0, 3) . '/' . $name, $mainImage, 'public');
+            Storage::disk('do')->put('sfccy/business/' . substr($name, 0, 1) . '/' . substr($name, 0, 2) . '/' . substr($name, 0, 3) . '/th_' . $name, $thumbnail, 'public');
+            $business->img = $name;
+            $business->save();
+            return response()->json([
+                'success' => true,
+                'avatar_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/business/' . substr($business->img, 0, 1) . '/' . substr($business->img, 0, 2) . '/' . substr($business->img, 0, 3) . '/' . $business->img,
+                'thumbnail_url' => 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/business/' . substr($business->img, 0, 1) . '/' . substr($business->img, 0, 2) . '/' . substr($business->img, 0, 3) . '/th_' . $business->img,
+                'message' => __('Image updated successfully!'),
+                'id' => $business->id
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

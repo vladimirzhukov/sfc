@@ -32,16 +32,16 @@ input[type="date"] {
     <ol role="list" class="flex items-center space-x-4">
         <li><div><a href="{{ route('web::index') }}" class="text-gray-400 hover:text-gray-500"><svg class="size-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" /></svg><span class="sr-only">{{ __('Home') }}</span></a></div></li>
         <li><div class="flex items-center"><svg class="size-5 shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" /></svg><a href="{{ route('app::index') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">{{ __('Dashboard') }}</a></div></li>
-        <li><div class="flex items-center"><svg class="size-5 shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" /></svg><a href="{{ route('app::events') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ __('Events') }}</a></div></li>
-        <li><div class="flex items-center"><svg class="size-5 shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" /></svg><a href="{{ ((Route::currentRouteName() == 'app::events::create') ? route('app::events::create') : route('app::events::edit', ['id' => $event->id])) }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ ((Route::currentRouteName() == 'app::events::create') ? __('Create Event') : __('Edit Event')) }}</a></div></li>
+        <li><div class="flex items-center"><svg class="size-5 shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" /></svg><a href="{{ route('app::business') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ __('Businesses') }}</a></div></li>
+        <li><div class="flex items-center"><svg class="size-5 shrink-0 text-gray-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" /></svg><a href="{{ ((Route::currentRouteName() == 'app::business::create') ? route('app::business::create') : route('app::business::edit', ['id' => $business->id])) }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ ((Route::currentRouteName() == 'app::business::create') ? __('Create Business') : __('Edit Business')) }}</a></div></li>
     </ol>
 </nav>
-<form action="{{ route('app::events::save') }}" method="POST">
+<form action="{{ route('app::business::save') }}" method="POST">
     @if (session('success'))
         <div x-data="{ show: true }" x-show="show" x-transition class="rounded-md bg-green-50 p-4 mb-4">
             <div class="flex">
                 <div class="shrink-0"><svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 text-green-400"><path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" fill-rule="evenodd" /></svg></div>
-                <div class="ml-3"><p class="text-sm font-medium text-green-800">{{ __('Event saved successfully!') }}</p></div>
+                <div class="ml-3"><p class="text-sm font-medium text-green-800">{{ __('Business saved successfully!') }}</p></div>
                 <div class="ml-auto pl-3">
                     <div class="-mx-1.5 -my-1.5">
                         <button type="button" @click="show = false" class="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50 focus:outline-hidden">
@@ -70,20 +70,20 @@ input[type="date"] {
         </div>
     @endif
     @csrf
-    <input type="hidden" name="id" value="{{ (!empty($event->id) ? $event->id : '') }}">
+    <input type="hidden" name="id" value="{{ (!empty($business->id) ? $business->id : '') }}">
     <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-6">
-            <h2 class="text-base/7 font-semibold text-gray-900">{{ ((Route::currentRouteName() == 'app::events::create') ? __('Create Event') : __('Edit Event')) }}</h2>
-            @if (Route::currentRouteName() == 'app::events::create')
-                <p class="mt-1 text-sm/6 text-gray-600">{{ __('app.event_create_noto') }}</p>
+            <h2 class="text-base/7 font-semibold text-gray-900">{{ ((Route::currentRouteName() == 'app::business::create') ? __('Create Business') : __('Edit Business')) }}</h2>
+            @if (Route::currentRouteName() == 'app::business::create')
+                <p class="mt-1 text-sm/6 text-gray-600">{{ __('app.business_create_noto') }}</p>
             @else
-                <p class="mt-1 text-sm/6 text-gray-600">{{ __('app.event_edit_noto') }}</p>
+                <p class="mt-1 text-sm/6 text-gray-600">{{ __('app.business_edit_noto') }}</p>
             @endif
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div class="sm:col-span-3">
-                    <label for="name" class="block text-sm/6 font-medium text-gray-900">{{ __('Event title') }}</label>
+                    <label for="name" class="block text-sm/6 font-medium text-gray-900">{{ __('Business title') }}</label>
                     <div class="mt-2">
-                        <input type="text" name="name" id="name" autocomplete="title" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="{{ __('Event title') }}" value="{{ (!empty($event->name) ? $event->name : '') }}" />
+                        <input type="text" name="name" id="name" autocomplete="title" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="{{ __('Business title') }}" value="{{ (!empty($business->name) ? $business->name : '') }}" />
                     </div>
                 </div>
 
@@ -105,7 +105,7 @@ input[type="date"] {
                     </div>
                     <div class="mt-2 flex items-center gap-x-3">
                         <div class="relative">
-                            <img x-show="previewUrl || avatarUrl" :src="previewUrl || avatarUrl" class="size-12 rounded-full object-cover ring-2 ring-gray-200 service-avatar" alt="Event Image">
+                            <img x-show="previewUrl || avatarUrl" :src="previewUrl || avatarUrl" class="size-12 rounded-full object-cover ring-2 ring-gray-200 service-avatar" alt="Business Image">
                             <svg x-show="!previewUrl && !avatarUrl" class="size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" /></svg>
                             <div x-show="uploading" class="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center"><svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></div>
                         </div>
@@ -120,12 +120,12 @@ input[type="date"] {
                 </div>
 
                 <div class="sm:col-span-6" x-data="categorySelector()">
-                    <label class="block text-sm/6 font-medium text-gray-900">{{ __('Event Categories') }} ({{ __('Maximum 5') }})</label>
+                    <label class="block text-sm/6 font-medium text-gray-900">{{ __('Business Categories') }} ({{ __('Maximum 5') }})</label>
                     <div class="relative mt-2">
                         <button type="button" @click="open = !open" class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-3 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" :aria-expanded="open">
-                    <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-                        <span class="block truncate" x-text="selectedCategories.length > 0 ? `{{ __('Categories selected') }}: ${selectedCategories.length}/5` : '{{ __('Select event categories') }} ({{ __('max 5') }})...'"></span>
-                    </span>
+                <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6">
+                    <span class="block truncate" x-text="selectedCategories.length > 0 ? `{{ __('Categories selected') }}: ${selectedCategories.length}/5` : '{{ __('Select business categories') }} ({{ __('max 5') }})...'"></span>
+                </span>
                             <svg class="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4 transition-transform duration-200" :class="{ 'rotate-180': open }" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd" /></svg>
                         </button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" @click.away="open = false" class="absolute z-10 bg-white max-h-80 w-full overflow-auto rounded-md shadow-lg border-1 border-gray-300 mt-1">
@@ -166,13 +166,13 @@ input[type="date"] {
                     <div x-data="{ forceShow: true }" x-show="(selectedCategories.length > 0) || forceShow" class="mt-3">
                         <div class="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
                             <template x-for="categoryCode in selectedCategories" :key="categoryCode">
-                            <span class="inline-flex items-center gap-x-1.5 rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-700">
-                                <span x-text="categories.find(cat => cat.code == categoryCode)?.name || `Code: ${categoryCode}`"></span>
-                                <button type="button" @click="removeCategory(categoryCode); if(selectedCategories.length === 0) forceShow = false;" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-indigo-600/20 cursor-pointer">
-                                    <span class="sr-only">{{ __('Remove') }}</span>
-                                    <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-indigo-700/50 group-hover:stroke-indigo-700/75"><path d="m4 4 6 6m0-6-6 6" /></svg>
-                                </button>
-                            </span>
+                        <span class="inline-flex items-center gap-x-1.5 rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-700">
+                            <span x-text="categories.find(cat => cat.code == categoryCode)?.name || `Code: ${categoryCode}`"></span>
+                            <button type="button" @click="removeCategory(categoryCode); if(selectedCategories.length === 0) forceShow = false;" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-indigo-600/20 cursor-pointer">
+                                <span class="sr-only">{{ __('Remove') }}</span>
+                                <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-indigo-700/50 group-hover:stroke-indigo-700/75"><path d="m4 4 6 6m0-6-6 6" /></svg>
+                            </button>
+                        </span>
                             </template>
                         </div>
                         <p class="mt-2 text-xs text-gray-600">{{ __('Selected') }} <span x-text="selectedCategories.length"></span> {{ __('of 5 categories') }}.
@@ -185,7 +185,7 @@ input[type="date"] {
                             <svg class="h-5 w-5 text-amber-400 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.732 15.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
                             <div class="text-sm text-amber-800">
                                 <p class="font-medium">{{ __('Maximum categories reached') }}</p>
-                                <p class="text-xs mt-1">{{ __('app.event_max_categories_message') }}</p>
+                                <p class="text-xs mt-1">{{ __('app.business_max_categories_message') }}</p>
                             </div>
                         </div>
                     </div>
@@ -197,54 +197,19 @@ input[type="date"] {
                 <div class="col-span-full">
                     <label for="description" class="block text-sm/6 font-medium text-gray-900">{{ __('Description') }}</label>
                     <div class="mt-2">
-                        <textarea name="description" id="description" rows="3" class="hidden" placeholder="{{ __('Description') }}">{!! (!empty($event->description) ? $event->description : '') !!}</textarea>
+                        <textarea name="description" id="description" rows="3" class="hidden" placeholder="{{ __('Description') }}">{!! (!empty($business->description) ? $business->description : '') !!}</textarea>
                         <div id="editor">
-                            {!! (!empty($event->description_html) ? $event->description_html : '') !!}
+                            {!! (!empty($business->description_html) ? $business->description_html : '') !!}
                         </div>
                     </div>
-                    <p class="mt-3 text-sm/6 text-gray-600">{{ __('Write a few sentences about your event.') }}</p>
-                </div>
-
-                <div class="sm:col-span-6">
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        <div>
-                            <label for="start_date" class="block text-sm/6 font-medium text-gray-900">{{ __('Start Date') }}</label>
-                            <div class="mt-2">
-                                <input type="date" name="start_date" id="start_date" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($event->start_date) ? date('Y-m-d', strtotime($event->start_date)) : '') }}" />
-                            </div>
-                        </div>
-                        <div>
-                            <label for="start_time" class="block text-sm/6 font-medium text-gray-900">{{ __('Start Time') }}</label>
-                            <div class="mt-2">
-                                <input type="time" name="start_time" id="start_time" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($event->start_date) ? date('H:i', strtotime($event->start_date)) : '') }}" />
-                            </div>
-                        </div>
-                        <div>
-                            <label for="end_date" class="block text-sm/6 font-medium text-gray-900">{{ __('End Date') }}</label>
-                            <div class="mt-2">
-                                <input type="date" name="end_date" id="end_date" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($event->end_date) ? date('Y-m-d', strtotime($event->end_date)) : '') }}" />
-                            </div>
-                        </div>
-                        <div>
-                            <label for="end_time" class="block text-sm/6 font-medium text-gray-900">{{ __('End Time') }}</label>
-                            <div class="mt-2">
-                                <input type="time" name="end_time" id="end_time" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($event->end_date) ? date('H:i', strtotime($event->end_date)) : '') }}" />
-                            </div>
-                        </div>
-                    </div>
-                    <div id="date-time-error" class="mt-2 text-sm text-red-600 hidden"></div>
-                    <div class="mt-3 text-sm text-gray-600 flex items-center gap-2">
-                        <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        <span id="timezone-display">GMT+03:00 Nicosia</span>
-                        <input type="hidden" name="timezone" id="timezone" value="">
-                    </div>
+                    <p class="mt-3 text-sm/6 text-gray-600">{{ __('Write a few sentences about your business.') }}</p>
                 </div>
 
                 <div class="sm:col-span-6" x-data="locationPicker()">
                     <div class="space-y-4">
                         <div class="flex items-center gap-4">
                             <svg class="size-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                            <h3 class="text-base font-medium text-gray-900">{{ __('Add Event Location') }}</h3>
+                            <h3 class="text-base font-medium text-gray-900">{{ __('Business Location') }}</h3>
                         </div>
                         <p class="text-sm text-gray-600">{{ __('Offline location or virtual link') }}</p>
                         <div class="flex items-center space-x-4">
@@ -259,13 +224,13 @@ input[type="date"] {
                             <input type="hidden" name="is_online" :value="isOnline ? 1 : 0">
                         </div>
                         <div x-show="isOnline" x-transition class="space-y-2">
-                            <label for="link" class="block text-sm font-medium text-gray-700">{{ __('Virtual Event Link') }}</label>
-                            <input type="url" name="link" id="link" placeholder="https://..." class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($event->link) ? $event->link : '') }}" />
+                            <label for="link" class="block text-sm font-medium text-gray-700">{{ __('Virtual Link') }}</label>
+                            <input type="url" name="link" id="link" placeholder="https://..." class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($business->link) ? $business->link : '') }}" />
                         </div>
                         <div x-show="!isOnline" x-transition class="space-y-4">
                             <div class="relative">
-                                <label for="location" class="block text-sm font-medium text-gray-700">{{ __('Event Location') }}</label>
-                                <input type="text" name="location" id="location" placeholder="{{ __('Enter event location...') }}" class="mt-1 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" @input="searchLocations($event.target.value)" @focus="showDropdown = true" @keydown.escape="showDropdown = false" @keydown.arrow-down.prevent="navigateResults(1)" @keydown.arrow-up.prevent="navigateResults(-1)" @keydown.enter.prevent="selectResult()" x-model="locationQuery" autocomplete="off" value="{{ (!empty($event->location) ? $event->location : '') }}" />
+                                <label for="location" class="block text-sm font-medium text-gray-700">{{ __('Business Location') }}</label>
+                                <input type="text" name="location" id="location" placeholder="{{ __('Enter address...') }}" class="mt-1 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" @input="searchLocations($event.target.value)" @focus="showDropdown = true" @keydown.escape="showDropdown = false" @keydown.arrow-down.prevent="navigateResults(1)" @keydown.arrow-up.prevent="navigateResults(-1)" @keydown.enter.prevent="selectResult()" x-model="locationQuery" autocomplete="off" value="{{ (!empty($business->location) ? $business->location : '') }}" />
                                 <div x-show="showDropdown && searchResults.length > 0" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" @click.away="showDropdown = false" class="absolute z-20 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md border border-gray-300 overflow-auto">
                                     <template x-for="(result, index) in searchResults" :key="index">
                                         <div @click="selectLocation(result, index)" :class="{'bg-indigo-50': selectedIndex === index}" class="px-4 py-3 cursor-pointer hover:bg-gray-50 border-b border-gray-100 last:border-b-0">
@@ -301,21 +266,21 @@ input[type="date"] {
 
                 <div class="col-span-full">
                     <div class="flex items-center">
-                        <input type="checkbox" id="active" name="active" value="1" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" {{ (old('active', $event->active ?? true)) ? 'checked' : '' }}>
+                        <input type="checkbox" id="active" name="active" value="1" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" {{ (old('active', $business->active ?? true)) ? 'checked' : '' }}>
                         <label for="active" class="ml-2 rtl:mr-2 block text-sm text-gray-900 font-medium">{{ __('Active') }}</label>
                     </div>
-                    <p class="mt-1 text-xs text-gray-500">{{ __('app.event_active') }}</p>
+                    <p class="mt-1 text-xs text-gray-500">{{ __('app.business_active') }}</p>
                     <div class="mt-3 p-3 bg-blue-50 rounded-md border border-blue-200">
                         <div class="flex">
                             <svg class="h-5 w-5 text-blue-400 mt-0.5 mr-2 rtl:ml-2 rtl:mr-0 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             <div class="text-sm text-blue-800">
-                                <p class="font-medium mb-1">{{ __('Event Visibility:') }}</p>
+                                <p class="font-medium mb-1">{{ __('Business Visibility:') }}</p>
                                 <ul class="text-xs space-y-1">
                                     <div>
-                                        <li>{!! __('app.event_tip_1') !!}</li>
-                                        <li>{!! __('app.event_tip_2') !!}</li>
-                                        <li>{!! __('app.event_tip_3') !!}</li>
-                                        <li>{!! __('app.event_tip_4') !!}</li>
+                                        <li>{!! __('app.business_tip_1') !!}</li>
+                                        <li>{!! __('app.business_tip_2') !!}</li>
+                                        <li>{!! __('app.business_tip_3') !!}</li>
+                                        <li>{!! __('app.business_tip_4') !!}</li>
                                     </div>
                                 </ul>
                             </div>
@@ -348,22 +313,12 @@ document.addEventListener('DOMContentLoaded', function() {
             toolbar: toolbarOptions
         },
         theme: 'snow',
-        placeholder: '{{ __('Enter your event description...') }}'
+        placeholder: '{{ __('Enter your business description...') }}'
     });
     quill.on('text-change', () => {
         const html = quill.root.innerHTML;
         document.getElementById('description').value = html;
     });
-
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const offset = new Date().getTimezoneOffset();
-    const offsetHours = Math.abs(Math.floor(offset / 60));
-    const offsetMinutes = Math.abs(offset % 60);
-    const offsetSign = offset > 0 ? '-' : '+';
-
-    document.getElementById('timezone-display').textContent =
-        `GMT${offsetSign}${offsetHours.toString().padStart(2, '0')}:${offsetMinutes.toString().padStart(2, '0')} ${timezone.split('/').pop()}`;
-    document.getElementById('timezone').value = timezone;
 
     let map, marker;
     const defaultLat = 35.1856;
@@ -472,106 +427,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }, 100);
 
-    function setDateTimeConstraints() {
-        const now = new Date();
-        const today = now.toISOString().split('T')[0];
-        const currentTime = now.toTimeString().slice(0, 5);
-
-        const startDate = document.getElementById('start_date');
-        const startTime = document.getElementById('start_time');
-        const endDate = document.getElementById('end_date');
-        const endTime = document.getElementById('end_time');
-
-        if (startDate) {
-            startDate.min = today;
-            startDate.addEventListener('change', function() {
-                if (this.value === today && startTime) {
-                    startTime.min = currentTime;
-                } else if (startTime) {
-                    startTime.removeAttribute('min');
-                }
-
-                if (endDate) {
-                    endDate.min = this.value;
-                    if (endDate.value && endDate.value < this.value) {
-                        endDate.value = this.value;
-                    }
-                }
-            });
-        }
-
-        if (endDate) {
-            endDate.min = today;
-            endDate.addEventListener('change', function() {
-                const startDateValue = startDate ? startDate.value : today;
-
-                if (this.value === startDateValue && endTime && startTime) {
-                    const startTimeValue = startTime.value;
-                    if (startTimeValue) {
-                        endTime.min = startTimeValue;
-                    }
-                } else if (endTime) {
-                    endTime.removeAttribute('min');
-                }
-            });
-        }
-
-        if (startTime) {
-            startTime.addEventListener('change', function() {
-                const startDateValue = startDate ? startDate.value : '';
-                const endDateValue = endDate ? endDate.value : '';
-
-                if (startDateValue === today) {
-                    if (this.value < currentTime) {
-                        this.value = currentTime;
-                    }
-                }
-
-                if (endDateValue === startDateValue && endTime) {
-                    endTime.min = this.value;
-                    if (endTime.value && endTime.value <= this.value) {
-                        const [hours, minutes] = this.value.split(':');
-                        const newHour = (parseInt(hours) + 1).toString().padStart(2, '0');
-                        endTime.value = `${newHour}:${minutes}`;
-                    }
-                }
-            });
-        }
-
-        if (endTime) {
-            endTime.addEventListener('change', function() {
-                const startTimeValue = startTime ? startTime.value : '';
-                const startDateValue = startDate ? startDate.value : '';
-                const endDateValue = endDate ? endDate.value : '';
-
-                if (startDateValue === endDateValue && startTimeValue) {
-                    if (this.value <= startTimeValue) {
-                        const [hours, minutes] = startTimeValue.split(':');
-                        const newHour = (parseInt(hours) + 1).toString().padStart(2, '0');
-                        this.value = `${newHour}:${minutes}`;
-                    }
-                }
-            });
-        }
-    }
-    setDateTimeConstraints();
-
-    function showDateTimeError(message) {
-        const errorDiv = document.getElementById('date-time-error');
-        if (errorDiv) {
-            errorDiv.textContent = message;
-            errorDiv.classList.remove('hidden');
-            setTimeout(() => {
-                errorDiv.classList.add('hidden');
-            }, 3000);
-        }
-    }
-
-    @if(!empty($event->lat) && !empty($event->lon))
+    @if(!empty($business->lat) && !empty($business->lon))
     setTimeout(() => {
         if (window.eventMap && window.setEventMapMarker) {
-            window.eventMap.setView([{{ $event->lat }}, {{ $event->lon }}], 15);
-            window.setEventMapMarker({{ $event->lat }}, {{ $event->lon }}, true);
+            window.eventMap.setView([{{ $business->lat }}, {{ $business->lon }}], 15);
+            window.setEventMapMarker({{ $business->lat }}, {{ $business->lon }}, true);
         }
     }, 500);
     @endif
@@ -580,16 +440,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 function locationPicker() {
     return {
-        isOnline: {{ (!empty($event->is_online) ? 'true' : 'false') }},
-        locationQuery: '{{ (!empty($event->location) ? $event->location : '') }}',
+        isOnline: {{ (!empty($business->is_online) ? 'true' : 'false') }},
+        locationQuery: '{{ (!empty($business->location) ? $business->location : '') }}',
         searchResults: [],
         showDropdown: false,
         selectedIndex: -1,
         isSearching: false,
         searchTimeout: null,
         coordinates: {
-            lat: {{ (!empty($event->lat) ? $event->lat : 0) }},
-            lon: {{ (!empty($event->lon) ? $event->lon : 0) }}
+            lat: {{ (!empty($business->lat) ? $business->lat : 0) }},
+            lon: {{ (!empty($business->lon) ? $business->lon : 0) }}
         },
 
         searchLocations(query) {
@@ -706,7 +566,7 @@ function makeSecureUrl(path) {
 
 function avatarUpload() {
     return {
-        avatarUrl: '{{ (!empty($event->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/' . substr($event->img, 0, 1) . '/' . substr($event->img, 0, 2) . '/' . substr($event->img, 0, 3) . '/th_' . $event->img : '/assets/images/no-image-icon.png') }}',
+        avatarUrl: '{{ (!empty($business->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/business/' . substr($business->img, 0, 1) . '/' . substr($business->img, 0, 2) . '/' . substr($business->img, 0, 3) . '/th_' . $business->img : '/assets/images/no-image-icon.png') }}',
         uploading: false,
         error: '',
         previewUrl: null,
@@ -745,7 +605,7 @@ function avatarUpload() {
             formData.append('avatar', file);
             formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
 
-            fetch(makeSecureUrl('/app/events/image?eventID={{ (!empty($event->id) ? $event->id : 0) }}'), {
+            fetch(makeSecureUrl('/app/business/image?businessID={{ (!empty($business->id) ? $business->id : 0) }}'), {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -759,7 +619,7 @@ function avatarUpload() {
                     return response.json();
                 })
                 .then(data => {
-                    @if (!empty($event->id))
+                    @if (!empty($business->id))
                     if (data.success) {
                         this.avatarUrl = data.avatar_url;
                         this.previewUrl = null;
@@ -775,7 +635,7 @@ function avatarUpload() {
                     }
                     @else
                     if (data.success) {
-                        window.location.replace('/app/events/edit/' + data.id);
+                        window.location.replace('/app/business/edit/' + data.id);
                     } else {
                         this.error = data.message || '{{ __('Upload failed') }}';
                         this.previewUrl = null;
@@ -816,20 +676,20 @@ function categorySelector() {
         selectedCategories: [],
         categories: [
             @php
-            $cats = '';
-            foreach ($parentCategories as $pkey => $parent) {
-                if (isset($categories[$pkey])) {
-                    foreach ($categories[$pkey] as $key => $category) {
-                        if (!empty($cats)) {
-                            $cats .= ',';
+                $cats = '';
+                foreach ($parentCategories as $pkey => $parent) {
+                    if (isset($categories[$pkey])) {
+                        foreach ($categories[$pkey] as $key => $category) {
+                            if (!empty($cats)) {
+                                $cats .= ',';
+                            }
+                            $ord = $rawCategories[$key]->ord ?? 0;
+                            $cats .= '{code: "' . $key . '", name: "' . addslashes($category) . '", group: "' . addslashes($parent) . '", description: "' . addslashes($categoryDescriptions[$key] ?? '') . '", ord: ' . $ord . '}';
                         }
-                        $ord = $rawCategories[$key]->ord ?? 0;
-                        $cats .= '{code: "' . $key . '", name: "' . addslashes($category) . '", group: "' . addslashes($parent) . '", description: "' . addslashes($categoryDescriptions[$key] ?? '') . '", ord: ' . $ord . '}';
                     }
                 }
-            }
             @endphp
-            {!! $cats !!}
+                {!! $cats !!}
         ],
 
         get filteredCategories() {
@@ -922,7 +782,7 @@ function categorySelector() {
         },
 
         init() {
-            this.selectedCategories = [{!! (!empty($event->categories) ? str_replace(array(']', '['), '"', str_replace('][', '","', $event->categories)) : '') !!}];
+            this.selectedCategories = [{!! (!empty($business->categories) ? str_replace(array(']', '['), '"', str_replace('][', '","', $business->categories)) : '') !!}];
         }
     }
 }
