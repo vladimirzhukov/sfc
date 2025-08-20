@@ -38,7 +38,7 @@
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
             <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-                <div class="relative rounded-full px-3 py-1 text-sm/6 text-white ring-1 ring-white/10 hover:ring-white/20">{{ __('Working afternoons in Cyprus!') }} <a href="#" class="font-semibold text-orange-400"><span aria-hidden="true" class="absolute inset-0"></span>{{ __('Read more') }} <span aria-hidden="true">&rarr;</span></a></div>
+                <div class="relative rounded-full px-3 py-1 text-sm/6 text-white ring-1 ring-white/10 hover:ring-white/20">{{ __('Working afternoons in Cyprus!') }} <a href="{{ route('web::wa') }}" class="font-semibold text-orange-400"><span aria-hidden="true" class="absolute inset-0"></span>{{ __('Read more') }} <span aria-hidden="true">&rarr;</span></a></div>
             </div>
             <div class="text-center">
                 <h1 class="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">{{ __('Startup Founders Community in Cyprus') }}</h1>
@@ -58,7 +58,7 @@
     <div class="mx-auto max-w-7xl px-6 text-center lg:px-8">
         <div class="mx-auto">
             <h2 class="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white">{{ __('Working afternoons in Cyprus!') }}</h2>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-400">{!! __('web.index_wan') !!} <a class="font-semibold text-orange-400" href="#">{{ __('See the details') }}</a>.</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-400">{!! __('web.index_wan') !!} <a class="font-semibold text-orange-400" href="{{ route('web::wa') }}">{{ __('See the details') }}</a>.</p>
         </div>
         @if ($afternoons->isNotEmpty())
         @php
