@@ -31,16 +31,14 @@
             @if (!empty($contacts))
                 @php
                 $languages = $meta->languages;
-                if (!empty($languages)) {
-                    ksort($languages);
-                }
+                ksort($languages);
                 @endphp
                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{!! $contacts !!}</p>
             @endif
             @if (!empty($user->languages))
                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                     @foreach ($user->languages as $language)
-                        @if (!empty($language->language_code))
+                        @if (!empty($language->language_code) && !empty($languages[$language->language_code]['name']))
                             <span class="inline-flex items-center gap-x-1.5 rounded-full bg-indigo-100 ms-1 px-2 py-1 text-xs font-medium text-indigo-700">
                                 <img class="size-4 rounded-full" src="/assets/flags/language/{{ $language->language_code }}.svg" alt="{{ $languages[$language->language_code]['name'] }}">
                                 <span>{{ $languages[$language->language_code]['name'] }}</span>
