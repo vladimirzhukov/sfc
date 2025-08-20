@@ -31,7 +31,9 @@
             @if (!empty($contacts))
                 @php
                 $languages = $meta->languages;
-                ksort($languages);
+                if (!empty($languages)) {
+                    ksort($languages);
+                }
                 @endphp
                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{!! $contacts !!}</p>
             @endif
