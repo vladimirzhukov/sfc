@@ -56,6 +56,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::post('/app/services/save', [AppController::class, 'servicesSave'])->name('app::services::save')->middleware(['auth', 'last.seen']);
     Route::post('/app/services/image', [AppController::class, 'servicesImage'])->name('app::services::image');
     Route::get('/app/community', [AppController::class, 'community'])->name('app::community')->middleware(['auth', 'last.seen']);
+    Route::get('/app/u/{nickname}', [AppController::class, 'user'])->name('app::user')->middleware(['auth', 'last.seen']);
     // API routes
     Route::prefix('api/cities')->group(function() {
         Route::get('popular/{countryCode}', [CityController::class, 'getPopularCities'])->where('countryCode', '[A-Za-z]{2}');

@@ -101,7 +101,7 @@
                 <div class="flex min-w-0 gap-x-4">
                     <img src="{{ (!empty($member->user->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/avatars/' . substr($member->user->img, 0, 1) . '/' . substr($member->user->img, 0, 2) . '/' . substr($member->user->img, 0, 3) . '/' . $member->user->img : '/assets/images/no-user-image-icon.png') }}" alt="{{ (!empty($member->first_name) ? $member->first_name : '') }}{{ (!empty($member->last_name) ? ' ' . $member->last_name : '') }}" class="size-12 flex-none rounded-full bg-gray-50 dark:bg-gray-800 dark:outline dark:-outline-offset-1 dark:outline-white/10" />
                     <div class="min-w-0 flex-auto">
-                        <p class="text-sm/6 font-semibold text-gray-900 dark:text-white"><a href="#"><span class="absolute inset-x-0 -top-px bottom-0"></span>{{ (!empty($member->first_name) ? $member->first_name : '') }}{{ (!empty($member->last_name) ? ' ' . $member->last_name : '') }}</a></p>
+                        <p class="text-sm/6 font-semibold text-gray-900 dark:text-white"><a href="{{ route('app::user', ['nickname' => $member->user->name]) }}"><span class="absolute inset-x-0 -top-px bottom-0"></span>{{ (!empty($member->first_name) ? $member->first_name : '') }}{{ (!empty($member->last_name) ? ' ' . $member->last_name : '') }}</a></p>
                         <p class="mt-1 flex text-xs/5 text-gray-500 dark:text-gray-400">{!! (!empty($member->public_email) ? '<a href="mailto:' . $member->public_email . '" class="relative truncate hover:underline">' . $member->public_email . '</a>' : '') !!}</p>
                     </div>
                 </div>

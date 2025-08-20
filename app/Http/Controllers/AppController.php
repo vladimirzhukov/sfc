@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -326,6 +327,21 @@ class AppController extends Controller
         return view('app.community', [
             'meta' => $meta,
             'members' => $members
+        ]);
+    }
+
+    public function user($nickname)
+    {
+        $meta = $this->getMeta();
+        $user = User::where('name', $nickname)->firstOrFail();
+        if (!empty($user->profile->about)) {
+            $user->about_html = $this->markdownConverter->convert($user->profile->about)->getContent();
+        } else {
+            $user->about_html = '';
+        }
+        return view('app.user', [
+            'meta' => $meta,
+            'user' => $user
         ]);
     }
 

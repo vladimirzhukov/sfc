@@ -1,23 +1,23 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-    <style>
-        .ql-container {
-            border-radius: 0 0 0.375rem 0.375rem !important;
-        }
-        .ql-toolbar {
-            border-radius: 0.375rem 0.375rem 0 0 !important;
-        }
-        .ql-container, .ql-toolbar {
-            border-color: rgb(209 213 219) !important;
-        }
-        .ql-container.ql-focused {
-            outline: 2px solid rgb(99 102 241) !important;
-            outline-offset: -2px !important;
-            border-color: rgb(99 102 241) !important;
-        }
-    </style>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<style>
+.ql-container {
+    border-radius: 0 0 0.375rem 0.375rem !important;
+}
+.ql-toolbar {
+    border-radius: 0.375rem 0.375rem 0 0 !important;
+}
+.ql-container, .ql-toolbar {
+    border-color: rgb(209 213 219) !important;
+}
+.ql-container.ql-focused {
+    outline: 2px solid rgb(99 102 241) !important;
+    outline-offset: -2px !important;
+    border-color: rgb(99 102 241) !important;
+}
+</style>
 @endsection
 
 @section('content')

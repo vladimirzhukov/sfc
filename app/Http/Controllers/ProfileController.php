@@ -155,7 +155,7 @@ class ProfileController extends Controller
             \DB::beginTransaction();
             // Update main user fields
             $userUpdates = [
-                'name' => $validated['username'],
+                'name' => mb_strtolower($validated['username']),
             ];
             // Handle password update
             if (!empty($validated['password'])) {
