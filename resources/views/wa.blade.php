@@ -44,23 +44,23 @@
     <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24 dark:bg-gray-800/50 dark:after:pointer-events-none dark:after:absolute dark:after:inset-0 dark:after:inset-ring dark:after:inset-ring-white/10 dark:after:sm:rounded-3xl">
         <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-y-0">
             <div class="lg:row-start-2 lg:max-w-md">
-                <h2 class="text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl">Boost your productivity. Join Working Afternoons today.</h2>
-                <p class="mt-6 text-lg/8 text-gray-300">Escape your home office and join Cyprus's most productive co-working community. Our Working Afternoons bring together founders, entrepreneurs, remote workers, and digital nomads in a relaxed environment where great work gets done.</p>
+                <h2 class="text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl">{{ __('web.wa_1') }}</h2>
+                <p class="mt-6 text-lg/8 text-gray-300">{{ __('web.wa_2') }}</p>
             </div>
             <img width="1500" height="1000" src="/assets/images/wa.jpg" alt="{{ __('Working Afternoons') }}" class="relative -z-20 max-w-xl min-w-full rounded-xl shadow-xl ring-1 ring-white/10 lg:row-span-4 lg:w-5xl lg:max-w-none" />
             <div class="max-w-xl lg:row-start-3 lg:mt-10 lg:max-w-md lg:border-t lg:border-white/10 lg:pt-10 dark:lg:border-white/10">
                 <dl class="max-w-xl space-y-8 text-base/7 text-gray-300 lg:max-w-none">
                     <div class="relative">
-                        <dt class="inline-block font-semibold text-white">Drop-in flexibility.</dt>
-                        <dd class="inline">No RSVP needed, no agenda required. Just bring your laptop and join us whenever it works for your schedule.</dd>
+                        <dt class="inline-block font-semibold text-white">{{ __('web.wa_3') }}</dt>
+                        <dd class="inline">{{ __('web.wa_4') }}</dd>
                     </div>
                     <div class="relative">
-                        <dt class="inline-block font-semibold text-white">Perfect atmosphere.</dt>
-                        <dd class="inline">Grab a coffee or your favorite drink while tackling your most important tasks alongside motivated professionals.</dd>
+                        <dt class="inline-block font-semibold text-white">{{ __('web.wa_5') }}</dt>
+                        <dd class="inline">{{ __('web.wa_6') }}</dd>
                     </div>
                     <div class="relative">
-                        <dt class="inline-block font-semibold text-white">Community-driven.</dt>
-                        <dd class="inline">Connect with like-minded individuals who understand the entrepreneurial journey and remote work lifestyle.</dd>
+                        <dt class="inline-block font-semibold text-white">{{ __('web.wa_7') }}</dt>
+                        <dd class="inline">{{ __('web.wa_8') }}</dd>
                     </div>
                 </dl>
             </div>
@@ -73,28 +73,28 @@
 <div class="bg-gray-100 py-24 sm:py-32 dark:bg-gray-900">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:text-center">
-            <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">Start your own</h2>
-            <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance dark:text-white">Everything you need to launch your Working Afternoon</p>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">Ready to bring the productivity revolution to your city? Starting a Working Afternoon is simple and rewarding. Create a space where local professionals can escape isolation, boost productivity, and build meaningful connections in your community.</p>
+            <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Start your own') }}</h2>
+            <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance dark:text-white">{{ __('web.wa_9') }}</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.wa_10') }}</p>
         </div>
         <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
             <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
                 <div class="flex flex-col">
-                    <dt class="flex items-center gap-x-3 text-base/7 font-semibold text-gray-900 dark:text-white">Find the place</dt>
+                    <dt class="flex items-center gap-x-3 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('web.wa_11') }}</dt>
                     <dd class="mt-4 flex flex-auto flex-col text-base/7 text-gray-600 dark:text-gray-400">
-                        <p class="flex-auto">Find a venue with reliable high-speed internet and accessible power outlets for laptops. Look for cafes, co-working spaces, or community centers with comfortable seating and a welcoming atmosphere that supports focused work.</p>
+                        <p class="flex-auto">{{ __('web.wa_12') }}</p>
                     </dd>
                 </div>
                 <div class="flex flex-col">
-                    <dt class="flex items-center gap-x-3 text-base/7 font-semibold text-gray-900 dark:text-white">Secure the time</dt>
+                    <dt class="flex items-center gap-x-3 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('web.wa_13') }}</dt>
                     <dd class="mt-4 flex flex-auto flex-col text-base/7 text-gray-600 dark:text-gray-400">
-                        <p class="flex-auto">Approach the venue owner about hosting a weekly Working Afternoon from 2:00 PM to 6:00 PM. Most venues appreciate the consistent foot traffic and additional revenue during typically quieter afternoon hours.</p>
+                        <p class="flex-auto">{{ __('web.wa_14') }}</p>
                     </dd>
                 </div>
                 <div class="flex flex-col">
-                    <dt class="flex items-center gap-x-3 text-base/7 font-semibold text-gray-900 dark:text-white">Get listed</dt>
+                    <dt class="flex items-center gap-x-3 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('web.wa_15') }}</dt>
                     <dd class="mt-4 flex flex-auto flex-col text-base/7 text-gray-600 dark:text-gray-400">
-                        <p class="flex-auto">Contact us with your venue details, preferred day, and time slot. We'll add your Working Afternoon to our official directory and help promote it to the local startup and remote work community.</p>
+                        <p class="flex-auto">{{ __('web.wa_16') }}</p>
                     </dd>
                 </div>
             </dl>
@@ -148,12 +148,12 @@
 <div class="bg-gray-100 py-24 sm:py-32 dark:bg-gray-900">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div>
-            <dt class="text-xl text-base/7 font-semibold text-gray-900 dark:text-white">Why start a Working Afternoon?</dt>
-            <dd class="mt-2 text-base/7 text-gray-600 dark:text-gray-400">Build a thriving professional community in your area while creating consistent value for local venues. Working Afternoons foster genuine connections between entrepreneurs, remote workers, and digital nomads who are hungry for both productivity and community.</dd>
+            <dt class="text-xl text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('web.wa_17') }}</dt>
+            <dd class="mt-2 text-base/7 text-gray-600 dark:text-gray-400">{{ __('web.wa_18') }}</dd>
         </div>
         <div>
-            <dt class="text-xl text-base/7 font-semibold text-gray-900 dark:text-white mt-8">What we provide</dt>
-            <dd class="mt-2 text-base/7 text-gray-600 dark:text-gray-400">Complete organizer support including promotional materials, community directory listing, social media promotion, and connection to our network of hosts across Cyprus and beyond.</dd>
+            <dt class="text-xl text-base/7 font-semibold text-gray-900 dark:text-white mt-8">{{ __('web.wa_19') }}</dt>
+            <dd class="mt-2 text-base/7 text-gray-600 dark:text-gray-400">{{ __('web.wa_20') }}</dd>
         </div>
     </div>
 </div>
@@ -166,27 +166,27 @@
         </div>
         <div class="px-6 lg:contents">
             <div class="mx-auto max-w-2xl pt-16 pb-24 sm:pt-20 sm:pb-32 lg:mr-0 lg:ml-8 lg:w-full lg:max-w-lg lg:flex-none lg:pt-32 xl:w-1/2">
-                <p class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">From isolation to innovation</p>
-                <h1 class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">The story behind the movement</h1>
-                <p class="mt-6 text-xl/8 text-gray-700 dark:text-gray-300">The concept of informal collaborative work sessions has transformed how independent professionals connect and create. What started as a simple solution to home office isolation has evolved into a global movement that redefined the future of work.</p>
+                <p class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('web.wa_21') }}</p>
+                <h1 class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">{{ __('web.wa_22') }}</h1>
+                <p class="mt-6 text-xl/8 text-gray-700 dark:text-gray-300">{{ __('web.wa_23') }}</p>
                 <div class="mt-10 max-w-xl text-base/7 text-gray-600 lg:max-w-none dark:text-gray-400">
-                    <p>The mid-2000s marked a turning point for independent workers. As freelancers, remote employees, and entrepreneurs grew in numbers, a critical challenge emerged: <strong>professional and social isolation</strong>. Coffee shops offered temporary relief, but lacked the consistent community that creative minds craved.</p>
-                    <p>The breakthrough came in February 2006 when two friends in <strong>New York City</strong>, Amit Gupta and Luke Crawford, decided to tackle this problem head-on. Working from separate home offices, they missed the creative energy and spontaneous collaboration of traditional workspaces. Their solution was elegantly simple: invite friends to work together from Amit's Chelsea loft for a day.</p>
-                    <p>They called it "Jelly" - envisioning a group of independent professionals (invertebrates without rigid corporate structure) "jamming together." The tagline captured everything: "<strong>Show up with a laptop and work alongside others.</strong>"</p>
+                    <p>{!! __('web.wa_24') !!}</p>
+                    <p class="mt-4">{!! __('web.wa_25') !!}</p>
+                    <p class="mt-4">{!! __('web.wa_26') !!}</p>
                     <ul role="list" class="mt-8 space-y-8 text-gray-600 dark:text-gray-400">
                         <li class="flex gap-x-3">
-                            <span><strong class="font-semibold text-gray-900 dark:text-white">Open-source movement.</strong> Jelly was intentionally free and unstructured. No fees, no forced networking, no rigid schedules. People could arrive and leave as their productivity demanded, creating natural workflow rhythms.</span>
+                            <span><strong class="font-semibold text-gray-900 dark:text-white">{{ __('web.wa_27') }}</strong> {{ __('web.wa_28') }}</span>
                         </li>
                         <li class="flex gap-x-3">
-                            <span><strong class="font-semibold text-gray-900 dark:text-white">Viral community growth.</strong> The concept spread organically across dozens, then hundreds of cities worldwide. Anyone with suitable space could host their own Jelly, supported by wiki documentation and grassroots enthusiasm.</span>
+                            <span><strong class="font-semibold text-gray-900 dark:text-white">{{ __('web.wa_29') }}</strong> {{ __('web.wa_30') }}</span>
                         </li>
                         <li class="flex gap-x-3">
-                            <span><strong class="font-semibold text-gray-900 dark:text-white">Foundation for coworking.</strong> Jelly proved massive untapped demand for flexible, community-driven workspaces. This proof of concept directly inspired the coworking industry boom that followed, including giants like WeWork.</span>
+                            <span><strong class="font-semibold text-gray-900 dark:text-white">{{ __('web.wa_31') }}</strong> {{ __('web.wa_32') }}</span>
                         </li>
                     </ul>
-                    <p class="mt-8">Jelly wasn't about the time of day - it was about transforming the where and how of independent work. This grassroots solution to digital age isolation became the catalyst for an entire industry that fundamentally reshaped our understanding of what an "office" can be.</p>
-                    <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">The catalyst that changed everything</h2>
-                    <p class="mt-6">Today's Working Afternoons carry forward this same spirit: creating spaces where productivity meets community, where isolation transforms into collaboration, and where the best work happens naturally alongside others who share the journey.</p>
+                    <p class="mt-8">{{ __('web.wa_33') }}</p>
+                    <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ __('web.wa_34') }}</h2>
+                    <p class="mt-6">{{ __('web.wa_35') }}</p>
                 </div>
             </div>
         </div>
