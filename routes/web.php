@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Auth\GoogleController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -28,6 +29,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::get('/privacy', [WebController::class, 'privacy'])->name('web::privacy');
     Route::get('/working-afternoons', [WebController::class, 'wa'])->name('web::wa');
     Route::get('/about', [WebController::class, 'about'])->name('web::about');
+    Route::get('/partnerships', [WebController::class, 'partnerships'])->name('web::partnerships');
     // Dashboard routes
     Route::get('/app', [AppController::class, 'index'])->name('app::index')->middleware(['auth', 'last.seen']);
     Route::get('/app/profile', [AppController::class, 'profile'])->name('app::profile')->middleware(['auth', 'last.seen']);
@@ -66,3 +68,5 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
         Route::get('{cityId}', [CityController::class, 'getCityById'])->where('cityId', '[0-9]+');
     });
 });
+Route::get('/sitemap.xml', [SitemapController::class, 'sitemap'])->name('sitemap');
+Route::get('/sitemap-{language}.xml', [SitemapController::class, 'sitemapMain'])->name('sitemap::main');

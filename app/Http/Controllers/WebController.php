@@ -98,4 +98,16 @@ class WebController extends Controller
             'cities' => $cities
         ]);
     }
+
+    public function partnerships()
+    {
+        $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('partnerships', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities
+        ]);
+    }
 }

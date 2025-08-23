@@ -4,14 +4,18 @@
 <script type="application/ld+json">
 {
     "@@context": "https://schema.org",
-    "@@type": "Service",
+    "@@type": "WebPage",
     "name": "{{ (!empty($meta->metas[$meta->locale]->name) ? $meta->metas[$meta->locale]->name : (!empty($meta->metas['en']->name) ? $meta->metas['en']->name : 'SFC.CY')) }}",
     "url": "{{ url()->current() }}",
     "description": "{{ (!empty($meta->metas[$meta->locale]->description) ? $meta->metas[$meta->locale]->description : (!empty($meta->metas['en']->description) ? $meta->metas['en']->description : '')) }}",
-    "areaServed": "Global",
-    "provider": {
-        "@@type": "Brand",
-        "name": "{{ (!empty($meta->metas[$meta->locale]->name) ? $meta->metas[$meta->locale]->name : (!empty($meta->metas['en']->name) ? $meta->metas['en']->name : 'SFC.CY')) }}"
+    "isPartOf": {
+        "@@type": "WebSite",
+        "name": "SFC.CY",
+        "url": "{{ route('web::index') }}"
+    },
+    "publisher": {
+        "@@type": "Organization",
+        "name": "SFC.CY"
     }
 }
 </script>

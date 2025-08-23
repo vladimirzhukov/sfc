@@ -68,7 +68,7 @@
                 <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Ecosystem') }}</a>
                 <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Events') }}</a>
                 <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Startups') }}</a>
-                <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Resources') }}</a>
+                <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Contact') }}</a>
                 <a @click="languagePopup = true" href="javascript:void(0);" class="text-sm/6 font-semibold text-white"><img class="mr-1 rtl:ml-1 rtl:mr-0 inline-block" src="/assets/flags/language/{{ $meta->locale }}.svg" width="24"> {{ strtoupper(!empty($meta->locale) ? $meta->locale : 'en') }} ({{ (!empty($meta->language) ? $meta->language : '') }})</a>
             </div>
             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -99,7 +99,7 @@
                                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Ecosystem') }}</a>
                                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Events') }}</a>
                                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Startups') }}</a>
-                                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Resources') }}</a>
+                                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Contact') }}</a>
                                     <a @click="languagePopup = true" href="javascript:void(0);" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"><img class="mr-1 rtl:ml-1 rtl:mr-0 inline-block" src="/assets/flags/language/{{ $meta->locale }}.svg" width="24"> {{ strtoupper(!empty($meta->locale) ? $meta->locale : 'en') }} ({{ (!empty($meta->language) ? $meta->language : '') }})</a>
                                 </div>
                                 <div class="py-6">
@@ -232,9 +232,9 @@
                             <ul role="list" class="mt-6 space-y-4">
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('About') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Startup Playbook') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Partnerships') }}</a></li>
+                                <li><a href="{{ route('web::partnerships') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Partnerships') }}</a></li>
                                 <li><a href="{{ route('web::terms') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Terms of Service') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Privacy Policy') }}</a></li>
+                                <li><a href="{{ route('web::privacy') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Privacy Policy') }}</a></li>
                             </ul>
                         </div>
                     </div>
