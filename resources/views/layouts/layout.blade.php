@@ -42,6 +42,15 @@
     <link rel="canonical" href="{{ str_replace('http://', 'https://', url()->current()) }}">
     @yield('styles')
     @yield('ldbread')
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7B6Z5PBSMD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7B6Z5PBSMD');
+    </script>
 </head>
 <body x-data="{
     languagePopup: false,
@@ -194,7 +203,7 @@
                             <h3 class="text-sm/6 font-semibold text-white">{{ __('Ecosystem') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Members') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Working Afternoons') }}</a></li>
+                                <li><a href="{{ route('web::wa') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Working Afternoons') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Investors') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Event Organizers') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Infrastructure') }}</a></li>
