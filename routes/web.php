@@ -27,6 +27,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::get('/terms', [WebController::class, 'terms'])->name('web::terms');
     Route::get('/privacy', [WebController::class, 'privacy'])->name('web::privacy');
     Route::get('/working-afternoons', [WebController::class, 'wa'])->name('web::wa');
+    Route::get('/about', [WebController::class, 'about'])->name('web::about');
     // Dashboard routes
     Route::get('/app', [AppController::class, 'index'])->name('app::index')->middleware(['auth', 'last.seen']);
     Route::get('/app/profile', [AppController::class, 'profile'])->name('app::profile')->middleware(['auth', 'last.seen']);

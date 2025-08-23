@@ -233,7 +233,7 @@
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('About') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Startup Playbook') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Partnerships') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Terms of Service') }}</a></li>
+                                <li><a href="{{ route('web::terms') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Terms of Service') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Privacy Policy') }}</a></li>
                             </ul>
                         </div>

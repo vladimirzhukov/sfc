@@ -62,4 +62,40 @@ class WebController extends Controller
             'cities' => $cities
         ]);
     }
+
+    public function terms()
+    {
+        $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('terms', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities
+        ]);
+    }
+
+    public function privacy()
+    {
+        $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('privacy', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities
+        ]);
+    }
+
+    public function about()
+    {
+        $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('about', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities
+        ]);
+    }
 }
