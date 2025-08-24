@@ -49,7 +49,7 @@
                 <p class="mt-8 text-lg font-medium text-pretty text-white sm:text-xl/8">{{ __('web.index_subheading') }}</p>
                 <div class="mt-10 flex items-center justify-center gap-x-6">
                     <a href="{{ route('signup') }}" class="rounded-md bg-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500">Join Us <span aria-hidden="true">→</span></a>
-                    <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Learn more') }} <span aria-hidden="true">→</span></a>
+                    <a href="{{ route('web::about') }}" class="text-sm/6 font-semibold text-white">{{ __('Learn more') }} <span aria-hidden="true">→</span></a>
                 </div>
             </div>
         </div>

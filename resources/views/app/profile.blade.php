@@ -871,8 +871,9 @@ function languageSelector() {
 
         languages: [
                 @php
-                    $languages = $meta->languages;
-                    ksort($languages);
+                //$languages = $meta->languages;
+                $languages = config('languages.locales');
+                ksort($languages);
                 @endphp
                 @foreach ($languages as $key => $item)
             { code: '{{ $key }}', name: '{{ $item['name'] }}', native: '{{ $item['native'] }}', flag: '{{ asset('assets/flags/language/' . $key . '.svg') }}' },
