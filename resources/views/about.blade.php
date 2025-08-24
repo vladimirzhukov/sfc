@@ -111,15 +111,47 @@
                 <img src="/assets/images/volodymyr-zhukov.png" alt="{{ __('Volodymyr Zhukov') }}" class="mx-auto size-56 rounded-full outline-1 -outline-offset-1 outline-black/5 dark:outline-white/10" />
                 <h3 class="mt-6 text-base/7 font-semibold tracking-tight text-gray-900 dark:text-white">{{ __('Volodymyr Zhukov') }}</h3>
                 <p class="text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Founder & Community Leader') }}</p>
+                <ul role="list" class="mt-4 flex justify-center gap-x-6">
+                    <li>
+                        <a href="https://linkedin.com/in/vlzhukov" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
+                            <span class="sr-only">LinkedIn</span>
+                            <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
                 <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.about_10') }}</p>
             </li>
             <li>
                 <img src="/assets/images/carmine-masiello.jpeg" alt="{{ __('Carmine Masiello') }}" class="mx-auto size-56 rounded-full outline-1 -outline-offset-1 outline-black/5 dark:outline-white/10" />
                 <h3 class="mt-6 text-base/7 font-semibold tracking-tight text-gray-900 dark:text-white">{{ __('Carmine Masiello') }}</h3>
                 <p class="text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Working Afternoons Innovator') }}</p>
+                <ul role="list" class="mt-4 flex justify-center gap-x-6">
+                    <li>
+                        <a href="https://linkedin.com/in/carminemasiello" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
+                            <span class="sr-only">LinkedIn</span>
+                            <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
                 <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.about_11') }}</p>
             </li>
         </ul>
+    </div>
+</div>
+<div class="bg-gray-100 py-24 sm:py-32 dark:bg-gray-900">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:text-center">
+            <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Join Our Movement') }}</h2>
+            <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance dark:text-white">{{ __('Become Part of Something Bigger') }}</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.about_21') }}</p>
+        </div>
+        <div class="mx-auto mt-16 max-w-2xl text-center">
+            <a href="{{ route('web::wa') }}" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400">{{ __('Explore Working Afternoons') }}</a>
+        </div>
     </div>
 </div>
 <div class="relative bg-white dark:bg-gray-900">
@@ -148,18 +180,6 @@
                     <p class="mt-6">{{ __('web.about_20') }}</p>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="bg-gray-100 py-24 sm:py-32 dark:bg-gray-900">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl lg:text-center">
-            <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Join Our Movement') }}</h2>
-            <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance dark:text-white">{{ __('Become Part of Something Bigger') }}</p>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.about_21') }}</p>
-        </div>
-        <div class="mx-auto mt-16 max-w-2xl text-center">
-            <a href="{{ route('web::wa') }}" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400">{{ __('Explore Working Afternoons') }}</a>
         </div>
     </div>
 </div>
