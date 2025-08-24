@@ -239,7 +239,7 @@
                         <div class="mt-10 md:mt-0">
                             <h3 class="text-sm/6 font-semibold text-white">{{ __('Resources') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('About') }}</a></li>
+                                <li><a href="{{ route('web::about') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('About') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Startup Playbook') }}</a></li>
                                 <li><a href="{{ route('web::partnerships') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Partnerships') }}</a></li>
                                 <li><a href="{{ route('web::terms') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Terms of Service') }}</a></li>

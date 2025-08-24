@@ -31,7 +31,7 @@
     },{
         "@@type": "ListItem",
         "position": 2,
-        "name": "{{ __('Working Afternoons') }}",
+        "name": "{{ __('Partnerships') }}",
         "item": "{{ url()->current() }}"
     }]
 }
