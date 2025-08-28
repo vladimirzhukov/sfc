@@ -109,4 +109,9 @@ return [
     'about_19' => 'Únete a nosotros y conviértete en parte de una comunidad próspera que está moldeando el futuro del emprendimiento e innovación en Chipre.',
     'about_20' => 'Descubre próximos eventos Working Afternoons en tu ciudad y comienza a construir relaciones significativas con emprendedores y profesionales hoy mismo.',
     'about_21' => 'Conecta con emprendedores, comparte ideas y construye las relaciones que impulsarán tu próximo gran avance.',
+    'contact_1' => 'Conéctate con emprendedores afines, accede a oportunidades de mentoría y sé parte del ecosistema de startups más vibrante de Chipre. Ya sea que estés lanzando tu primer emprendimiento o escalando tu negocio, SFC.CY es tu puerta de entrada al éxito.',
+    'contact_2' => 'Escapa de tu oficina en casa y únete a la comunidad de co-working más productiva de Chipre. Flexibilidad sin cita previa: solo trae tu laptop y trabaja junto a profesionales motivados.',
+    'contact_3' => 'Conéctate con fundadores experimentados y expertos de la industria que pueden guiar tu viaje startup con ideas prácticas y conexiones.',
+    'contact_4' => 'Accede a talleres exclusivos, oportunidades de financiamiento, orientación legal y recursos de desarrollo empresarial adaptados al ecosistema de startups de Chipre.',
+    'contact_5' => 'Ya sea que busques unirte a nuestra comunidad, asociarte con nosotros o simplemente quieras aprender más sobre la escena de startups en Chipre, nos encantaría saber de ti. Construyamos algo increíble juntos.',
 ];

@@ -109,4 +109,9 @@ return [
     'about_19' => 'Schließen Sie sich uns an und werden Sie Teil einer florierenden Community, die die Zukunft des Unternehmertums und der Innovation in Zypern prägt.',
     'about_20' => 'Entdecken Sie kommende Working Afternoons Events in Ihrer Stadt und beginnen Sie noch heute, bedeutungsvolle Beziehungen mit Unternehmern und Fachkräften aufzubauen.',
     'about_21' => 'Vernetzen Sie sich mit Unternehmern, teilen Sie Ideen und bauen Sie die Beziehungen auf, die Ihren nächsten Durchbruch vorantreiben werden.',
+    'contact_1' => 'Knüpfen Sie Kontakte zu gleichgesinnten Unternehmern, erhalten Sie Mentoring-Möglichkeiten und werden Sie Teil von Zyperns lebendigstem Startup-Ökosystem. Egal, ob Sie Ihr erstes Unternehmen gründen oder Ihr Geschäft ausbauen – SFC.CY ist Ihr Tor zum Erfolg.',
+    'contact_2' => 'Verlassen Sie Ihr Homeoffice und schließen Sie sich Zyperns produktivster Co-Working-Community an. Drop-in Flexibilität ohne RSVP - bringen Sie einfach Ihren Laptop mit und arbeiten Sie neben motivierten Fachleuten.',
+    'contact_3' => 'Lassen Sie sich mit erfahrenen Gründern und Branchenexperten zusammenbringen, die Ihre Startup-Reise mit praktischen Einblicken und Verbindungen leiten können.',
+    'contact_4' => 'Erhalten Sie Zugang zu exklusiven Workshops, Finanzierungsmöglichkeiten, rechtlicher Beratung und Ressourcen zur Geschäftsentwicklung, die speziell für das Startup-Ökosystem in Zypern entwickelt wurden.',
+    'contact_5' => 'Egal, ob Sie unserer Community beitreten, eine Partnerschaft mit uns eingehen oder einfach mehr über die Startup-Szene in Zypern erfahren möchten – wir würden uns freuen, von Ihnen zu hören. Lassen Sie uns gemeinsam etwas Großartiges aufbauen.',
 ];

@@ -110,4 +110,22 @@ class WebController extends Controller
             'cities' => $cities
         ]);
     }
+
+    public function contact()
+    {
+        $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('contact', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities
+        ]);
+    }
+
+    public function contactSubmit(Request $request)
+    {
+        //-4914189896
+
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\ContactController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
@@ -30,6 +31,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::get('/working-afternoons', [WebController::class, 'wa'])->name('web::wa');
     Route::get('/about', [WebController::class, 'about'])->name('web::about');
     Route::get('/partnerships', [WebController::class, 'partnerships'])->name('web::partnerships');
+    Route::get('/contact', [WebController::class, 'contact'])->name('web::contact');
+    Route::post('/contact', [ContactController::class, 'submit'])->name('web::contact::submit');
+    Route::get('/events', [WebController::class, 'events'])->name('web::events');
+    Route::get('/startups', [WebController::class, 'startups'])->name('web::startups');
     // Dashboard routes
     Route::get('/app', [AppController::class, 'index'])->name('app::index')->middleware(['auth', 'last.seen']);
     Route::get('/app/profile', [AppController::class, 'profile'])->name('app::profile')->middleware(['auth', 'last.seen']);

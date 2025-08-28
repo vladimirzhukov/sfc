@@ -109,4 +109,9 @@ return [
     'about_19' => 'Join us and become part of a thriving community that\'s shaping the future of entrepreneurship and innovation in Cyprus.',
     'about_20' => 'Discover upcoming Working Afternoons events in your city and start building meaningful relationships with fellow entrepreneurs and professionals today.',
     'about_21' => 'Connect with entrepreneurs, share ideas, and build the relationships that will drive your next breakthrough.',
+    'contact_1' => 'Connect with like-minded entrepreneurs, access mentorship opportunities, and be part of Cyprus\'s most vibrant startup ecosystem. Whether you\'re launching your first venture or scaling your business, SFC.CY is your gateway to success.',
+    'contact_2' => 'Escape your home office and join Cyprus\'s most productive co-working community. Drop-in flexibility with no RSVP needed - just bring your laptop and work alongside motivated professionals.',
+    'contact_3' => 'Get paired with experienced founders and industry experts who can guide your startup journey with practical insights and connections.',
+    'contact_4' => 'Access exclusive workshops, funding opportunities, legal guidance, and business development resources tailored for the Cyprus startup ecosystem.',
+    'contact_5' => 'Whether you\'re looking to join our community, partner with us, or simply want to learn more about the Cyprus startup scene, we\'d love to hear from you. Let\'s build something amazing together.',
 ];

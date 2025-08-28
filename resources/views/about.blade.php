@@ -126,7 +126,7 @@
             <li>
                 <img src="/assets/images/carmine-masiello.jpeg" alt="{{ __('Carmine Masiello') }}" class="mx-auto size-56 rounded-full outline-1 -outline-offset-1 outline-black/5 dark:outline-white/10" />
                 <h3 class="mt-6 text-base/7 font-semibold tracking-tight text-gray-900 dark:text-white">{{ __('Carmine Masiello') }}</h3>
-                <p class="text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Working Afternoons Innovator') }}</p>
+                <p class="text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Startup Mentor, Entrepreneur, Tech Enthusiast') }}</p>
                 <ul role="list" class="mt-4 flex justify-center gap-x-6">
                     <li>
                         <a href="https://linkedin.com/in/carminemasiello" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
