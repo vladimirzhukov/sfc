@@ -167,6 +167,51 @@ class SitemapController extends Controller
         <xhtml:link rel="alternate" hreflang="x-default" href="https://sfccy.com/about" />
     </url>';
         echo '
+    <url>
+        <loc>https://sfccy.com/' . (($language != 'en') ? $language . '/' : '') . 'contact</loc>
+        <lastmod>' . date('Y-m-d') . '</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>';
+        foreach ($languages as $key => $lang) {
+            //if ($key != $language) {
+            echo '
+        <xhtml:link rel="alternate" hreflang="' . $key . '" href="https://sfccy.com/' . (($key != 'en') ? $key . '/' : '') . 'contact" />';
+            //}
+        }
+        echo '
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://sfccy.com/contact" />
+    </url>';
+        echo '
+    <url>
+        <loc>https://sfccy.com/' . (($language != 'en') ? $language . '/' : '') . 'events</loc>
+        <lastmod>' . date('Y-m-d') . '</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>';
+        foreach ($languages as $key => $lang) {
+            //if ($key != $language) {
+            echo '
+        <xhtml:link rel="alternate" hreflang="' . $key . '" href="https://sfccy.com/' . (($key != 'en') ? $key . '/' : '') . 'events" />';
+            //}
+        }
+        echo '
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://sfccy.com/events" />
+    </url>';
+        echo '
+    <url>
+        <loc>https://sfccy.com/' . (($language != 'en') ? $language . '/' : '') . 'startups</loc>
+        <lastmod>' . date('Y-m-d') . '</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>';
+        foreach ($languages as $key => $lang) {
+            //if ($key != $language) {
+            echo '
+        <xhtml:link rel="alternate" hreflang="' . $key . '" href="https://sfccy.com/' . (($key != 'en') ? $key . '/' : '') . 'startups" />';
+            //}
+        }
+        echo '
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://sfccy.com/startups" />
+    </url>';
+        echo '
 </urlset>';
     }
 }
