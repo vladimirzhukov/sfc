@@ -75,8 +75,8 @@
             </div>
             <div class="hidden lg:flex lg:gap-x-12">
                 <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Ecosystem') }}</a>
-                <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Events') }}</a>
-                <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Startups') }}</a>
+                <a href="{{ route('web::events') }}" class="text-sm/6 font-semibold text-white">{{ __('Events') }}</a>
+                <a href="{{ route('web::startups') }}" class="text-sm/6 font-semibold text-white">{{ __('Startups') }}</a>
                 <a href="{{ route('web::contact') }}" class="text-sm/6 font-semibold text-white">{{ __('Contact') }}</a>
                 <a @click="languagePopup = true" href="javascript:void(0);" class="text-sm/6 font-semibold text-white"><img class="mr-1 rtl:ml-1 rtl:mr-0 inline-block" src="/assets/flags/language/{{ $meta->locale }}.svg" width="24"> {{ strtoupper(!empty($meta->locale) ? $meta->locale : 'en') }} ({{ (!empty($meta->language) ? $meta->language : '') }})</a>
             </div>
@@ -106,8 +106,8 @@
                             <div class="-my-6 divide-y divide-gray-500/25">
                                 <div class="space-y-2 py-6">
                                     <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Ecosystem') }}</a>
-                                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Events') }}</a>
-                                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Startups') }}</a>
+                                    <a href="{{ route('web::events') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Events') }}</a>
+                                    <a href="{{ route('web::startups') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Startups') }}</a>
                                     <a href="{{ route('web::contact') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Contact') }}</a>
                                     <a @click="languagePopup = true" href="javascript:void(0);" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"><img class="mr-1 rtl:ml-1 rtl:mr-0 inline-block" src="/assets/flags/language/{{ $meta->locale }}.svg" width="24"> {{ strtoupper(!empty($meta->locale) ? $meta->locale : 'en') }} ({{ (!empty($meta->language) ? $meta->language : '') }})</a>
                                 </div>
@@ -220,7 +220,7 @@
                                         <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ $city->name }}</a></li>
                                     @endforeach
                                 @endif
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('All cities') }}</a></li>
+                                <li><a href="{{ route('web::events') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('All cities') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -233,7 +233,7 @@
                                         <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ $city->name }}</a></li>
                                     @endforeach
                                 @endif
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('All cities') }}</a></li>
+                                <li><a href="{{ route('web::startups') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('All cities') }}</a></li>
                             </ul>
                         </div>
                         <div class="mt-10 md:mt-0">

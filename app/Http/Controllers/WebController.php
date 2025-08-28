@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StartupCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Meta;
@@ -123,9 +124,31 @@ class WebController extends Controller
         ]);
     }
 
-    public function contactSubmit(Request $request)
+    public function events()
     {
-        //-4914189896
+        $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('events', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities
+        ]);
+    }
 
+    public function startups()
+    {
+        $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        $categories = StartupCategory::where('parent_id', 0)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
+        $subcategories = StartupCategory::where('parent_id', '!=', 0)->count();
+        return view('startups', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities,
+            'categories' => $categories,
+            'subcategories' => $subcategories
+        ]);
     }
 }

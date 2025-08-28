@@ -114,4 +114,6 @@ return [
     'contact_3' => 'Zostań połączony z doświadczonymi założycielami i ekspertami branżowymi, którzy mogą poprowadzić Twoją podróż startupową, oferując praktyczne spostrzeżenia i kontakty.',
     'contact_4' => 'Access exclusive workshops, funding opportunities, legal guidance, and business development resources tailored for the Cyprus startup ecosystem.',
     'contact_5' => 'Whether you\'re looking to join our community, partner with us, or simply want to learn more about the Cyprus startup scene, we\'d love to hear from you. Let\'s build something amazing together.',
+    'events_1' => 'Łącz się, ucz i rozwijaj razem z dynamicznym ekosystemem startupów na Cyprze. Od spotkań networkingowych po konkursy pitchów – odkryj wydarzenia, które napędzają innowacje we wszystkich największych miastach.',
+    'startups_1' => 'Poznaj innowacyjne startupy budujące przyszłość z Cypru. Od fintech po healthtech, odkryj firmy, które mają wpływ lokalnie i globalnie.'
 ];

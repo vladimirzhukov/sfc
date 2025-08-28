@@ -114,4 +114,6 @@ return [
     'contact_3' => 'Get paired with experienced founders and industry experts who can guide your startup journey with practical insights and connections.',
     'contact_4' => 'Access exclusive workshops, funding opportunities, legal guidance, and business development resources tailored for the Cyprus startup ecosystem.',
     'contact_5' => 'Whether you\'re looking to join our community, partner with us, or simply want to learn more about the Cyprus startup scene, we\'d love to hear from you. Let\'s build something amazing together.',
+    'events_1' => 'Connect, learn, and grow with Cyprus\' vibrant startup ecosystem. From networking meetups to pitch competitions, discover events that fuel innovation across all major cities.',
+    'startups_1' => 'Explore innovative startups building the future from Cyprus. From fintech to healthtech, discover companies that are making an impact locally and globally.',
 ];

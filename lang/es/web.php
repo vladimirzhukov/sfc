@@ -114,4 +114,6 @@ return [
     'contact_3' => 'Conéctate con fundadores experimentados y expertos de la industria que pueden guiar tu viaje startup con ideas prácticas y conexiones.',
     'contact_4' => 'Accede a talleres exclusivos, oportunidades de financiamiento, orientación legal y recursos de desarrollo empresarial adaptados al ecosistema de startups de Chipre.',
     'contact_5' => 'Ya sea que busques unirte a nuestra comunidad, asociarte con nosotros o simplemente quieras aprender más sobre la escena de startups en Chipre, nos encantaría saber de ti. Construyamos algo increíble juntos.',
+    'events_1' => 'Conéctate, aprende y crece con el vibrante ecosistema de startups de Chipre. Desde encuentros de networking hasta competiciones de pitch, descubre eventos que impulsan la innovación en todas las principales ciudades.',
+    'startups_1' => 'Explora startups innovadoras que están construyendo el futuro desde Chipre. Desde fintech hasta healthtech, descubre empresas que están teniendo un impacto a nivel local y global.',
 ];
