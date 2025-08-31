@@ -57,4 +57,12 @@ return [
     'index_services' => 'Comparte y gestiona información sobre tus servicios personales, habilidades y experiencia con la Comunidad de Fundadores de Startups en Chipre.',
     'index_events' => 'Comparte y gestiona información sobre tus eventos, encuentros e iniciativas con la Comunidad de Fundadores de Startups en Chipre.',
     'community_members' => 'Conoce a nuestros miembros de la comunidad que están contribuyendo activamente al ecosistema de startups en Chipre.',
+    'event_tip_5' => '&bull; Los eventos gratuitos atraen a más asistentes',
+    'event_tip_6' => '&bull; Ideal para crear comunidad y hacer networking',
+    'event_tip_7' => '&bull; Considera pedir donaciones o patrocinios',
+    'event_tip_8' => '&bull; Perfecto para talleres y eventos educativos',
+    'event_tip_9' => '&bull; Investiga eventos similares en Chipre para fijar precios',
+    'event_tip_10' => '&bull; Considera descuentos por compra anticipada',
+    'event_tip_11' => '&bull; Ten en cuenta los costos de lugar, catering y materiales',
+    'event_tip_12' => '&bull; Indica los precios en euros, ya que es la moneda local',
 ];

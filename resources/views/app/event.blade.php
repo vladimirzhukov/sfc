@@ -194,6 +194,92 @@ input[type="date"] {
                     </template>
                 </div>
 
+                <div class="sm:col-span-6" x-data="priceSelector()">
+                    <label class="block text-sm/6 font-medium text-gray-900">{{ __('Event Price') }}</label>
+                    <p class="mt-1 text-sm text-gray-600">{{ __('Set the price for your event or mark it as free') }}</p>
+                    <div class="mt-3">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="is_free" name="is_free" x-model="isFree" @change="if (isFree) price = ''" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="is_free" class="ml-2 rtl:mr-2 block text-sm text-gray-900 font-medium">{{ __('This event is FREE') }}</label>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">{{ __('Check this box if your event is free to attend') }}</p>
+                    </div>
+                    <div class="mt-4" :class="{ 'opacity-50 pointer-events-none': isFree }">
+                        <div class="sm:col-span-2">
+                            <label for="price" class="block text-xs font-medium text-gray-700 mb-1">{{ __('Amount (EUR)') }}</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 sm:text-sm">€</span>
+                                </div>
+                                <input type="text" name="price" id="price" x-model="price" :disabled="isFree" class="block w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-100 disabled:cursor-not-allowed" placeholder="0.00" @input="price = $event.target.value.replace(/[^0-9.]/g, '')">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 sm:text-sm">EUR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div x-show="price || isFree" class="mt-3 p-3 rounded-md border" :class="isFree ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg class="h-5 w-5 mr-2" :class="isFree ? 'text-green-500' : 'text-green-500'" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>
+                                <span class="text-sm font-medium" :class="isFree ? 'text-green-900' : 'text-gray-900'">{{ __('Event Price:') }}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <template x-if="isFree">
+                                    <span class="text-2xl font-bold text-green-600">{{ __('FREE') }}</span>
+                                </template>
+                                <template x-if="!isFree && price">
+                                    <div class="flex items-center">
+                                        <span class="text-lg font-bold text-gray-900">
+                                            €<span x-text="formatPrice()"></span>
+                                            <span class="text-sm font-normal text-gray-500 ml-1">EUR</span>
+                                        </span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-xs" :class="isFree ? 'text-green-600' : 'text-gray-600'">
+                            <div class="flex justify-between">
+                                <span>{{ __('Event Type:') }}</span>
+                                <span x-text="isFree ? '{{ __('Free Event') }}' : '{{ __('Paid Event') }}'"></span>
+                            </div>
+                            <div x-show="!isFree" class="flex justify-between">
+                                <span>{{ __('Currency:') }}</span>
+                                <span>Euro (EUR)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-3 bg-blue-50 rounded-md border border-blue-200">
+                        <div class="flex">
+                            <svg class="h-5 w-5 text-blue-400 mt-0.5 mr-2 rtl:ml-2 rtl:mr-0 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <div class="text-sm text-blue-800">
+                                <p class="font-medium mb-1">{{ __('Pricing Tips:') }}</p>
+                                <ul class="text-xs space-y-1">
+                                    <template x-if="isFree">
+                                        <div>
+                                            <li>{!! __('app.event_tip_5') !!}</li>
+                                            <li>{!! __('app.event_tip_6') !!}</li>
+                                            <li>{!! __('app.event_tip_7') !!}</li>
+                                            <li>{!! __('app.event_tip_8') !!}</li>
+                                        </div>
+                                    </template>
+                                    <template x-if="!isFree">
+                                        <div>
+                                            <li>{!! __('app.event_tip_9') !!}</li>
+                                            <li>{!! __('app.event_tip_10') !!}</li>
+                                            <li>{!! __('app.event_tip_11') !!}</li>
+                                            <li>{!! __('app.event_tip_12') !!}</li>
+                                        </div>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="currency" value="EUR">
+                    <input type="hidden" name="price_amount" :value="isFree ? '0' : price">
+                    <input type="hidden" name="is_free_event" :value="isFree ? '1' : '0'">
+                </div>
+
                 <div class="col-span-full">
                     <label for="description" class="block text-sm/6 font-medium text-gray-900">{{ __('Description') }}</label>
                     <div class="mt-2">
@@ -238,6 +324,74 @@ input[type="date"] {
                         <span id="timezone-display">GMT+03:00 Nicosia</span>
                         <input type="hidden" name="timezone" id="timezone" value="">
                     </div>
+                </div>
+
+                <div class="sm:col-span-6" x-data="eventLanguageSelector()">
+                    <label class="block text-sm/6 font-medium text-gray-900">{{ __('Event Languages') }} ({{ __('Maximum 3') }})</label>
+                    <div class="relative mt-2">
+                        <button type="button" @click="open = !open" class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-3 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" :aria-expanded="open">
+                            <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6"><span class="block truncate" x-text="selectedLanguages.length > 0 ? `{{ __('Languages selected:') }} ${selectedLanguages.length}/3` : '{{ __('Select event languages...') }}'"></span></span>
+                            <svg class="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4 transition-transform duration-200" :class="{ 'rotate-180': open }" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd" /></svg>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" @click.away="open = false" class="absolute z-10 bg-white max-h-60 w-full overflow-auto rounded-md shadow-lg ring-1 ring-black/5 mt-1">
+                            <div class="sticky top-0 bg-white p-2 border-b border-gray-300 z-20">
+                                <input type="text" x-model="search" @keydown.escape="open = false" placeholder="{{ __('Search languages...') }}" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                            <div class="sticky top-12 bg-white border-b border-gray-100 z-10">
+                                <div class="flex justify-between items-center px-3 py-2">
+                                    <button type="button" @click="selectTop3()" :disabled="isMaxSelected()" class="text-xs font-medium disabled:text-gray-400 disabled:cursor-not-allowed" :class="isMaxSelected() ? 'text-gray-400' : 'text-indigo-600 hover:text-indigo-800'">{{ __('Select Top 3') }}</button>
+                                    <div class="text-xs text-gray-500">
+                                        <span x-text="selectedLanguages.length"></span>/3 {{ __('selected') }}
+                                    </div>
+                                    <button type="button" @click="clearAll()" class="text-xs text-gray-600 hover:text-gray-800 font-medium">{{ __('Clear All') }}</button>
+                                </div>
+                            </div>
+                            <template x-for="language in filteredLanguages" :key="language.code">
+                                <div @click="toggleLanguage(language)" class="relative cursor-pointer py-1 pr-9 pl-3 text-gray-900 select-none" :class="{'bg-indigo-50': isSelected(language.code), 'hover:bg-gray-50': !isSelected(language.code) && !isMaxSelected(), 'opacity-50 cursor-not-allowed': !isSelected(language.code) && isMaxSelected()}">
+                                    <div class="flex items-center">
+                                        <img :src="language.flag" :alt="language.name" class="size-5 shrink-0 rounded-xl mr-3" />
+                                        <div class="flex-1">
+                                            <span class="block truncate text-sm" x-text="language.name"></span>
+                                            <span class="block text-xs text-gray-500" x-text="language.native"></span>
+                                        </div>
+                                        <span x-show="isSelected(language.code)" class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600"><svg class="size-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" /></svg></span>
+                                        <span x-show="!isSelected(language.code) && isMaxSelected()" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400"><svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728" /></svg></span>
+                                    </div>
+                                </div>
+                            </template>
+                            <div x-show="filteredLanguages.length === 0" class="px-3 py-2 text-gray-500 text-sm">{{ __('No languages found') }}</div>
+                        </div>
+                    </div>
+                    <div x-show="selectedLanguages.length > 0" class="mt-3">
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="language in getSelectedLanguageObjects()" :key="language.code">
+                                <span class="inline-flex items-center gap-x-1.5 rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700">
+                                    <img :src="language.flag" :alt="language.name" class="size-4 rounded-full" />
+                                    <span x-text="language.name"></span>
+                                    <button type="button" @click="removeLanguage(language.code)" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-indigo-600/20">
+                                        <span class="sr-only">{{ __('Remove') }}</span>
+                                        <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-indigo-700/50 group-hover:stroke-indigo-700/75"><path d="m4 4 6 6m0-6-6 6" /></svg>
+                                    </button>
+                                </span>
+                            </template>
+                        </div>
+                        <p class="mt-2 text-xs text-gray-600">{{ __('Selected') }} <span x-text="selectedLanguages.length"></span> {{ __('of 3 languages') }}.
+                            <span x-show="getRemainingSlots() > 0">{{ __('You can select') }} <span x-text="getRemainingSlots()"></span> {{ __('more') }}.</span>
+                            <span x-show="getRemainingSlots() === 0" class="text-amber-600 font-medium">{{ __('Maximum languages selected.') }}</span>
+                        </p>
+                    </div>
+                    <div x-show="isMaxSelected()" class="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-md">
+                        <div class="flex">
+                            <svg class="h-5 w-5 text-amber-400 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.732 15.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+                            <div class="text-sm text-amber-800">
+                                <p class="font-medium">{{ __('Maximum languages reached') }}</p>
+                                <p class="text-xs mt-1">{{ __('You have selected the maximum of 3 languages for this event. Remove a language to select a different one.') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <template x-for="languageCode in selectedLanguages" :key="languageCode">
+                        <input type="hidden" name="languages[]" :value="languageCode">
+                    </template>
                 </div>
 
                 <div class="sm:col-span-6" x-data="locationPicker()">
@@ -922,7 +1076,204 @@ function categorySelector() {
         },
 
         init() {
-            this.selectedCategories = [{!! (!empty($event->categories) ? str_replace(array(']', '['), '"', str_replace('][', '","', $event->categories)) : '') !!}];
+            // Exclude parent categories
+            @php
+            $categories = '';
+            if (!empty($event->categories)) {
+                $categoryIDs = explode('][', trim($event->categories, '[]'));
+                if (!empty($categoryIDs)) {
+                    foreach ($categoryIDs as $categoryID) {
+                        if (empty($parentCategories[$categoryID])) {
+                            if (!empty($categories)) {
+                                $categories .= ', ';
+                            }
+                            $categories .= '"' . $categoryID . '"';
+                        }
+                    }
+                }
+            }
+            @endphp
+            this.selectedCategories = [{!! (!empty($categories) ? $categories : '') !!}];
+        }
+    }
+}
+
+function priceSelector() {
+    return {
+        price: '{{ (!empty($event->price) ? round($event->price, 2) : '') }}',
+        isFree: {{ (!empty($event->is_free) ? 'true' : 'false') }},
+
+        formatPrice() {
+            if (!this.price || this.isFree) return '';
+            let numericPrice = this.price.replace(/[^0-9.]/g, '');
+            const parts = numericPrice.split('.');
+            if (parts.length > 2) {
+                numericPrice = parts[0] + '.' + parts.slice(1).join('');
+            }
+            const price = parseFloat(numericPrice);
+            if (isNaN(price)) return '';
+            return new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            }).format(price);
+        },
+
+        toggleFree() {
+            this.isFree = !this.isFree;
+            if (this.isFree) {
+                this.price = '';
+            }
+        },
+
+        validatePrice() {
+            if (this.isFree) return true;
+
+            if (!this.price) return false;
+
+            const numericPrice = parseFloat(this.price.replace(/[^0-9.]/g, ''));
+            return !isNaN(numericPrice) && numericPrice >= 0;
+        },
+
+        getPriceValue() {
+            if (this.isFree) return 0;
+            const numericPrice = this.price.replace(/[^0-9.]/g, '');
+            return parseFloat(numericPrice) || 0;
+        },
+
+        init() {
+            // Initialize with existing event data if editing
+            @if(!empty($event->id))
+                this.price = '{{ (!empty($event->price) ? round($event->price, 2) : '') }}';
+            this.isFree = {{ (!empty($event->is_free) ? 'true' : 'false') }};
+            @endif
+
+            // Watch for changes to update hidden fields
+            this.$watch('price', () => {
+                const priceInput = document.querySelector('input[name="price_amount"]');
+                if (priceInput) {
+                    priceInput.value = this.isFree ? '0' : this.getPriceValue();
+                }
+            });
+
+            this.$watch('isFree', () => {
+                const freeInput = document.querySelector('input[name="is_free_event"]');
+                const priceInput = document.querySelector('input[name="price_amount"]');
+                if (freeInput) {
+                    freeInput.value = this.isFree ? '1' : '0';
+                }
+                if (priceInput) {
+                    priceInput.value = this.isFree ? '0' : this.getPriceValue();
+                }
+                if (this.isFree) {
+                    this.price = '';
+                }
+            });
+        }
+    }
+}
+
+function eventLanguageSelector() {
+    return {
+        open: false,
+        search: '',
+        selectedLanguages: [], // Array of language codes
+
+        languages: [
+            @php
+            $languages = config('languages.locales');
+            ksort($languages);
+            @endphp
+            @foreach ($languages as $key => $item)
+            { code: '{{ $key }}', name: '{{ $item['name'] }}', native: '{{ $item['native'] }}', flag: '{{ asset('assets/flags/language/' . $key . '.svg') }}' },
+            @endforeach
+        ],
+
+        get filteredLanguages() {
+            if (!this.search) {
+                return this.languages.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            const searchTerm = this.search.toLowerCase();
+            return this.languages.filter(language =>
+                language.name.toLowerCase().includes(searchTerm) ||
+                language.native.toLowerCase().includes(searchTerm) ||
+                language.code.toLowerCase().includes(searchTerm)
+            ).sort((a, b) => a.name.localeCompare(b.name));
+        },
+
+        toggleLanguage(language) {
+            if (!this.canSelectMore() && !this.isSelected(language.code)) {
+                return; // Cannot select more languages
+            }
+
+            const index = this.selectedLanguages.indexOf(language.code);
+            if (index > -1) {
+                // Remove language
+                this.selectedLanguages.splice(index, 1);
+            } else {
+                // Add language (only if under limit)
+                if (this.selectedLanguages.length < 3) {
+                    this.selectedLanguages.push(language.code);
+                }
+            }
+        },
+
+        removeLanguage(languageCode) {
+            const index = this.selectedLanguages.indexOf(languageCode);
+            if (index > -1) {
+                this.selectedLanguages.splice(index, 1);
+            }
+        },
+
+        isSelected(languageCode) {
+            return this.selectedLanguages.includes(languageCode);
+        },
+
+        selectTop3() {
+            // Select first 3 languages alphabetically
+            const top3 = this.filteredLanguages.slice(0, 3);
+            this.selectedLanguages = top3.map(lang => lang.code);
+        },
+
+        clearAll() {
+            this.selectedLanguages = [];
+        },
+
+        getSelectedLanguageObjects() {
+            return this.selectedLanguages.map(code =>
+                this.languages.find(lang => lang.code === code)
+            ).filter(lang => lang); // Filter out any undefined results
+        },
+
+        isMaxSelected() {
+            return this.selectedLanguages.length >= 3;
+        },
+
+        canSelectMore() {
+            return this.selectedLanguages.length < 3;
+        },
+
+        getRemainingSlots() {
+            return Math.max(0, 3 - this.selectedLanguages.length);
+        },
+
+        // Initialize with existing event data
+        init() {
+            @php
+            $selectedLanguages = '';
+            if (!empty($event->languages)) {
+                $languageIDs = explode('][', trim($event->languages, '[]'));
+                if (!empty($languageIDs)) {
+                    foreach ($languageIDs as $languageID) {
+                        if (!empty($selectedLanguages)) {
+                            $selectedLanguages .= ',';
+                        }
+                        $selectedLanguages .= "'" . $languageID . "'";
+                    }
+                }
+            }
+            @endphp
+                this.selectedLanguages = [{!! (!empty($selectedLanguages) ? $selectedLanguages : '') !!}];
         }
     }
 }

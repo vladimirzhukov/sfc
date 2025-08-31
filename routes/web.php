@@ -34,7 +34,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::get('/contact', [WebController::class, 'contact'])->name('web::contact');
     Route::post('/contact', [ContactController::class, 'submit'])->name('web::contact::submit');
     Route::get('/events', [WebController::class, 'events'])->name('web::events');
+    Route::get('/event/{link}', [WebController::class, 'event'])->name('web::event');
+    Route::get('/events/{link}', [WebController::class, 'eventsFilter'])->name('web::events::filter');
+    Route::get('/events/{link}/{category}', [WebController::class, 'eventsFilterCategory'])->name('web::events::filter::category');
     Route::get('/startups', [WebController::class, 'startups'])->name('web::startups');
+    Route::get('/startup/{link}', [WebController::class, 'startup'])->name('web::startup');
+    Route::get('/startups/{link}', [WebController::class, 'startupsFilter'])->name('web::startups::filter');
+    Route::get('/startups/{link}/{category}', [WebController::class, 'startupsFilterCategory'])->name('web::startups::filter::category');
     // Dashboard routes
     Route::get('/app', [AppController::class, 'index'])->name('app::index')->middleware(['auth', 'last.seen']);
     Route::get('/app/profile', [AppController::class, 'profile'])->name('app::profile')->middleware(['auth', 'last.seen']);

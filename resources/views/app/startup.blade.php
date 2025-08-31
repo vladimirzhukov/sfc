@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 <style>
 .ql-container {
@@ -198,6 +199,98 @@
                     <p class="mt-3 text-sm/6 text-gray-600">{{ __('Write a few sentences about your startup.') }}</p>
                 </div>
 
+                <div class="sm:col-span-3">
+                    <label for="founding_year" class="block text-sm font-medium leading-6 text-gray-900">{{ __('Founding Year') }}</label>
+                    <div class="mt-2">
+                        <select name="founding_year" id="founding_year" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <option value="">{{ __('Select founding year') }}</option>
+                            @php
+                            $currentYear = date('Y');
+                            $selectedYear = old('founding_year', $startup->founding_year ?? null);
+                            @endphp
+                            @for($year = $currentYear; $year >= 2010; $year--)
+                                <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>{{ $year }}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    @error('founding_year')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="is_fundraising" class="block text-sm font-medium leading-6 text-gray-900">{{ __('Fundraising Status') }}</label>
+                    <div class="mt-2">
+                        <select name="is_fundraising" id="is_fundraising" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <option value="0" {{ old('is_fundraising', $startup->is_fundraising ?? 0) == 0 ? 'selected' : '' }}>{{ __('Not actively fundraising') }}</option>
+                            <option value="1" {{ old('is_fundraising', $startup->is_fundraising ?? 0) == 1 ? 'selected' : '' }}>{{ __('Actively fundraising') }}</option>
+                        </select>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-500">{{ __('Select whether your startup is currently seeking investment or funding.') }}</p>
+                    @error('is_fundraising')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="sm:col-span-6" x-data="locationPicker()">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <svg class="size-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            <h3 class="text-base font-medium text-gray-900">{{ __('Add Startup Location') }}</h3>
+                        </div>
+                        <p class="text-sm text-gray-600">{{ __('Physical location or online startup') }}</p>
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="location_type" value="offline" @change="isOnline = false" :checked="!isOnline" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                                <span class="ml-2 text-sm text-gray-700">{{ __('Physical location') }}</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="location_type" value="online" @change="isOnline = true" :checked="isOnline" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                                <span class="ml-2 text-sm text-gray-700">{{ __('Online startup') }}</span>
+                            </label>
+                            <input type="hidden" name="is_online" :value="isOnline ? 1 : 0">
+                        </div>
+                        <div x-show="isOnline" x-transition class="space-y-2">
+                            <label for="link" class="block text-sm font-medium text-gray-700">{{ __('Website Link') }}</label>
+                            <input type="url" name="link" id="link" placeholder="https://..." class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" value="{{ (!empty($startup->link) ? $startup->link : '') }}" />
+                        </div>
+                        <div x-show="!isOnline" x-transition class="space-y-4">
+                            <div class="relative">
+                                <label for="location" class="block text-sm font-medium text-gray-700">{{ __('Startup Location') }}</label>
+                                <input type="text" name="location" id="location" placeholder="{{ __('Enter startup location...') }}" class="mt-1 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" @input="searchLocations($event.target.value)" @focus="showDropdown = true" @keydown.escape="showDropdown = false" @keydown.arrow-down.prevent="navigateResults(1)" @keydown.arrow-up.prevent="navigateResults(-1)" @keydown.enter.prevent="selectResult()" x-model="locationQuery" autocomplete="off" value="{{ (!empty($startup->location) ? $startup->location : '') }}" />
+                                <div x-show="showDropdown && searchResults.length > 0" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" @click.away="showDropdown = false" class="absolute z-20 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md border border-gray-300 overflow-auto">
+                                    <template x-for="(result, index) in searchResults" :key="index">
+                                        <div @click="selectLocation(result, index)" :class="{'bg-indigo-50': selectedIndex === index}" class="px-4 py-3 cursor-pointer hover:bg-gray-50 border-b border-gray-100 last:border-b-0">
+                                            <div class="flex items-start space-x-3">
+                                                <svg class="size-5 text-gray-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="font-medium text-gray-900" x-text="result.name"></div>
+                                                    <div class="text-sm text-gray-500" x-text="result.address"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template x-if="searchResults.length === 0 && locationQuery.length > 2 && !isSearching">
+                                        <div class="px-4 py-3 text-sm text-gray-500 text-center">
+                                            <div class="flex items-center justify-center space-x-2">
+                                                <svg class="size-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                                                <span>{{ __('Use') }} "<span x-text="locationQuery" class="font-medium"></span>"</span>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">{{ __('Choose Location on Map') }}</label>
+                                <div id="map" class="h-64 w-full rounded-lg border border-gray-300 z-10"></div>
+                                <p class="text-xs text-gray-500">{{ __('Click on the map to set the exact location, or search for an address above.') }}</p>
+                            </div>
+                            <input type="hidden" name="lat" id="lat" :value="coordinates.lat" />
+                            <input type="hidden" name="lon" id="lon" :value="coordinates.lon" />
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-span-full mt-4">
                     <div class="flex items-center">
                         <input type="checkbox" id="active" name="active" value="1" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" {{ (old('active', $startup->active ?? true)) ? 'checked' : '' }}>
@@ -231,6 +324,7 @@
 @endsection
 
 @section('js')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -252,6 +346,123 @@ document.addEventListener('DOMContentLoaded', function() {
         const html = quill.root.innerHTML;
         document.getElementById('description').value = html;
     });
+
+    let map, marker;
+    const defaultLat = 35.1856;
+    const defaultLng = 33.3823;
+
+    function initMap() {
+        map = L.map('map').setView([defaultLat, defaultLng], 13);
+
+        window.startupMap = map;
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        map.on('click', function(e) {
+            setMarker(e.latlng.lat, e.latlng.lng);
+            reverseGeocode(e.latlng.lat, e.latlng.lng);
+        });
+
+        map.on('click', function(e) {
+            setMarker(e.latlng.lat, e.latlng.lng, true);
+        });
+    }
+
+    function setMarker(lat, lng, draggable = false) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+
+        marker = L.marker([lat, lng], { draggable: draggable }).addTo(map);
+
+        const locationPicker = document.querySelector('[x-data*="locationPicker"]');
+        if (locationPicker && locationPicker._x_dataStack) {
+            locationPicker._x_dataStack[0].coordinates.lat = lat;
+            locationPicker._x_dataStack[0].coordinates.lon = lng;
+        }
+
+        const latInput = document.getElementById('lat');
+        const lonInput = document.getElementById('lon');
+        if (latInput) latInput.value = lat;
+        if (lonInput) lonInput.value = lng;
+
+        if (draggable) {
+            marker.on('dragend', function(e) {
+                const position = e.target.getLatLng();
+                setMarker(position.lat, position.lng, true);
+                reverseGeocode(position.lat, position.lng);
+            });
+        }
+    }
+
+    window.setStartupMapMarker = setMarker;
+
+    function reverseGeocode(lat, lng) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&countrycodes=cy&format=json&addressdetails=1`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.display_name) {
+                    const locationInput = document.getElementById('location');
+                    if (locationInput) {
+                        locationInput.value = data.display_name;
+
+                        const locationPicker = document.querySelector('[x-data*="locationPicker"]');
+                        if (locationPicker && locationPicker._x_dataStack) {
+                            locationPicker._x_dataStack[0].locationQuery = data.display_name;
+                        }
+                    }
+                }
+            })
+            .catch(error => console.error('Reverse geocoding error:', error));
+    }
+
+    // Map initialization observer
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                const mapContainer = document.getElementById('map');
+                if (mapContainer && mapContainer.offsetParent !== null && !map) {
+                    setTimeout(() => {
+                        initMap();
+                        setTimeout(() => {
+                            if (map) {
+                                map.invalidateSize();
+                            }
+                        }, 100);
+                    }, 100);
+                }
+            }
+        });
+    });
+
+    const mapContainer = document.getElementById('map');
+    if (mapContainer) {
+        observer.observe(mapContainer, { attributes: true });
+
+        if (mapContainer.offsetParent !== null) {
+            initMap();
+        }
+    }
+
+    setTimeout(() => {
+        initMap();
+        setTimeout(() => {
+            if (map) {
+                map.invalidateSize();
+            }
+        }, 100);
+    }, 100);
+
+    @if(!empty($startup->lat) && !empty($startup->lon))
+    setTimeout(() => {
+        if (window.startupMap && window.setStartupMapMarker) {
+            window.startupMap.setView([{{ $startup->lat }}, {{ $startup->lon }}], 15);
+            window.setStartupMapMarker({{ $startup->lat }}, {{ $startup->lon }}, true);
+        }
+    }, 500);
+    @endif
 });
 </script>
 <script>
@@ -267,6 +478,117 @@ function makeSecureUrl(path) {
     }
     return path;
     @endif
+}
+
+function locationPicker() {
+    return {
+        isOnline: {{ (!empty($startup->is_online) ? 'true' : 'false') }},
+        locationQuery: '{{ (!empty($startup->location) ? $startup->location : '') }}',
+        searchResults: [],
+        showDropdown: false,
+        selectedIndex: -1,
+        isSearching: false,
+        searchTimeout: null,
+        coordinates: {
+            lat: {{ (!empty($startup->lat) ? $startup->lat : 0) }},
+            lon: {{ (!empty($startup->lon) ? $startup->lon : 0) }}
+        },
+
+        searchLocations(query) {
+            this.locationQuery = query;
+            clearTimeout(this.searchTimeout);
+
+            if (query.length < 3) {
+                this.searchResults = [];
+                this.showDropdown = false;
+                return;
+            }
+
+            this.isSearching = true;
+            this.searchTimeout = setTimeout(() => {
+                this.performSearch(query);
+            }, 300);
+        },
+
+        async performSearch(query) {
+            const searchQuery = `${query}, Cyprus`;
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(searchQuery)}&format=json&limit=5&addressdetails=1&countrycodes=cy&bounded=1&viewbox=32.2566,35.7013,34.5999,34.5718`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const cyprusResults = data.filter(result => {
+                        const address = result.display_name.toLowerCase();
+                        return address.includes('cyprus') || address.includes('κύπρος') || address.includes('kibris');
+                    });
+
+                    this.searchResults = cyprusResults.map(result => ({
+                        name: this.extractLocationName(result),
+                        address: result.display_name,
+                        lat: parseFloat(result.lat),
+                        lon: parseFloat(result.lon),
+                        raw: result
+                    }));
+
+                    this.showDropdown = this.searchResults.length > 0;
+                    this.selectedIndex = -1;
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                    this.searchResults = [];
+                })
+                .finally(() => {
+                    this.isSearching = false;
+                });
+        },
+
+        extractLocationName(result) {
+            const addressParts = result.display_name.split(',');
+
+            if (result.name && result.name !== result.display_name) {
+                return result.name;
+            }
+
+            if (addressParts.length > 0) {
+                return addressParts[0].trim();
+            }
+
+            return result.display_name;
+        },
+
+        selectLocation(location, index) {
+            this.locationQuery = location.address;
+            this.coordinates.lat = location.lat;
+            this.coordinates.lon = location.lon;
+            this.showDropdown = false;
+            this.selectedIndex = -1;
+
+            if (window.startupMap) {
+                window.startupMap.setView([location.lat, location.lon], 15);
+                window.setStartupMapMarker(location.lat, location.lon);
+            }
+        },
+
+        navigateResults(direction) {
+            if (this.searchResults.length === 0) return;
+
+            this.selectedIndex += direction;
+
+            if (this.selectedIndex < 0) {
+                this.selectedIndex = this.searchResults.length - 1;
+            } else if (this.selectedIndex >= this.searchResults.length) {
+                this.selectedIndex = 0;
+            }
+        },
+
+        selectResult() {
+            if (this.selectedIndex >= 0 && this.selectedIndex < this.searchResults.length) {
+                this.selectLocation(this.searchResults[this.selectedIndex], this.selectedIndex);
+            } else if (this.searchResults.length === 0 && this.locationQuery.length > 2) {
+                this.showDropdown = false;
+            }
+        }
+    }
 }
 
 function avatarUpload() {

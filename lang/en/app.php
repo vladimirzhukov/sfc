@@ -57,4 +57,12 @@ return [
     'index_services' => 'Share and manage information about your personal services, skills, and expertise with the Startup Founders Community in Cyprus.',
     'index_events' => 'Share and manage information about your events, meetups, and initiatives with the Startup Founders Community in Cyprus.',
     'community_members' => 'Meet our community members who are actively contributing to the startup ecosystem in Cyprus.',
+    'event_tip_5' => '&bull; Free events attract more attendees',
+    'event_tip_6' => '&bull; Great for community building and networking',
+    'event_tip_7' => '&bull; Consider asking for donations or sponsorships',
+    'event_tip_8' => '&bull; Perfect for workshops and educational events',
+    'event_tip_9' => '&bull; Research similar events in Cyprus for pricing',
+    'event_tip_10' => '&bull; Consider early bird discounts',
+    'event_tip_11' => '&bull; Factor in venue, catering, and material costs',
+    'event_tip_12' => '&bull; Price in Euros as it\'s the local currency',
 ];

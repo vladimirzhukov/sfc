@@ -115,5 +115,6 @@ return [
     'contact_4' => 'Access exclusive workshops, funding opportunities, legal guidance, and business development resources tailored for the Cyprus startup ecosystem.',
     'contact_5' => 'Whether you\'re looking to join our community, partner with us, or simply want to learn more about the Cyprus startup scene, we\'d love to hear from you. Let\'s build something amazing together.',
     'events_1' => 'Connect, learn, and grow with Cyprus\' vibrant startup ecosystem. From networking meetups to pitch competitions, discover events that fuel innovation across all major cities.',
+    'events_2' => 'Cyprus is home to a thriving startup ecosystem with regular events connecting entrepreneurs, investors, and innovators across the island. From tech meetups in Nicosia to fintech gatherings in Limassol, these events provide opportunities for networking, learning, and collaboration within the Mediterranean\'s emerging innovation hub.',
     'startups_1' => 'Explore innovative startups building the future from Cyprus. From fintech to healthtech, discover companies that are making an impact locally and globally.',
 ];

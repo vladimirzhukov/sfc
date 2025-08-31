@@ -57,4 +57,12 @@ return [
     'index_services' => 'Podziel się i zarządzaj informacjami o swoich osobistych usługach, umiejętnościach i doświadczeniu ze Społecznością Założycieli Startupów na Cyprze.',
     'index_events' => 'Podziel się i zarządzaj informacjami o swoich wydarzeniach, spotkaniach i inicjatywach ze Społecznością Założycieli Startupów na Cyprze.',
     'community_members' => 'Poznaj naszych członków społeczności, którzy aktywnie przyczyniają się do ekosystemu startupów na Cyprze.',
+    'event_tip_5' => '&bull; Darmowe wydarzenia przyciągają więcej uczestników',
+    'event_tip_6' => '&bull; Świetne do budowania społeczności i nawiązywania kontaktów',
+    'event_tip_7' => '&bull; Rozważ poproszenie o darowizny lub sponsoring',
+    'event_tip_8' => '&bull; Idealne na warsztaty i wydarzenia edukacyjne',
+    'event_tip_9' => '&bull; Sprawdź podobne wydarzenia na Cyprze pod kątem cen',
+    'event_tip_10' => '&bull; Rozważ zniżki dla wcześniejszych zapisów',
+    'event_tip_11' => '&bull; Uwzględnij koszty miejsca, cateringu i materiałów',
+    'event_tip_12' => '&bull; Podawaj ceny w euro, ponieważ jest to lokalna waluta',
 ];

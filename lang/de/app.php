@@ -57,4 +57,12 @@ return [
     'index_services' => 'Teilen und verwalten Sie Informationen über Ihre persönlichen Dienstleistungen, Fähigkeiten und Fachkenntnisse mit der Startup Founders Community in Zypern.',
     'index_events' => 'Teilen und verwalten Sie Informationen über Ihre Veranstaltungen, Treffen und Initiativen mit der Startup Founders Community in Zypern.',
     'community_members' => 'Lerne unsere Community-Mitglieder kennen, die aktiv zum Startup-Ökosystem in Zypern beitragen.',
+    'event_tip_5' => '&bull; Kostenlose Veranstaltungen ziehen mehr Teilnehmer an',
+    'event_tip_6' => '&bull; Ideal für Community-Building und Networking',
+    'event_tip_7' => '&bull; Erwägen Sie Spenden oder Sponsoring zu erbitten',
+    'event_tip_8' => '&bull; Perfekt für Workshops und Bildungsveranstaltungen',
+    'event_tip_9' => '&bull; Recherchieren Sie ähnliche Veranstaltungen in Zypern für die Preisgestaltung',
+    'event_tip_10' => '&bull; Erwägen Sie Frühbucherrabatte',
+    'event_tip_11' => '&bull; Berücksichtigen Sie Kosten für Veranstaltungsort, Catering und Materialien',
+    'event_tip_12' => '&bull; Preise in Euro angeben, da es die lokale Währung ist',
 ];

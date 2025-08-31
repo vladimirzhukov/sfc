@@ -54,8 +54,9 @@
 </head>
 <body x-data="{
     languagePopup: false,
-    mobileMenu: false
-}">
+    mobileMenu: false,
+    sidebarOpen: false
+}" x-effect="document.body.classList.toggle('overflow-hidden', sidebarOpen)" :class="{ 'overflow-hidden': sidebarOpen }">
 <div class="bg-gray-900">
     <header class="absolute inset-x-0 top-0 z-50">
         <nav aria-label="Global" class="flex items-center justify-between p-6 lg:px-8">
@@ -109,7 +110,7 @@
                                     <a href="{{ route('web::events') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Events') }}</a>
                                     <a href="{{ route('web::startups') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Startups') }}</a>
                                     <a href="{{ route('web::contact') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Contact') }}</a>
-                                    <a @click="languagePopup = true" href="javascript:void(0);" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"><img class="mr-1 rtl:ml-1 rtl:mr-0 inline-block" src="/assets/flags/language/{{ $meta->locale }}.svg" width="24"> {{ strtoupper(!empty($meta->locale) ? $meta->locale : 'en') }} ({{ (!empty($meta->language) ? $meta->language : '') }})</a>
+                                    <a @click="languagePopup = true" href="javascript:void(0);" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5"><img class="mr-1 rtl:ml-1 rtl:mr-0 inline-block" src="/assets/flags/language/{{ $meta->locale }}.svg" width="24"> {{ strtoupper(!empty($meta->locale) ? $meta->locale : 'en') }} ({{ (!empty($meta->language) ? $meta->language : '') }})</a>
                                 </div>
                                 <div class="py-6">
                                     @if (Auth::check())
@@ -203,6 +204,8 @@
                             <h3 class="text-sm/6 font-semibold text-white">{{ __('Ecosystem') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Members') }}</a></li>
+                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Businesses') }}</a></li>
+                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Services') }}</a></li>
                                 <li><a href="{{ route('web::wa') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Working Afternoons') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Investors') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Event Organizers') }}</a></li>
@@ -217,7 +220,7 @@
                             <ul role="list" class="mt-6 space-y-4">
                                 @if ($cities->isNotEmpty())
                                     @foreach ($cities as $city)
-                                        <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ $city->name }}</a></li>
+                                        <li><a href="{{ route('web::events::filter', ['link' => $city->slug]) }}" class="text-sm/6 text-gray-400 hover:text-white">{{ $city->name }}</a></li>
                                     @endforeach
                                 @endif
                                 <li><a href="{{ route('web::events') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('All cities') }}</a></li>
@@ -230,7 +233,7 @@
                             <ul role="list" class="mt-6 space-y-4">
                                 @if ($cities->isNotEmpty())
                                     @foreach ($cities as $city)
-                                        <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ $city->name }}</a></li>
+                                        <li><a href="{{ route('web::startups::filter', ['link' => $city->slug]) }}" class="text-sm/6 text-gray-400 hover:text-white">{{ $city->name }}</a></li>
                                     @endforeach
                                 @endif
                                 <li><a href="{{ route('web::startups') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('All cities') }}</a></li>

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +17,8 @@ use App\Models\Event;
 use App\Models\EventCategory;
 use App\Models\Business;
 use App\Models\BusinessCategory;
+use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -93,7 +93,7 @@ class AppController extends Controller
                 $markdownCount++;
             }
         }
-        return $markdownCount >= 2;
+        return $markdownCount >= 1;
     }
 
     private function generateUniqueStartupSlug($name, $userId, $excludeId = null)
@@ -408,6 +408,13 @@ class AppController extends Controller
                 'description' => 'nullable|string|max:4000',
                 'categories' => 'array|max:5', // Max 5 categories
                 'categories.*' => 'string',
+                'founding_year' => 'nullable|integer|min:1900|max:' . date('Y'),
+                'is_fundraising' => 'boolean',
+                'is_online' => 'required|boolean',
+                'location' => 'nullable|required_if:is_online,0|string|max:191',
+                'link' => 'nullable|required_if:is_online,1|url|max:191',
+                'lat' => 'nullable|required_if:is_online,0|numeric|between:-90,90',
+                'lon' => 'nullable|required_if:is_online,0|numeric|between:-180,180',
                 'active' => 'boolean'
             ]);
             if (empty($request->id)) {
@@ -431,9 +438,24 @@ class AppController extends Controller
                 $startup->description = null;
             }
             $startup->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
+            $startup->founding_year = $request->founding_year ?? null;
+            $startup->is_fundraising = $request->boolean('is_fundraising');
+            $startup->lat = $request->is_online ? 0 : ($request->lat ?? 0);
+            $startup->lon = $request->is_online ? 0 : ($request->lon ?? 0);
+            $startup->is_online = $request->is_online ? 1 : 0;
+            $startup->location = $request->is_online ? null : $request->location;
+            $startup->link = $request->is_online ? $request->link : null;
             $startup->active = $request->boolean('active');
             if (!$startup->slug || $startup->isDirty('name')) {
                 $startup->slug = $this->generateUniqueStartupSlug($request->input('name'), Auth::user()->id, $startup->id ?? null);
+            }
+            if (!empty($startup->lat) && !empty($startup->lon)) {
+                $startup->country_id = 55;
+                $nearestCity = City::select('id')->selectRaw('(6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) as distance', [$startup->lat, $startup->lon, $startup->lat])->where('country_id', 55)->orderBy('distance', 'asc')->first();
+                $startup->city_id = $nearestCity ? $nearestCity->id : null;
+            } else {
+                $startup->city_id = 0;
+                $startup->country_id = 55;
             }
             $startup->save();
             return redirect()->route('app::startups::edit', ['id' => $startup->id])->with(['success' => __('Startup saved')]);
@@ -647,7 +669,7 @@ class AppController extends Controller
     {
         $meta = $this->getMeta();
         $events = Event::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get()->keyBy('id');
-        $eventCategories = ServiceCategory::orderBy('ord', 'asc')->get()->keyBy('id');
+        $eventCategories = EventCategory::orderBy('ord', 'asc')->get()->keyBy('id');
         foreach ($events as $key => $event) {
             if (!empty($event->description)) {
                 $events[$key]->description_html = $this->markdownConverter->convert($event->description)->getContent();
@@ -717,6 +739,11 @@ class AppController extends Controller
                 'link' => 'nullable|required_if:is_online,1|url|max:191',
                 'lat' => 'nullable|required_if:is_online,0|numeric|between:-90,90',
                 'lon' => 'nullable|required_if:is_online,0|numeric|between:-180,180',
+                'price_amount' => 'nullable|numeric|min:0|max:99999999.99',
+                'is_free_event' => 'required|boolean',
+                'currency' => 'nullable|string|max:3',
+                'languages' => 'array|max:3',
+                'languages.*' => 'string|size:2',
                 'active' => 'boolean'
             ]);
             if (empty($request->id)) {
@@ -730,17 +757,9 @@ class AppController extends Controller
             }
 
             $userTimezone = $validated['timezone'];
-            $startDateTime = Carbon::createFromFormat(
-                'Y-m-d H:i',
-                $validated['start_date'] . ' ' . $validated['start_time'],
-                $userTimezone
-            )->utc();
-            $endDateTime = Carbon::createFromFormat(
-                'Y-m-d H:i',
-                $validated['end_date'] . ' ' . $validated['end_time'],
-                $userTimezone
-            )->utc();
-            if ($endDateTime->lte($startDateTime)) {
+            $startDateTime = date('Y-m-d H:i:s', strtotime($validated['start_date'] . ' ' . $validated['start_time']));
+            $endDateTime = date('Y-m-d H:i:s', strtotime($validated['end_date'] . ' ' . $validated['end_time']));
+            if (strtotime($endDateTime) <= strtotime($startDateTime)) {
                 return back()->withErrors(['end_time' => __('End time must be after start time.')]);
             }
             $event->start_date = $startDateTime;
@@ -758,14 +777,46 @@ class AppController extends Controller
                 $event->description = null;
             }
             $event->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
+            $event->languages = (!empty($validated['languages']) ? '[' . implode('][', $validated['languages']) . ']' : null);
+            // Add parent categories automatically
+            if (!empty($event->categories)) {
+                $categoryIDs = explode('][', trim($event->categories, '[]'));
+                foreach ($categoryIDs as $categoryID) {
+                    $category = EventCategory::find($categoryID);
+                    if ($category && $category->parent_id != 0) {
+                        $parentID = $category->parent_id;
+                        if (!in_array($parentID, $categoryIDs)) {
+                            $categoryIDs[] = $parentID;
+                        }
+                    }
+                }
+                sort($categoryIDs);
+                $event->categories = '[' . implode('][', $categoryIDs) . ']';
+            }
             $event->lat = $validated['is_online'] ? 0 : ($validated['lat'] ?? 0);
             $event->lon = $validated['is_online'] ? 0 : ($validated['lon'] ?? 0);
             $event->is_online = $validated['is_online'] ? 1 : 0;
             $event->location = $validated['is_online'] ? null : $validated['location'];
             $event->link = $validated['is_online'] ? $validated['link'] : null;
+            $event->is_free = $validated['is_free_event'] ? 1 : 0;
+            if ($event->is_free) {
+                $event->price = 0.00;
+                $event->currency = 'EUR';
+            } else {
+                $event->price = $validated['price_amount'] ?? 0.00;
+                $event->currency = 'EUR'; // Always EUR for Cyprus
+            }
             $event->active = $request->boolean('active');
             if (!$event->slug || $event->isDirty('name')) {
                 $event->slug = $this->generateUniqueEventSlug($request->input('name'), Auth::user()->id, $event->id ?? null);
+            }
+            if (!empty($event->lat) && !empty($event->lon)) {
+                $event->country_id = 55;
+                $nearestCity = City::select('id')->selectRaw('(6371 * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) as distance', [$event->lat, $event->lon, $event->lat])->where('country_id', 55)->orderBy('distance', 'asc')->first();
+                $event->city_id = $nearestCity ? $nearestCity->id : null;
+            } else {
+                $event->city_id = 0;
+                $event->country_id = 55;
             }
             $event->save();
             return redirect()->route('app::events::edit', ['id' => $event->id])->with(['success' => __('Event saved')]);
