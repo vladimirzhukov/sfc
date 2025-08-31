@@ -172,8 +172,6 @@ class WebController extends Controller
             ['start_date', '>=', date('Y-m-d')],
             ['active', 1]
         ])->orderBy('start_date')->orderBy('name')->paginate(20);
-        $meta->subtitle = __('Cyprus Startup Events');
-        $meta->subnote = __('web.events_2');
         return view('events', [
             'meta' => $meta,
             'afternoons' => $afternoons,
@@ -217,27 +215,19 @@ class WebController extends Controller
                     ['start_date', '>=', date('Y-m-d')],
                     ['active', 1]
                 ])->orderBy('start_date')->orderBy('name')->paginate(20);
-                $meta->subtitle = __('Online Startup Events');
-                $meta->subnote = __('web.events_3');
             } elseif ($link == 'past') {
                 $events = Event::where([
                     ['end_date', '<', date('Y-m-d')],
                     ['active', 1]
                 ])->orderBy('start_date', 'desc')->orderBy('name')->paginate(20);
-                $meta->subtitle = __('Past Startup Events');
-                $meta->subnote = __('web.events_4');
             } elseif ($link == 'free') {
                 $events = Event::where([
                     ['is_free', 1],
                     ['start_date', '>=', date('Y-m-d')],
                     ['active', 1]
                 ])->orderBy('start_date')->orderBy('name')->paginate(20);
-                $meta->subtitle = __('Free Startup Events');
-                $meta->subnote = __('web.events_5');
             } elseif ($link == 'cities') {
                 $events = null;
-                $meta->subtitle = __('Startup Events in Cities');
-                $meta->subnote = __('web.events_6');
                 $allCities = City::where('country_id', 55)->where('population', '<=', 10000)->orderBy('name', 'asc')->get();
                 $majorCities = City::where('country_id', 55)->where('population', '>', 10000)->orderBy('population', 'desc')->orderBy('name', 'asc')->get()->keyBy('id');
             }
@@ -253,8 +243,6 @@ class WebController extends Controller
                 ])->orderBy('start_date')->orderBy('name')->paginate(20);
                 $categories = EventCategory::where('parent_id', $currentCategory->id)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
                 $currentCity = null;
-                $meta->subtitle = __('Cyprus Startup Events');
-                $meta->subnote = __('web.events_1') . ' ' . $currentCategory->name;
             } else {
                 $currentCity = City::where('slug', $link)->firstOrFail();
                 $events = Event::where([
@@ -263,8 +251,6 @@ class WebController extends Controller
                     ['active', 1]
                 ])->orderBy('start_date')->orderBy('name')->paginate(20);
                 $currentCategory = null;
-                $meta->subtitle = __('Startup Events in') . ' ' . $currentCity->name;
-                $meta->subnote = __('web.events_7') . ' ' . $currentCity->name;
             }
         }
         return view('events', [
@@ -315,8 +301,6 @@ class WebController extends Controller
         ])->orderBy('start_date')->orderBy('name')->paginate(20);
         $categories = EventCategory::where('parent_id', $currentCategory->parent_id)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
         $currentCity = null;
-        $meta->subtitle = __('Cyprus Startup Events');
-        $meta->subnote = __('web.events_1') . ' ' . $currentCategory->name;
         return view('events', [
             'meta' => $meta,
             'afternoons' => $afternoons,
