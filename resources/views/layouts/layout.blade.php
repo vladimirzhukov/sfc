@@ -219,6 +219,7 @@
                             <h3 class="text-sm/6 font-semibold text-white">{{ __('Events') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
                                 @if ($cities->isNotEmpty())
+                                    @dd($cities)
                                     @foreach ($cities as $city)
                                         <li><a href="{{ route('web::events::filter', ['link' => $city->slug]) }}" class="text-sm/6 text-gray-400 hover:text-white">{{ $city->name }}</a></li>
                                     @endforeach
