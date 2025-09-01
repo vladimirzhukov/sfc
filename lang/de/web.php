@@ -115,5 +115,6 @@ return [
     'contact_4' => 'Erhalten Sie Zugang zu exklusiven Workshops, Finanzierungsmöglichkeiten, rechtlicher Beratung und Ressourcen zur Geschäftsentwicklung, die speziell für das Startup-Ökosystem in Zypern entwickelt wurden.',
     'contact_5' => 'Egal, ob Sie unserer Community beitreten, eine Partnerschaft mit uns eingehen oder einfach mehr über die Startup-Szene in Zypern erfahren möchten – wir würden uns freuen, von Ihnen zu hören. Lassen Sie uns gemeinsam etwas Großartiges aufbauen.',
     'events_1' => 'Verbinde dich, lerne und wachse mit dem dynamischen Startup-Ökosystem Zyperns. Von Networking-Meetups bis hin zu Pitch-Wettbewerben – entdecke Veranstaltungen, die Innovation in allen großen Städten vorantreiben.',
+    'events_2' => 'Zypern beherbergt ein florierendes Startup-Ökosystem mit regelmäßigen Veranstaltungen, die Unternehmer, Investoren und Innovatoren auf der ganzen Insel verbinden. Von Tech-Meetups in Nikosia bis hin zu Fintech-Treffen in Limassol bieten diese Veranstaltungen Möglichkeiten zum Networking, Lernen und zur Zusammenarbeit im aufstrebenden Innovationszentrum des Mittelmeers.',
     'startups_1' => 'Entdecken Sie innovative Startups, die die Zukunft aus Zypern gestalten. Von Fintech bis Healthtech, entdecken Sie Unternehmen, die lokal und global einen Einfluss haben.',
 ];
