@@ -212,6 +212,21 @@ class SitemapController extends Controller
         <xhtml:link rel="alternate" hreflang="x-default" href="https://sfccy.com/startups" />
     </url>';
         echo '
+    <url>
+        <loc>https://sfccy.com/' . (($language != 'en') ? $language . '/' : '') . 'ecosystem</loc>
+        <lastmod>' . date('Y-m-d') . '</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>';
+        foreach ($languages as $key => $lang) {
+            //if ($key != $language) {
+            echo '
+        <xhtml:link rel="alternate" hreflang="' . $key . '" href="https://sfccy.com/' . (($key != 'en') ? $key . '/' : '') . 'ecosystem" />';
+            //}
+        }
+        echo '
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://sfccy.com/ecosystem" />
+    </url>';
+        echo '
 </urlset>';
     }
 }
