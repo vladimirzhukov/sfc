@@ -18,7 +18,8 @@
         "mailersend/mailersend": "^0.34.0",
         "mcamara/laravel-localization": "^2.3",
         "nyholm/psr7": "^1.8",
-        "php-http/guzzle7-adapter": "^1.1"
+        "php-http/guzzle7-adapter": "^1.1",
+        "ext-dom": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
