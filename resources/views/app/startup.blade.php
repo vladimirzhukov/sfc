@@ -707,21 +707,21 @@ function categorySelector() {
         selectedCategories: [],
         categories: [
             @php
-                $cats = '';
-                // Use the properly sorted categories from the controller
-                foreach ($parentCategories as $pkey => $parent) {
-                    if (isset($categories[$pkey])) {
-                        foreach ($categories[$pkey] as $key => $category) {
-                            if (!empty($cats)) {
-                                $cats .= ',';
-                            }
-                            $ord = $rawCategories[$key]->ord ?? 0;
-                            $cats .= '{code: "' . $key . '", name: "' . addslashes($category) . '", group: "' . addslashes($parent) . '", description: "' . addslashes($categoryDescriptions[$key] ?? '') . '", ord: ' . $ord . '}';
+            $cats = '';
+            // Use the properly sorted categories from the controller
+            foreach ($parentCategories as $pkey => $parent) {
+                if (isset($categories[$pkey])) {
+                    foreach ($categories[$pkey] as $key => $category) {
+                        if (!empty($cats)) {
+                            $cats .= ',';
                         }
+                        $ord = $rawCategories[$key]->ord ?? 0;
+                        $cats .= '{code: "' . $key . '", name: "' . addslashes($category) . '", group: "' . addslashes($parent) . '", description: "' . addslashes($categoryDescriptions[$key] ?? '') . '", ord: ' . $ord . '}';
                     }
                 }
+            }
             @endphp
-                {!! $cats !!}
+            {!! $cats !!}
         ],
 
         get filteredCategories() {
@@ -824,7 +824,24 @@ function categorySelector() {
 
         init() {
             // Initialize with existing categories if editing
-            this.selectedCategories = [{!! (!empty($startup->categories) ? str_replace(array(']', '['), '"', str_replace('][', '","', $startup->categories)) : '') !!}];
+            // Exclude parent categories
+            @php
+            $categories = '';
+            if (!empty($startup->categories)) {
+                $categoryIDs = explode('][', trim($startup->categories, '[]'));
+                if (!empty($categoryIDs)) {
+                    foreach ($categoryIDs as $categoryID) {
+                        if (empty($parentCategories[$categoryID])) {
+                            if (!empty($categories)) {
+                                $categories .= ', ';
+                            }
+                            $categories .= '"' . $categoryID . '"';
+                        }
+                    }
+                }
+            }
+            @endphp
+            this.selectedCategories = [{!! (!empty($categories) ? $categories : '') !!}];
         }
     }
 }

@@ -75,7 +75,7 @@
                 </button>
             </div>
             <div class="hidden lg:flex lg:gap-x-12">
-                <a href="#" class="text-sm/6 font-semibold text-white">{{ __('Ecosystem') }}</a>
+                <a href="{{ route('web::ecosystem') }}" class="text-sm/6 font-semibold text-white">{{ __('Ecosystem') }}</a>
                 <a href="{{ route('web::events') }}" class="text-sm/6 font-semibold text-white">{{ __('Events') }}</a>
                 <a href="{{ route('web::startups') }}" class="text-sm/6 font-semibold text-white">{{ __('Startups') }}</a>
                 <a href="{{ route('web::contact') }}" class="text-sm/6 font-semibold text-white">{{ __('Contact') }}</a>
@@ -106,7 +106,7 @@
                         <div class="mt-6 flow-root">
                             <div class="-my-6 divide-y divide-gray-500/25">
                                 <div class="space-y-2 py-6">
-                                    <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Ecosystem') }}</a>
+                                    <a href="{{ route('web::ecosystem') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Ecosystem') }}</a>
                                     <a href="{{ route('web::events') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Events') }}</a>
                                     <a href="{{ route('web::startups') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Startups') }}</a>
                                     <a href="{{ route('web::contact') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">{{ __('Contact') }}</a>

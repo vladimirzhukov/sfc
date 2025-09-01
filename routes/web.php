@@ -30,6 +30,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::get('/privacy', [WebController::class, 'privacy'])->name('web::privacy');
     Route::get('/working-afternoons', [WebController::class, 'wa'])->name('web::wa');
     Route::get('/about', [WebController::class, 'about'])->name('web::about');
+    Route::get('/ecosystem', [WebController::class, 'ecosystem'])->name('web::ecosystem');
     Route::get('/partnerships', [WebController::class, 'partnerships'])->name('web::partnerships');
     Route::get('/contact', [WebController::class, 'contact'])->name('web::contact');
     Route::post('/contact', [ContactController::class, 'submit'])->name('web::contact::submit');

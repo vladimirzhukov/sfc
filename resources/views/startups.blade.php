@@ -417,111 +417,68 @@ if (Route::currentRouteName() == 'web::startups::filter') {
                 @else
                     <div class="bg-white shadow overflow-hidden sm:rounded-md dark:bg-gray-800">
                         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                            @if (!empty($events) && $events->isNotEmpty())
-                                @foreach ($events as $event)
+                            @if (!empty($startups) && $startups->isNotEmpty())
+                                @foreach ($startups as $startup)
                                     <li class="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6 lg:px-8 dark:hover:bg-white/2.5">
                                         <div class="flex min-w-0 gap-x-4">
-                                            <img src="{{ (!empty($event->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/' . substr($event->img, 0, 1) . '/' . substr($event->img, 0, 2) . '/' . substr($event->img, 0, 3) . '/th_' . $event->img : '/assets/images/no-image-icon.png') }}" alt="{{ $event->name }}" class="size-12 flex-none rounded-lg bg-gray-50 object-cover dark:bg-gray-800" />
+                                            <img src="{{ (!empty($startup->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/startups/' . substr($startup->img, 0, 1) . '/' . substr($startup->img, 0, 2) . '/' . substr($startup->img, 0, 3) . '/th_' . $startup->img : '/assets/images/no-image-icon.png') }}" alt="{{ $startup->name }}" class="size-12 flex-none rounded-lg bg-gray-50 object-cover dark:bg-gray-800" />
                                             <div class="min-w-0 flex-auto">
                                                 <p class="text-sm/6 font-semibold text-gray-900 dark:text-white">
-                                                    <a href="{{ route('web::event', $event->slug) }}">
+                                                    <a href="{{ route('web::startup', ['link' => $startup->slug]) }}">
                                                         <span class="absolute inset-x-0 -top-px bottom-0"></span>
-                                                        {{ $event->name }}
+                                                        {{ $startup->name }}
                                                     </a>
                                                 </p>
                                                 <p class="mt-1 text-xs/5 text-gray-500 dark:text-orange-400">
                                                     @php
-                                                        $categories = '';
-                                                        if (!empty($event->categories)) {
-                                                            $categoryIDs = explode('][', trim($event->categories, '[]'));
-                                                            if (!empty($categoryIDs)) {
-                                                                foreach ($categoryIDs as $categoryID) {
-                                                                    if (!empty($allCategories[$categoryID]->parent_id)) {
-                                                                        if (!empty($categories)) {
-                                                                            $categories .= ', ';
-                                                                        }
-                                                                        $categories .= (!empty($allCategories[$categoryID]->parentCategory->name) ? $allCategories[$categoryID]->parentCategory->name . ' > ' : '') . $allCategories[$categoryID]->name;
+                                                    $categories = '';
+                                                    if (!empty($startup->categories)) {
+                                                        $categoryIDs = explode('][', trim($startup->categories, '[]'));
+                                                        if (!empty($categoryIDs)) {
+                                                            foreach ($categoryIDs as $categoryID) {
+                                                                if (!empty($allCategories[$categoryID]->parent_id)) {
+                                                                    if (!empty($categories)) {
+                                                                        $categories .= ', ';
                                                                     }
+                                                                    $categories .= (!empty($allCategories[$categoryID]->parentCategory->name) ? $allCategories[$categoryID]->parentCategory->name . ' > ' : '') . $allCategories[$categoryID]->name;
                                                                 }
                                                             }
                                                         }
+                                                    }
                                                     @endphp
-                                                    {{ (!empty($categories) ? $categories . ' • ' : '') }}{{ (!empty($event->is_online) ? __('Online') : (!empty($event->city->name) ? $event->city->name . (!empty($event->city->region->name) ? ', ' . $event->city->region->name : '') : __('Cyprus'))) }}
+                                                    {{ (!empty($categories) ? $categories . ' • ' : '') }}{{ (!empty($startup->is_online) ? __('Online') : (!empty($startup->city->name) ? $startup->city->name . (!empty($startup->city->region->name) ? ', ' . $startup->city->region->name : '') : __('Cyprus'))) }}
                                                 </p>
-                                                <div class="mt-2 flex items-center gap-x-4">
-                                                    @if (date('Y-m-d', strtotime($event->start_date)) != date('Y-m-d', strtotime($event->end_date)))
-                                                        <div class="flex items-center gap-x-1.5">
-                                                            <svg class="size-4 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/></svg>
-                                                            <p class="text-xs/5 text-gray-700 dark:text-gray-400">
-                                                                {{ \Carbon\Carbon::parse($event->start_date)->format('M j, Y H:i') }}
-                                                                @if ($event->end_date)
-                                                                    - {{ \Carbon\Carbon::parse($event->end_date)->format('M j, Y H:i') }}
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                    @else
-                                                        <div class="flex items-center gap-x-1.5">
-                                                            <svg class="size-4 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/></svg>
-                                                            <p class="text-xs/5 text-gray-700 dark:text-gray-400">
-                                                                {{ \Carbon\Carbon::parse($event->start_date)->format('M j, Y') }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="flex items-center gap-x-1.5">
-                                                            <svg class="size-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                                                            <p class="text-xs/5 text-gray-700 dark:text-gray-400">
-                                                                {{ \Carbon\Carbon::parse($event->start_date)->format('H:i') }}
-                                                                @if ($event->end_date)
-                                                                    - {{ \Carbon\Carbon::parse($event->end_date)->format('H:i') }}
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                    @endif
-                                                    @if (!empty($event->location))
-                                                        <div class="flex items-center gap-x-1.5">
-                                                            <svg class="size-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
-                                                            <p class="text-xs/5 text-gray-500 dark:text-gray-400">{{ Str::limit($event->location, 40) }}</p>
-                                                        </div>
-                                                    @endif
-                                                </div>
+                                                @if (!empty($startup->description))
+                                                    <p class="mt-2 text-sm/6 text-gray-600 dark:text-gray-300">{{ Str::limit($startup->description, 200) }}</p>
+                                                @endif
+                                                @if (!empty($startup->location))
+                                                    <div class="flex items-center gap-x-1.5">
+                                                        <svg class="size-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
+                                                        <p class="text-xs/5 text-gray-500 dark:text-gray-400">{{ Str::limit($startup->location, 40) }}</p>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="flex shrink-0 items-center gap-x-4">
                                             <div class="hidden sm:flex sm:flex-col sm:items-end">
-                                                @php
-                                                    $eventDate = \Carbon\Carbon::parse($event->start_date);
-                                                    $now = \Carbon\Carbon::now();
-                                                    $isUpcoming = $eventDate->isFuture();
-                                                    $isPast = $eventDate->isPast();
-                                                    $isToday = $eventDate->isToday();
-                                                @endphp
-                                                <div class="flex items-center gap-x-1.5">
-                                                    @if ($isToday)
-                                                        <div class="flex-none rounded-full bg-blue-500/20 p-1 dark:bg-blue-500/30"><div class="size-1.5 rounded-full bg-blue-500"></div></div>
-                                                        <p class="text-xs/5 text-blue-600 dark:text-blue-400 font-medium">{{ __('Today') }}</p>
-                                                    @elseif ($isUpcoming)
-                                                        <div class="flex-none rounded-full bg-emerald-500/20 p-1 dark:bg-emerald-500/30"><div class="size-1.5 rounded-full bg-emerald-500"></div></div>
-                                                        <p class="text-xs/5 text-emerald-600 dark:text-emerald-400 font-medium">{{ __('Upcoming') }}</p>
-                                                    @else
-                                                        <div class="flex-none rounded-full bg-gray-500/20 p-1 dark:bg-gray-500/30"><div class="size-1.5 rounded-full bg-gray-500"></div></div>
-                                                        <p class="text-xs/5 text-gray-500 dark:text-gray-400">{{ __('Past') }}</p>
-                                                    @endif
-                                                </div>
-                                                @if (!empty($event->is_free))
-                                                    <p class="mt-1 text-xs/5 font-semibold text-gray-900 dark:text-white">{{ __('Free') }}</p>
+                                                @if (!empty($startup->is_fundraising))
+                                                    <div class="flex items-center gap-x-1.5">
+                                                        <div class="flex-none rounded-full bg-yellow-500/20 p-1 dark:bg-yellow-500/30">
+                                                            <div class="size-1.5 rounded-full bg-yellow-500"></div>
+                                                        </div>
+                                                        <p class="text-xs/5 text-gray-500 dark:text-gray-400">Fundraising</p>
+                                                    </div>
                                                 @else
-                                                    <p class="mt-1 text-xs/5 font-semibold text-gray-900 dark:text-white">
-                                                        @if (empty($event->price))
-                                                            {{ __('Free') }}
-                                                        @else
-                                                            €{{ number_format($event->price, 2) }}
-                                                        @endif
-                                                    </p>
+                                                    <div class="flex items-center gap-x-1.5">
+                                                        <div class="flex-none rounded-full bg-emerald-500/20 p-1 dark:bg-emerald-500/30">
+                                                            <div class="size-1.5 rounded-full bg-emerald-500"></div>
+                                                        </div>
+                                                        <p class="text-xs/5 text-gray-500 dark:text-gray-400">Active</p>
+                                                    </div>
                                                 @endif
-                                                {{--@if ($event->attendees_count)
-                                                    <p class="mt-1 text-xs/5 text-gray-500 dark:text-gray-400">
-                                                        {{ $event->attendees_count }} {{ __('attending') }}
-                                                    </p>
-                                                @endif--}}
+                                                @if (!empty($startup->founding_year))
+                                                    <p class="mt-1 text-xs/5 text-gray-500 dark:text-gray-400">Founded {{ $startup->founding_year }}</p>
+                                                @endif
                                             </div>
                                             <svg viewBox="0 0 20 20" fill="currentColor" class="size-5 flex-none text-gray-400 dark:text-gray-500"><path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" /></svg>
                                         </div>

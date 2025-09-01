@@ -104,6 +104,18 @@ class WebController extends Controller
         ]);
     }
 
+    public function ecosystem()
+    {
+        $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('ecosystem', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities
+        ]);
+    }
+
     public function partnerships()
     {
         $meta = $this->getMeta();
@@ -320,6 +332,7 @@ class WebController extends Controller
         $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
         $categories = StartupCategory::where('parent_id', 0)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
         $subcategories = StartupCategory::where('parent_id', '!=', 0)->count();
+        $allCategories = StartupCategory::get()->keyBy('id');
         $startups = Startup::where('active', 1)->orderBy('name')->paginate(20);
         $afternoons = WorkingAfternoon::where('country_id', 55)->get();
         $meta->subtitle = __('Cyprus Startups');
@@ -330,6 +343,7 @@ class WebController extends Controller
             'afternoons' => $afternoons,
             'categories' => $categories,
             'subcategories' => $subcategories,
+            'allCategories' => $allCategories,
             'startups' => $startups
         ]);
     }

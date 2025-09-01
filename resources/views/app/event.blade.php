@@ -1273,7 +1273,7 @@ function eventLanguageSelector() {
                 }
             }
             @endphp
-                this.selectedLanguages = [{!! (!empty($selectedLanguages) ? $selectedLanguages : '') !!}];
+            this.selectedLanguages = [{!! (!empty($selectedLanguages) ? $selectedLanguages : '') !!}];
         }
     }
 }

@@ -438,6 +438,20 @@ class AppController extends Controller
                 $startup->description = null;
             }
             $startup->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
+            if (!empty($startup->categories)) {
+                $categoryIDs = explode('][', trim($startup->categories, '[]'));
+                foreach ($categoryIDs as $categoryID) {
+                    $category = StartupCategory::find($categoryID);
+                    if ($category && $category->parent_id != 0) {
+                        $parentID = $category->parent_id;
+                        if (!in_array($parentID, $categoryIDs)) {
+                            $categoryIDs[] = $parentID;
+                        }
+                    }
+                }
+                sort($categoryIDs);
+                $startup->categories = '[' . implode('][', $categoryIDs) . ']';
+            }
             $startup->founding_year = $request->founding_year ?? null;
             $startup->is_fundraising = $request->boolean('is_fundraising');
             $startup->lat = $request->is_online ? 0 : ($request->lat ?? 0);
