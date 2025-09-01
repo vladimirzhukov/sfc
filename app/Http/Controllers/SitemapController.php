@@ -33,7 +33,7 @@ class SitemapController extends Controller
         $languages = LaravelLocalization::getSupportedLocales();
         echo '
     <url>
-        <loc>https://sfccy.com/' . $language . '</loc>
+        <loc>https://sfccy.com/' . (($language != 'en') ? $language : '') . '</loc>
         <lastmod>' . date('Y-m-d') . '</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>';
