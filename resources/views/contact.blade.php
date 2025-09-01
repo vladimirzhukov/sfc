@@ -5,17 +5,17 @@
 {
     "@@context": "https://schema.org",
     "@@type": "WebPage",
-    "name": "{{ (!empty($meta->metas[$meta->locale]->name) ? $meta->metas[$meta->locale]->name : (!empty($meta->metas['en']->name) ? $meta->metas['en']->name : 'Contact Us - SFC.CY')) }}",
+    "name": "{{ (!empty($meta->metas[$meta->locale]->name) ? $meta->metas[$meta->locale]->name : (!empty($meta->metas['en']->name) ? $meta->metas['en']->name : __('Contact Us - SFC.CY'))) }}",
     "url": "{{ url()->current() }}",
-    "description": "{{ (!empty($meta->metas[$meta->locale]->description) ? $meta->metas[$meta->locale]->description : (!empty($meta->metas['en']->description) ? $meta->metas['en']->description : 'Get in touch with Startup Founders Community Cyprus. Connect with fellow entrepreneurs, join our events, and grow your startup network in Cyprus.')) }}",
+    "description": "{{ (!empty($meta->metas[$meta->locale]->description) ? $meta->metas[$meta->locale]->description : (!empty($meta->metas['en']->description) ? $meta->metas['en']->description : __('web.contacts_meta_description'))) }}",
     "isPartOf": {
         "@@type": "WebSite",
-        "name": "SFC.CY",
+        "name": "{{ __('SFC.CY') }}",
         "url": "{{ route('web::index') }}"
     },
     "publisher": {
         "@@type": "Organization",
-        "name": "SFC.CY"
+        "name": "{{ __('SFC.CY') }}"
     }
 }
 </script>
@@ -155,7 +155,7 @@
                     <div class="sm:col-span-2">
                         <label for="company" class="block text-sm/6 font-semibold text-gray-900 dark:text-white">{{ __('Company/Startup') }}</label>
                         <div class="mt-2.5">
-                            <input id="company" type="text" name="company" class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500" placeholder="Optional" />
+                            <input id="company" type="text" name="company" class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500" placeholder="{{ __('Optional') }}" />
                             <p class="mt-1 text-sm text-red-600 dark:text-red-400 error-message" id="company-error"></p>
                         </div>
                     </div>

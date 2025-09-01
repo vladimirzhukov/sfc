@@ -5,17 +5,17 @@
 {
     "@@context": "https://schema.org",
     "@@type": "WebPage",
-    "name": "{{ (!empty($meta->metas[$meta->locale]->name) ? $meta->metas[$meta->locale]->name : (!empty($meta->metas['en']->name) ? $meta->metas['en']->name : 'SFC.CY')) }} - {{ __('Ecosystem') }}",
+    "name": "{{ (!empty($meta->metas[$meta->locale]->name) ? $meta->metas[$meta->locale]->name : (!empty($meta->metas['en']->name) ? $meta->metas['en']->name : __('SFC.CY'))) }}",
     "url": "{{ url()->current() }}",
     "description": "{{ (!empty($meta->metas[$meta->locale]->description) ? $meta->metas[$meta->locale]->description : (!empty($meta->metas['en']->description) ? $meta->metas['en']->description : '')) }}",
     "isPartOf": {
         "@@type": "WebSite",
-        "name": "SFC.CY",
+        "name": "{{ __('SFC.CY') }}",
         "url": "{{ route('web::index') }}"
     },
     "publisher": {
         "@@type": "Organization",
-        "name": "SFC.CY"
+        "name": "{{ __('SFC.CY') }}"
     }
 }
 </script>
@@ -43,7 +43,7 @@
     <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24 dark:bg-gray-800/50 dark:after:pointer-events-none dark:after:absolute dark:after:inset-0 dark:after:inset-ring dark:after:inset-ring-white/10 dark:after:sm:rounded-3xl">
         <div class="mx-auto max-w-2xl text-center">
             <h1 class="text-4xl font-semibold tracking-tight text-balance text-white sm:text-6xl">{{ __('Cyprus Startup Ecosystem') }}</h1>
-            <p class="mt-6 text-lg/8 text-gray-300">{{ __('Discover the vibrant startup ecosystem in Cyprus. Connect with founders, investors, service providers, and innovation hubs driving entrepreneurship across the island.') }}</p>
+            <p class="mt-6 text-lg/8 text-gray-300">{{ __('web.ecosystem_1') }}</p>
         </div>
         <div aria-hidden="true" class="pointer-events-none absolute top-1/2 left-12 -z-10 -translate-y-1/2 transform-gpu blur-3xl lg:top-auto lg:-bottom-48 lg:translate-y-0">
             <div style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" class="aspect-1155/678 w-288.75 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-25 dark:opacity-20"></div>
@@ -55,7 +55,7 @@
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Community') }}</h2>
             <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">{{ __('Active Members') }}</p>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('Connect with passionate entrepreneurs, founders, and startup enthusiasts across Cyprus. Our community spans all major cities and brings together individuals from diverse industries and backgrounds.') }}</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_2') }}</p>
         </div>
         <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div class="text-center">
@@ -65,7 +65,7 @@
                     </svg>
                 </div>
                 <h3 class="mt-6 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('Founders & Entrepreneurs') }}</h3>
-                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Active startup founders building innovative companies across fintech, healthtech, edtech, and other emerging sectors in Cyprus.') }}</p>
+                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_3') }}</p>
             </div>
             <div class="text-center">
                 <div class="mx-auto flex size-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20">
@@ -74,7 +74,7 @@
                     </svg>
                 </div>
                 <h3 class="mt-6 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('Mentors & Advisors') }}</h3>
-                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Experienced business leaders, successful entrepreneurs, and industry experts offering guidance to emerging startups.') }}</p>
+                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_4') }}</p>
             </div>
             <div class="text-center">
                 <div class="mx-auto flex size-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20">
@@ -83,7 +83,7 @@
                     </svg>
                 </div>
                 <h3 class="mt-6 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('Tech Talent') }}</h3>
-                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Skilled developers, designers, and technical professionals contributing to the growth of Cyprus\' tech startup scene.') }}</p>
+                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_5') }}</p>
             </div>
         </div>
     </div>
@@ -93,37 +93,37 @@
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Innovation') }}</h2>
             <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">{{ __('Cyprus Startups') }}</p>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('Discover innovative startups building the future from Cyprus. From early-stage ventures to scaling companies, our ecosystem supports businesses at every stage of growth.') }}</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_6') }}</p>
         </div>
         <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div class="flex flex-col">
                 <div class="flex-auto">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('FinTech & Blockchain') }}</h3>
-                    <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Cyprus has become a hub for financial technology companies, cryptocurrency exchanges, and blockchain startups leveraging the island\'s regulatory advantages and strategic location.') }}</p>
+                    <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_7') }}</p>
                 </div>
                 <div class="mt-6 flex flex-wrap gap-2">
-                    <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-400/10 dark:text-green-400">FinTech</span>
-                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 dark:bg-blue-400/10 dark:text-blue-400">Blockchain</span>
+                    <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-400/10 dark:text-green-400">{{ __('FinTech') }}</span>
+                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 dark:bg-blue-400/10 dark:text-blue-400">{{ __('Blockchain') }}</span>
                 </div>
             </div>
             <div class="flex flex-col">
                 <div class="flex-auto">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('SaaS & Software') }}</h3>
-                    <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Software-as-a-Service companies and B2B software solutions developed by Cyprus-based teams, serving both local and international markets with innovative digital products.') }}</p>
+                    <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_8') }}</p>
                 </div>
                 <div class="mt-6 flex flex-wrap gap-2">
-                    <span class="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 dark:bg-purple-400/10 dark:text-purple-400">SaaS</span>
-                    <span class="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-400/10 dark:text-indigo-400">B2B</span>
+                    <span class="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 dark:bg-purple-400/10 dark:text-purple-400">{{ __('SaaS') }}</span>
+                    <span class="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-400/10 dark:text-indigo-400">{{ __('B2B') }}</span>
                 </div>
             </div>
             <div class="flex flex-col">
                 <div class="flex-auto">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('E-commerce & MarTech') }}</h3>
-                    <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Digital commerce platforms, marketing technology solutions, and consumer-facing applications that are transforming how businesses reach and serve their customers.') }}</p>
+                    <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_9') }}</p>
                 </div>
                 <div class="mt-6 flex flex-wrap gap-2">
-                    <span class="inline-flex items-center rounded-md bg-orange-50 px-2 py-1 text-xs font-medium text-orange-700 dark:bg-orange-400/10 dark:text-orange-400">E-commerce</span>
-                    <span class="inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 dark:bg-pink-400/10 dark:text-pink-400">MarTech</span>
+                    <span class="inline-flex items-center rounded-md bg-orange-50 px-2 py-1 text-xs font-medium text-orange-700 dark:bg-orange-400/10 dark:text-orange-400">{{ __('E-commerce') }}</span>
+                    <span class="inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 dark:bg-pink-400/10 dark:text-pink-400">{{ __('MarTech') }}</span>
                 </div>
             </div>
         </div>
@@ -137,42 +137,42 @@
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Capital') }}</h2>
             <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">{{ __('Investors & Funding') }}</p>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('Connect with venture capitalists, angel investors, and funding organizations supporting Cyprus startups. Access capital from local and international investors.') }}</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_10') }}</p>
         </div>
         <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2">
             <div class="max-w-xl">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('Venture Capital Firms') }}</h3>
-                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('Professional VC firms with offices in Cyprus or actively investing in Cyprus-based startups, focusing on early to growth-stage investments.') }}</p>
+                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_11') }}</p>
                 <div class="mt-8 space-y-6">
                     <div class="relative">
                         <dt class="inline-block font-semibold text-gray-900 dark:text-white">{{ __('Local VCs') }}.</dt>
-                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('Cyprus-based venture capital firms understanding the local market and regulatory environment.') }}</dd>
+                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_12') }}</dd>
                     </div>
                     <div class="relative">
                         <dt class="inline-block font-semibold text-gray-900 dark:text-white">{{ __('Regional Funds') }}.</dt>
-                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('European and Middle Eastern VCs actively seeking investment opportunities in Cyprus.') }}</dd>
+                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_13') }}</dd>
                     </div>
                     <div class="relative">
                         <dt class="inline-block font-semibold text-gray-900 dark:text-white">{{ __('Sector Specialists') }}.</dt>
-                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('Funds specializing in fintech, blockchain, and other key sectors thriving in Cyprus.') }}</dd>
+                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_14') }}</dd>
                     </div>
                 </div>
             </div>
             <div class="max-w-xl">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('Angel Investors & Networks') }}</h3>
-                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('Individual angel investors and organized networks providing seed funding, mentorship, and strategic guidance to early-stage startups.') }}</p>
+                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_15') }}</p>
                 <div class="mt-8 space-y-6">
                     <div class="relative">
                         <dt class="inline-block font-semibold text-gray-900 dark:text-white">{{ __('Successful Entrepreneurs') }}.</dt>
-                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('Former founders who have built successful companies and now invest in the next generation.') }}</dd>
+                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_16') }}</dd>
                     </div>
                     <div class="relative">
                         <dt class="inline-block font-semibold text-gray-900 dark:text-white">{{ __('Industry Veterans') }}.</dt>
-                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('Experienced professionals from finance, tech, and other sectors supporting startups.') }}</dd>
+                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_17') }}</dd>
                     </div>
                     <div class="relative">
                         <dt class="inline-block font-semibold text-gray-900 dark:text-white">{{ __('Angel Networks') }}.</dt>
-                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('Organized groups of angel investors collaborating on startup investments and due diligence.') }}</dd>
+                        <dd class="inline text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_18') }}</dd>
                     </div>
                 </div>
             </div>
@@ -184,7 +184,7 @@
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Support') }}</h2>
             <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">{{ __('Professional Services') }}</p>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('Find specialized services and professionals to help your startup grow. From legal incorporation to marketing and design, access expert support tailored to startup needs.') }}</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_19') }}</p>
         </div>
         <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div class="text-center">
@@ -194,7 +194,7 @@
                     </svg>
                 </div>
                 <h3 class="mt-6 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('Legal & Compliance') }}</h3>
-                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Specialized law firms providing startup incorporation, intellectual property protection, employment law, data privacy compliance, and regulatory guidance for Cyprus businesses.') }}</p>
+                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_20') }}</p>
             </div>
             <div class="text-center">
                 <div class="mx-auto flex size-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20">
@@ -203,7 +203,7 @@
                     </svg>
                 </div>
                 <h3 class="mt-6 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('Accounting & Finance') }}</h3>
-                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Professional accounting firms offering bookkeeping, tax planning, financial reporting, CFO services, and investment readiness support for growing startups.') }}</p>
+                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_21') }}</p>
             </div>
             <div class="text-center">
                 <div class="mx-auto flex size-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20">
@@ -212,7 +212,7 @@
                     </svg>
                 </div>
                 <h3 class="mt-6 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('Marketing & Creative') }}</h3>
-                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Digital marketing agencies, brand designers, content creators, and PR professionals helping startups build their brand, reach customers, and scale their marketing efforts.') }}</p>
+                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_22') }}</p>
             </div>
         </div>
     </div>
@@ -222,7 +222,7 @@
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Connect') }}</h2>
             <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">{{ __('Events & Networking') }}</p>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('Join networking events, workshops, and conferences that bring the startup community together. Regular opportunities to learn, share, and collaborate with fellow entrepreneurs.') }}</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_23') }}</p>
         </div>
         <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
             <div class="relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700">
@@ -237,7 +237,7 @@
                         <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('Regular co-working sessions for founders') }}</p>
                     </div>
                 </div>
-                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('Join our regular co-working sessions where founders work alongside each other, share ideas, and build meaningful connections in a productive environment.') }}</p>
+                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_24') }}</p>
                 <a href="{{ route('web::wa') }}" class="mt-4 inline-flex items-center text-sm font-medium text-orange-600 hover:text-orange-500 dark:text-orange-400">
                     {{ __('Learn more') }}
                     <svg class="ml-1 size-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -257,7 +257,7 @@
                         <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('Networking, workshops, and conferences') }}</p>
                     </div>
                 </div>
-                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('Participate in startup competitions, investor pitch nights, workshops, and networking events happening across Cyprus throughout the year.') }}</p>
+                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_25') }}</p>
                 <a href="{{ route('web::events') }}" class="mt-4 inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
                     {{ __('View all events') }}
                     <svg class="ml-1 size-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -273,7 +273,7 @@
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Infrastructure') }}</h2>
             <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">{{ __('Startup Infrastructure') }}</p>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('Discover incubators, accelerators, co-working spaces, and innovation hubs supporting startups in Cyprus. Access world-class facilities and programs designed to accelerate growth.') }}</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_26') }}</p>
         </div>
         <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-4">
             <div class="text-center">
@@ -283,7 +283,7 @@
                     </svg>
                 </div>
                 <h3 class="mt-6 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('Business Incubators') }}</h3>
-                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Programs providing mentorship, office space, and resources for early-stage startups to develop their business models and validate their ideas.') }}</p>
+                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_27') }}</p>
             </div>
             <div class="text-center">
                 <div class="mx-auto flex size-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20">
@@ -292,7 +292,7 @@
                     </svg>
                 </div>
                 <h3 class="mt-6 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('Accelerator Programs') }}</h3>
-                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Intensive programs designed to fast-track startup growth through structured curriculum, mentorship, and investor access over 3-6 month periods.') }}</p>
+                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_28') }}</p>
             </div>
             <div class="text-center">
                 <div class="mx-auto flex size-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20">
@@ -301,7 +301,7 @@
                     </svg>
                 </div>
                 <h3 class="mt-6 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('Co-working Spaces') }}</h3>
-                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Flexible workspace solutions fostering collaboration and community among entrepreneurs, freelancers, and small teams across major Cyprus cities.') }}</p>
+                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_29') }}</p>
             </div>
             <div class="text-center">
                 <div class="mx-auto flex size-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/20">
@@ -310,7 +310,7 @@
                     </svg>
                 </div>
                 <h3 class="mt-6 text-base/7 font-semibold text-gray-900 dark:text-white">{{ __('Innovation Hubs') }}</h3>
-                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('Technology parks and research centers connecting startups with universities, corporations, and government initiatives to drive innovation.') }}</p>
+                <p class="mt-4 text-sm/6 text-gray-600 dark:text-gray-400">{{ __('web.ecosystem_30') }}</p>
             </div>
         </div>
     </div>
@@ -320,12 +320,12 @@
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Government') }}</h2>
             <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">{{ __('Government Support') }}</p>
-            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('Explore government programs, grants, and institutions supporting startup development in Cyprus. Access public funding and regulatory support for growing businesses.') }}</p>
+            <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_31') }}</p>
         </div>
         <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
             <div class="relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('Startup Support Programs') }}</h3>
-                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('Government-backed initiatives providing funding, mentorship, and resources for emerging startups across various sectors and development stages.') }}</p>
+                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_32') }}</p>
                 <ul class="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-400">
                     <li class="flex items-center gap-3">
                         <svg class="size-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -349,7 +349,7 @@
             </div>
             <div class="relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('Funding & Grants') }}</h3>
-                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('Government and EU funding opportunities available for Cyprus-based startups, including non-dilutive grants and low-interest loans.') }}</p>
+                <p class="mt-4 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_33') }}</p>
                 <ul class="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-400">
                     <li class="flex items-center gap-3">
                         <svg class="size-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -380,7 +380,7 @@
             <div>
                 <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Communities') }}</h2>
                 <p class="mt-2 text-3xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-4xl dark:text-white">{{ __('Partner Communities') }}</p>
-                <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('Connect with other entrepreneurship communities and organizations across Cyprus. Collaborative networks supporting different aspects of the startup ecosystem.') }}</p>
+                <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_34') }}</p>
                 <div class="mt-8 space-y-4">
                     <div class="flex items-center gap-4 p-4 border border-gray-200 rounded-lg dark:border-gray-700">
                         <div class="size-12 bg-blue-100 rounded-lg flex items-center justify-center dark:bg-blue-900/20">
@@ -420,7 +420,7 @@
             <div>
                 <h2 class="text-base/7 font-semibold text-indigo-600 dark:text-indigo-400">{{ __('Event Venues') }}</h2>
                 <p class="mt-2 text-3xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-4xl dark:text-white">{{ __('Hosting Locations') }}</p>
-                <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('Discover venues across Cyprus perfect for hosting startup events, workshops, and networking sessions. Modern facilities supporting the entrepreneurial community.') }}</p>
+                <p class="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">{{ __('web.ecosystem_35') }}</p>
                 <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div class="text-center p-6 border border-gray-200 rounded-lg dark:border-gray-700">
                         <div class="mx-auto size-12 bg-indigo-100 rounded-lg flex items-center justify-center dark:bg-indigo-900/20">
@@ -471,7 +471,7 @@
     <div class="px-6 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">{{ __('Join the Ecosystem') }}</h2>
-            <p class="mx-auto mt-6 max-w-xl text-lg/8 text-indigo-100">{{ __('Become part of Cyprus\' thriving startup ecosystem. Connect, collaborate, and grow with like-minded entrepreneurs across the island.') }}</p>
+            <p class="mx-auto mt-6 max-w-xl text-lg/8 text-indigo-100">{{ __('web.ecosystem_36') }}</p>
             <div class="mt-10 flex items-center justify-center gap-x-6">
                 <a href="{{ route('signup') }}" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{{ __('Get Started') }}</a>
                 <a href="{{ route('web::about') }}" class="text-sm/6 font-semibold text-white">{{ __('Learn more') }} <span aria-hidden="true">→</span></a>
