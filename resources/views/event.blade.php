@@ -1,5 +1,9 @@
 @extends('layouts.layout')
 
+@section('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+@endsection
+
 @section('ldbread')
 <script type="application/ld+json">
 {
@@ -50,54 +54,65 @@
     "url": "{{ route('web::event', $event->slug) }}"
 }
 </script>
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "BreadcrumbList",
+    "itemListElement": [{
+        "@@type": "ListItem",
+        "position": 1,
+        "name": "{{ __('Home') }}",
+        "item": "{{ route('web::index') }}"
+    },{
+        "@@type": "ListItem",
+        "position": 2,
+        "name": "{{ __('Events') }}",
+        "item": "{{ route('web::events') }}"
+    },{
+        "@@type": "ListItem",
+        "position": 3,
+        "name": "{{ $event->name }}",
+        "item": "{{ url()->current() }}"
+    }]
+}
+</script>
 @endsection
 
 @section('content')
     <div class="relative isolate overflow-hidden pt-14">
-        <!-- Event Header -->
         <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-16 sm:py-20 lg:py-28">
             <div class="mx-auto max-w-4xl">
-                <!-- Breadcrumb -->
                 <nav aria-label="Breadcrumb" class="flex mb-8">
                     <ol role="list" class="flex items-center space-x-4">
                         <li>
                             <div>
                                 <a href="{{ route('web::index') }}" class="text-gray-400 hover:text-gray-300">
-                                    <svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0">
-                                        <path d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" fill-rule="evenodd" />
-                                    </svg>
+                                    <svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0"><path d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" fill-rule="evenodd" /></svg>
                                     <span class="sr-only">{{ __('Home') }}</span>
                                 </a>
                             </div>
                         </li>
                         <li>
                             <div class="flex items-center">
-                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0 text-gray-400">
-                                    <path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
-                                </svg>
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0 text-gray-400"><path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" /></svg>
                                 <a href="{{ route('web::events') }}" class="ml-4 text-sm font-medium text-gray-400 hover:text-gray-300">{{ __('Events') }}</a>
                             </div>
                         </li>
                         <li>
                             <div class="flex items-center">
-                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0 text-gray-400">
-                                    <path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
-                                </svg>
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0 text-gray-400"><path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" /></svg>
                                 <span class="ml-4 text-sm font-medium text-gray-500" aria-current="page">{{ Str::limit($event->name, 30) }}</span>
                             </div>
                         </li>
                     </ol>
                 </nav>
-
-                <!-- Event Status Badge -->
                 @php
-                    $eventDate = \Carbon\Carbon::parse($event->start_date);
-                    $now = \Carbon\Carbon::now();
-                    $isUpcoming = $eventDate->isFuture();
-                    $isPast = $eventDate->isPast();
-                    $isToday = $eventDate->isToday();
+                $eventDate = \Carbon\Carbon::parse($event->start_date);
+                $now = \Carbon\Carbon::now();
+                $isUpcoming = $eventDate->isFuture();
+                $isPast = $eventDate->isPast();
+                $isToday = $eventDate->isToday();
                 @endphp
-
                 <div class="mb-6">
                     @if ($isToday)
                         <span class="inline-flex items-center gap-x-1.5 rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
@@ -116,19 +131,10 @@
                     </span>
                     @endif
                 </div>
-
-                <!-- Event Title -->
-                <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                    {{ $event->name }}
-                </h1>
-
-                <!-- Event Meta Information -->
+                <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">{{ $event->name }}</h1>
                 <div class="mt-8 space-y-4">
-                    <!-- Date & Time -->
                     <div class="flex items-center text-lg text-gray-300">
-                        <svg class="size-6 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
+                        <svg class="size-6 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                         @if (date('Y-m-d', strtotime($event->start_date)) != date('Y-m-d', strtotime($event->end_date)))
                             {{ \Carbon\Carbon::parse($event->start_date)->format('M j, Y H:i') }}
                             @if ($event->end_date)
@@ -177,10 +183,10 @@
                             {{ __('Join Online') }}
                         </a>
                     @endif
-                    <button class="rounded-md bg-white/10 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                    <button id="addCalendar" class="rounded-md bg-white/10 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                         {{ __('Add to Calendar') }}
                     </button>
-                    <button class="rounded-md bg-white/10 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                    <button id="shareButton" class="rounded-md bg-white/10 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                         {{ __('Share') }}
                     </button>
                 </div>
@@ -478,59 +484,54 @@
 @endsection
 
 @section('js')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize map for offline events
-            @if (!$event->is_online && $event->lat && $event->lon)
-            if (typeof L !== 'undefined') {
-                const map = L.map('map', {
-                    center: [{{ $event->lat }}, {{ $event->lon }}],
-                    zoom: 15,
-                    scrollWheelZoom: false
-                });
-
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(map);
-
-                L.marker([{{ $event->lat }}, {{ $event->lon }}])
-                    .addTo(map)
-                    .bindPopup('{{ addslashes($event->location ?? $event->name) }}');
-            }
-            @endif
-
-            // Add to calendar functionality
-            const addToCalendarBtn = document.querySelector('button:contains("Add to Calendar")');
-            if (addToCalendarBtn) {
-                addToCalendarBtn.addEventListener('click', function() {
-                    const title = encodeURIComponent('{{ addslashes($event->name) }}');
-                    const startDate = '{{ \Carbon\Carbon::parse($event->start_date)->format("Ymd\THis\Z") }}';
-                    const endDate = '{{ $event->end_date ? \Carbon\Carbon::parse($event->end_date)->format("Ymd\THis\Z") : \Carbon\Carbon::parse($event->start_date)->addHour()->format("Ymd\THis\Z") }}';
-                    const description = encodeURIComponent('{{ addslashes(strip_tags($event->description)) }}');
-                    const location = encodeURIComponent('{{ addslashes($event->is_online ? "Online Event" : ($event->location ?? "Cyprus")) }}');
-
-                    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${description}&location=${location}`;
-
-                    window.open(googleCalendarUrl, '_blank');
-                });
-            }
-
-            // Share functionality
-            const shareBtn = document.querySelector('button:contains("Share")');
-            if (shareBtn && navigator.share) {
-                shareBtn.addEventListener('click', function() {
-                    navigator.share({
-                        title: '{{ addslashes($event->name) }}',
-                        text: '{{ addslashes(Str::limit(strip_tags($event->description), 100)) }}',
-                        url: window.location.href
-                    });
-                });
-            }
-        });
-    </script>
-
+@if (!$event->is_online && $event->lat && $event->lon)
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+@endif
+<script>
+document.addEventListener('DOMContentLoaded', function() {
     @if (!$event->is_online && $event->lat && $event->lon)
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    if (typeof L !== 'undefined') {
+        const map = L.map('map', {
+            center: [{{ $event->lat }}, {{ $event->lon }}],
+            zoom: 15,
+            scrollWheelZoom: false
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([{{ $event->lat }}, {{ $event->lon }}])
+            .addTo(map)
+            .bindPopup('{{ addslashes($event->location ?? $event->name) }}');
+    }
     @endif
+
+    const addToCalendarBtn = document.getElementById('addCalendar');
+    if (addToCalendarBtn) {
+        addToCalendarBtn.addEventListener('click', function() {
+            const title = encodeURIComponent('{{ addslashes($event->name) }}');
+            const startDate = '{{ \Carbon\Carbon::parse($event->start_date)->format("Ymd\THis") }}';
+            const endDate = '{{ $event->end_date ? \Carbon\Carbon::parse($event->end_date)->format("Ymd\THis") : \Carbon\Carbon::parse($event->start_date)->addHour()->format("Ymd\THis") }}';
+            const description = encodeURIComponent({!! json_encode(strip_tags($event->description ?? '')) !!});
+            const location = encodeURIComponent('{{ addslashes($event->is_online ? "Online Event" : ($event->location ?? "Cyprus")) }}');
+
+            const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${description}&location=${location}`;
+
+            window.open(googleCalendarUrl, '_blank');
+        });
+    }
+
+    const shareBtn = document.getElementById('shareButton');
+    if (shareBtn && navigator.share) {
+        shareBtn.addEventListener('click', function() {
+            navigator.share({
+                title: {!! json_encode($event->name) !!},
+                text: {!! json_encode(Str::limit(strip_tags($event->description ?? ''), 100)) !!},
+                url: window.location.href
+            });
+        });
+    }
+});
+</script>
 @endsection
