@@ -554,7 +554,7 @@ if (Route::currentRouteName() == 'web::events::filter') {
                 @endif
                 @if (!empty($meta->page_seo))
                     <section class="mt-8">
-                        <div class="max-w-none">
+                        <div class="text-sm text-gray-900 max-w-none">
                             {!! App\Services\SeoContentService::format($meta->page_seo) !!}
                         </div>
                     </section>

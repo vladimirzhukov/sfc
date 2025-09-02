@@ -140,6 +140,20 @@ class WebController extends Controller
         ]);
     }
 
+    public function event($link)
+    {
+        $event = Event::where('slug', $link)->where('active', 1)->firstOrFail();
+        $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('event', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities,
+            'event' => $event
+        ]);
+    }
+
     public function events()
     {
         /*$parentCategories = EventCategory::where('parent_id', 0)->get();

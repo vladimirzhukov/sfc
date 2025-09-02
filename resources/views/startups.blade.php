@@ -507,8 +507,8 @@ if (Route::currentRouteName() == 'web::startups::filter') {
                 @endif
                 @if (!empty($meta->page_seo))
                     <section class="mt-8">
-                        <div class="prose prose-sm max-w-none text-gray-700 dark:text-gray-300">
-                            {!! $meta->page_seo !!}
+                        <div class="text-sm text-gray-900 max-w-none">
+                            {!! App\Services\SeoContentService::format($meta->page_seo) !!}
                         </div>
                     </section>
                 @endif
