@@ -495,5 +495,12 @@
     "virtual event": "wydarzenie wirtualne",
     "free event": "bezpłatne wydarzenie",
     "upcoming event": "nadchodzące wydarzenie",
-    "past event": "minione wydarzenie"
+    "past event": "minione wydarzenie",
+    "Business Languages": "Języki biznesowe",
+    "Maximum 10": "Maksymalnie 10",
+    "Select the languages your business can communicate in": "Wybierz języki, w których Twoja firma może się komunikować",
+    "Select business languages...": "Wybierz języki biznesowe...",
+    "Select Top 10": "Wybierz najlepsze 10",
+    "of 10 languages": "z 10 języków",
+    "You have selected the maximum of 10 languages for this business. Remove a language to select a different one.": "Wybrałeś maksymalną liczbę 10 języków dla tej firmy. Usuń język, aby wybrać inny."
 }

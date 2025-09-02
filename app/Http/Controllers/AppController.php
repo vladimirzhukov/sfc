@@ -960,6 +960,8 @@ class AppController extends Controller
                 'link' => 'nullable|required_if:is_online,1|url|max:191',
                 'lat' => 'nullable|required_if:is_online,0|numeric|between:-90,90',
                 'lon' => 'nullable|required_if:is_online,0|numeric|between:-180,180',
+                'languages' => 'array|max:10', // Added language validation - max 10
+                'languages.*' => 'string|size:2', // Each language code should be 2 characters
                 'active' => 'boolean'
             ]);
             if (empty($request->id)) {
@@ -982,7 +984,23 @@ class AppController extends Controller
             } else {
                 $business->description = null;
             }
+            $business->languages = (!empty($validated['languages']) ? '[' . implode('][', $validated['languages']) . ']' : null);
             $business->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
+            // Add parent categories automatically
+            if (!empty($event->categories)) {
+                $categoryIDs = explode('][', trim($event->categories, '[]'));
+                foreach ($categoryIDs as $categoryID) {
+                    $category = BusinessCategory::find($categoryID);
+                    if ($category && $category->parent_id != 0) {
+                        $parentID = $category->parent_id;
+                        if (!in_array($parentID, $categoryIDs)) {
+                            $categoryIDs[] = $parentID;
+                        }
+                    }
+                }
+                sort($categoryIDs);
+                $event->categories = '[' . implode('][', $categoryIDs) . ']';
+            }
             $business->lat = $validated['is_online'] ? 0 : ($validated['lat'] ?? 0);
             $business->lon = $validated['is_online'] ? 0 : ($validated['lon'] ?? 0);
             $business->is_online = $validated['is_online'] ? 1 : 0;

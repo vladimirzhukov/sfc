@@ -65,4 +65,8 @@ return [
     'event_tip_10' => '&bull; Erwägen Sie Frühbucherrabatte',
     'event_tip_11' => '&bull; Berücksichtigen Sie Kosten für Veranstaltungsort, Catering und Materialien',
     'event_tip_12' => '&bull; Preise in Euro angeben, da es die lokale Währung ist',
+    'business_tip_5' => '&bull; Wählen Sie alle Sprachen aus, in denen Ihr Unternehmen kommunizieren kann',
+    'business_tip_6' => '&bull; Fügen Sie Sprachen hinzu, die von Ihren Teammitgliedern gesprochen werden',
+    'business_tip_7' => '&bull; Berücksichtigen Sie die demografischen Merkmale Ihrer Zielkunden',
+    'business_tip_8' => '&bull; Dies hilft Kunden, Unternehmen zu finden, die ihre Sprache sprechen',
 ];

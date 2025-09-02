@@ -65,4 +65,8 @@ return [
     'event_tip_10' => '&bull; Rozważ zniżki dla wcześniejszych zapisów',
     'event_tip_11' => '&bull; Uwzględnij koszty miejsca, cateringu i materiałów',
     'event_tip_12' => '&bull; Podawaj ceny w euro, ponieważ jest to lokalna waluta',
+    'business_tip_5' => '&bull; Wybierz wszystkie języki, w których Twoja firma może się komunikować',
+    'business_tip_6' => '&bull; Uwzględnij języki, którymi posługują się członkowie Twojego zespołu',
+    'business_tip_7' => '&bull; Weź pod uwagę demografię docelowych klientów',
+    'business_tip_8' => '&bull; To pomaga klientom znaleźć firmy, które mówią w ich języku',
 ];

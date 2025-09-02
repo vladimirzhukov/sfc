@@ -65,4 +65,8 @@ return [
     'event_tip_10' => '&bull; Consider early bird discounts',
     'event_tip_11' => '&bull; Factor in venue, catering, and material costs',
     'event_tip_12' => '&bull; Price in Euros as it\'s the local currency',
+    'business_tip_5' => '&bull; Select all languages your business can communicate in',
+    'business_tip_6' => '&bull; Include languages spoken by your team members',
+    'business_tip_7' => '&bull; Consider your target customer demographics',
+    'business_tip_8' => '&bull; This helps customers find businesses that speak their language',
 ];

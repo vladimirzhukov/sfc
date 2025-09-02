@@ -65,4 +65,8 @@ return [
     'event_tip_10' => '&bull; Considera descuentos por compra anticipada',
     'event_tip_11' => '&bull; Ten en cuenta los costos de lugar, catering y materiales',
     'event_tip_12' => '&bull; Indica los precios en euros, ya que es la moneda local',
+    'business_tip_5' => '&bull; Selecciona todos los idiomas en los que tu empresa puede comunicarse',
+    'business_tip_6' => '&bull; Incluye los idiomas hablados por los miembros de tu equipo',
+    'business_tip_7' => '&bull; Ten en cuenta la demografía de tus clientes objetivo',
+    'business_tip_8' => '&bull; Esto ayuda a los clientes a encontrar empresas que hablen su idioma',
 ];
