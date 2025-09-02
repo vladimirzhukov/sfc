@@ -437,5 +437,13 @@
     "Date & Time": "Fecha y Hora",
     "Organizer": "Organizador",
     "Share this Event": "Compartir este Evento",
-    "Related Events": "Eventos Relacionados"
+    "Related Events": "Eventos Relacionados",
+    "Event Languages": "Idiomas del Evento",
+    "Maximum 3": "Máximo 3",
+    "Select event languages...": "Selecciona los idiomas del evento...",
+    "Select Top 3": "Selecciona los 3 principales",
+    "of 3 languages": "de 3 idiomas",
+    "Maximum languages selected.": "Máximo de idiomas seleccionados.",
+    "Maximum languages reached": "Máximo de idiomas alcanzado",
+    "You have selected the maximum of 3 languages for this event. Remove a language to select a different one.": "Has seleccionado el máximo de 3 idiomas para este evento. Elimina un idioma para seleccionar uno diferente."
 }
