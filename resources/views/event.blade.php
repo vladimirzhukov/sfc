@@ -30,7 +30,7 @@
             }
             @if ($event->lat && $event->lon)
             ,"geo": {
-                "@type": "GeoCoordinates",
+                "@@type": "GeoCoordinates",
                 "latitude": {{ $event->lat }},
                 "longitude": {{ $event->lon }}
             }
@@ -338,9 +338,9 @@
         </div>
     </div>
 </div>
-<div class="bg-gray-100 py-16 sm:py-24 dark:bg-gray-900">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        @if (!empty($relatedEvents) && $relatedEvents->isNotEmpty())
+@if (!empty($relatedEvents) && $relatedEvents->isNotEmpty())
+    <div class="bg-gray-100 py-16 sm:py-24 dark:bg-gray-900">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:text-center">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">{{ __('Related Events') }}</h2>
             </div>
@@ -469,9 +469,9 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+        </div>
     </div>
-</div>
+@endif
 @endsection
 
 @section('js')
@@ -546,7 +546,7 @@ function showShareModal() {
     modal.innerHTML = `
         <div class="bg-white rounded-lg p-6 max-w-sm mx-4 w-full">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">Share this Event</h3>
+                <h3 class="text-lg font-semibold text-gray-900">{{ __('Share this Event') }}</h3>
                 <button onclick="this.closest('.fixed').remove()" class="text-gray-400 hover:text-gray-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -558,7 +558,7 @@ function showShareModal() {
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                     </svg>
-                    Copy Link
+                    {{ __('Copy Link') }}
                 </button>
             </div>
         </div>
@@ -627,11 +627,7 @@ function setupSocialShareLinks() {
 
             // Show feedback
             const originalHTML = this.innerHTML;
-            this.innerHTML = `
-                <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-            `;
+            this.innerHTML = `<svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
             this.classList.remove('hover:bg-gray-700', 'bg-gray-600');
             this.classList.add('bg-green-600', 'hover:bg-green-700');
 

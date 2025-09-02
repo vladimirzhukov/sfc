@@ -13,6 +13,7 @@ use App\Models\City;
 use App\Models\WorkingAfternoon;
 use App\Models\EventCategory;
 use App\Models\StartupCategory;
+use Illuminate\Support\Str;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class WebController extends Controller
@@ -149,7 +150,7 @@ class WebController extends Controller
         $allCategories = EventCategory::get()->keyBy('id');
         $relatedEvents = Event::where([
             ['id', '!=', $event->id],
-            //['start_date', '>=', date('Y-m-d')],
+            ['start_date', '>=', date('Y-m-d')],
             ['active', 1]
         ])->orderBy('start_date')->orderBy('name')->limit(5)->get();
         return view('event', [
@@ -463,6 +464,73 @@ class WebController extends Controller
             'startups' => $startups,
             'currentCategory' => $currentCategory,
             'currentCity' => $currentCity
+        ]);
+    }
+
+    public function startup($link)
+    {
+        $startup = Startup::where('slug', $link)->where('active', 1)->firstOrFail();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        $allCategories = StartupCategory::get()->keyBy('id');
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $startupName = $startup->name;
+        $startupCity = $startup->is_online ? __('Online') : ($startup->city->name ?? __('Cyprus'));
+        $startupLocation = $startup->is_online ? __('Online') : ($startup->location ?? $startupCity);
+        $primaryCategory = '';
+        if (!empty($startup->categories)) {
+            $categoryIDs = explode('][', trim($startup->categories, '[]'));
+            if (!empty($categoryIDs[0]) && !empty($allCategories[$categoryIDs[0]])) {
+                $primaryCategory = $allCategories[$categoryIDs[0]]->name;
+            }
+        }
+        if ($startup->is_online) {
+            $meta->metas[$meta->locale]->title = $startupName . ($primaryCategory ? ' - ' . $primaryCategory : '') . ' | ' . __('Online Startup in Cyprus') . ' | ' . __('SFC.CY');
+        } else {
+            $meta->metas[$meta->locale]->title = $startupName . ' ' . __('in') . ' ' . $startupCity . ($primaryCategory ? ' - ' . $primaryCategory : '') . ' | ' . __('SFC in Cyprus');
+        }
+        $description = strip_tags($startup->description ?? '');
+        $shortDescription = Str::limit($description, 120);
+        if ($startup->is_fundraising) {
+            $fundraisingText = __('Currently seeking investment.') . ' ';
+        } else {
+            $fundraisingText = '';
+        }
+        $foundingText = $startup->founding_year ? __('Founded in') . ' ' . $startup->founding_year . '. ' : '';
+        if ($shortDescription) {
+            $meta->metas[$meta->locale]->description = $fundraisingText . $foundingText . $shortDescription . ' | ' . __('Cyprus startup ecosystem') . '.';
+        } else {
+            $baseDescription = $startup->is_online ? __('Online startup based in Cyprus') : __('Startup based in') . ' ' . $startupCity . ', ' . __('Cyprus');
+            $meta->metas[$meta->locale]->description = $fundraisingText . $foundingText . $baseDescription . ($primaryCategory ? ' ' . __('specializing in') . ' ' . strtolower($primaryCategory) : '') . '. ' . __('Part of the Cyprus startup ecosystem.');
+        }
+        $keywords = [$startupName, __('startup'), __('Cyprus'), __('SFC.CY')];
+        if (!$startup->is_online) {
+            $keywords[] = $startupCity;
+        } else {
+            $keywords[] = __('online startup');
+        }
+        if ($primaryCategory) {
+            $keywords[] = $primaryCategory;
+        }
+        if ($startup->founding_year) {
+            $keywords[] = $startup->founding_year;
+        }
+        if ($startup->is_fundraising) {
+            $keywords[] = __('fundraising');
+            $keywords[] = __('investment');
+        }
+        $meta->metas[$meta->locale]->keywords = implode(', ', $keywords);
+        return view('startup', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities,
+            'startup' => $startup,
+            'allCategories' => $allCategories
         ]);
     }
 }
