@@ -445,5 +445,12 @@
     "of 3 languages": "z 3 języków",
     "Maximum languages selected.": "Maksymalna liczba wybranych języków.",
     "Maximum languages reached": "Osiągnięto maksymalną liczbę języków",
-    "You have selected the maximum of 3 languages for this event. Remove a language to select a different one.": "Wybrałeś maksymalnie 3 języki dla tego wydarzenia. Usuń język, aby wybrać inny."
+    "You have selected the maximum of 3 languages for this event. Remove a language to select a different one.": "Wybrałeś maksymalnie 3 języki dla tego wydarzenia. Usuń język, aby wybrać inny.",
+    "Add Startup Location": "Dodaj lokalizację startupu",
+    "Physical location or online startup": "Lokalizacja fizyczna lub startup online",
+    "Physical location": "Lokalizacja fizyczna",
+    "Online startup": "Startup online",
+    "Website Link": "Link do strony internetowej",
+    "Startup Location": "Lokalizacja startupu",
+    "Enter startup location...": "Wprowadź lokalizację startupu..."
 }
