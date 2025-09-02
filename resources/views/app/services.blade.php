@@ -60,7 +60,11 @@
                                             }
                                             @endphp
                                             <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 mr-2">{{ $name }}</span>
+                                            @break
                                         @endforeach
+                                        @if (count($categories) > 1)
+                                            <span class="text-xs text-gray-400">+{{ count($categories) - 1 }} {{ __('more') }}</span>
+                                        @endif
                                     @endif
                                 </td>
                                 <td class="px-3 py-5 text-sm whitespace-nowrap text-gray-500">

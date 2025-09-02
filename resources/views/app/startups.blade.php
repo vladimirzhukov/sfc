@@ -48,16 +48,16 @@
                                 <td class="px-3 py-5 text-sm whitespace-nowrap text-gray-500">
                                     @if (!empty($startup->categories) && $startup->categories != '[]')
                                         @php
-                                            $categories = explode('][', trim($startup->categories, '[]'));
+                                        $categories = explode('][', trim($startup->categories, '[]'));
                                         @endphp
                                         @foreach ($categories as $category)
                                             @php
-                                                if (LaravelLocalization::getCurrentLocale() != 'en') {
-                                                    $names = json_decode($startupCategories[$category]->name_translations, true);
-                                                    $name = $names[LaravelLocalization::getCurrentLocale()] ?? $startupCategories[$category]->name;
-                                                } else {
-                                                    $name = $startupCategories[$category]->name;
-                                                }
+                                            if (LaravelLocalization::getCurrentLocale() != 'en') {
+                                                $names = json_decode($startupCategories[$category]->name_translations, true);
+                                                $name = $names[LaravelLocalization::getCurrentLocale()] ?? $startupCategories[$category]->name;
+                                            } else {
+                                                $name = $startupCategories[$category]->name;
+                                            }
                                             @endphp
                                             <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 mr-2">{{ $name }}</span>
                                             @break
