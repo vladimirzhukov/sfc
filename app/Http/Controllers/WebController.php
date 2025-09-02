@@ -144,7 +144,6 @@ class WebController extends Controller
     public function event($link)
     {
         $event = Event::where('slug', $link)->where('active', 1)->firstOrFail();
-        $meta = $this->getMeta();
         $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
         $afternoons = WorkingAfternoon::where('country_id', 55)->get();
         $allCategories = EventCategory::get()->keyBy('id');
@@ -153,6 +152,102 @@ class WebController extends Controller
             ['start_date', '>=', date('Y-m-d')],
             ['active', 1]
         ])->orderBy('start_date')->orderBy('name')->limit(5)->get();
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $eventName = $event->name;
+        $eventCity = $event->is_online ? __('Online') : ($event->city->name ?? __('Cyprus'));
+        $eventLocation = $event->is_online ? __('Online') : ($event->location ?? $eventCity);
+        $eventDate = \Carbon\Carbon::parse($event->start_date);
+        $formattedDate = $eventDate->format('M j, Y');
+        $formattedDateTime = $eventDate->format('M j, Y \a\t H:i');
+        $now = \Carbon\Carbon::now();
+        $isUpcoming = $eventDate->isFuture();
+        $isPast = $eventDate->isPast();
+        $isToday = $eventDate->isToday();
+        if ($isToday) {
+            $eventStatus = __('Today');
+        } elseif ($isUpcoming) {
+            $eventStatus = __('Upcoming');
+        } else {
+            $eventStatus = __('Past');
+        }
+        $primaryCategory = '';
+        if (!empty($event->categories)) {
+            $categoryIDs = explode('][', trim($event->categories, '[]'));
+            if (!empty($categoryIDs[0]) && !empty($allCategories[$categoryIDs[0]])) {
+                $primaryCategory = $allCategories[$categoryIDs[0]]->name;
+            }
+        }
+        if ($event->is_online) {
+            if ($isPast) {
+                $meta->metas[$meta->locale]->title = $eventName . ' - ' . $formattedDate . ' | ' . __('Past Online Event') . ' | '. __('SFC.CY');
+            } else {
+                $meta->metas[$meta->locale]->title = $eventName . ' - ' . $formattedDate . ' | ' . __('Online Event in Cyprus') . ' | '. __('SFC.CY');
+            }
+        } else {
+            if ($isPast) {
+                $meta->metas[$meta->locale]->title = $eventName . ' in ' . $eventCity . ' - ' . $formattedDate . ' | ' . __('Past Event') . ' | ' . __('SFC in Cyprus');
+            } else {
+                $meta->metas[$meta->locale]->title = $eventName . ' in ' . $eventCity . ' - ' . $formattedDate . ' | ' . __('SFC in Cyprus');
+            }
+        }
+        $description = strip_tags($event->description ?? '');
+        $shortDescription = Str::limit($description, 100);
+        $priceText = '';
+        if ($event->is_free || empty($event->price)) {
+            $priceText = __('Free event') . '. ';
+        } else {
+            $priceText = '€' . number_format($event->price, 2) . ' ' . __('event') . '. ';
+        }
+        $timeText = '';
+        if ($event->end_date && date('Y-m-d', strtotime($event->start_date)) == date('Y-m-d', strtotime($event->end_date))) {
+            $timeText = $eventDate->format('H:i') . '-' . \Carbon\Carbon::parse($event->end_date)->format('H:i') . '. ';
+        } else {
+            $timeText = $eventDate->format('H:i') . '. ';
+        }
+        if ($shortDescription) {
+            $meta->metas[$meta->locale]->description = $priceText . $shortDescription . ' | ' . $formattedDateTime . ' | ' . __('Cyprus startup events') . '.';
+        } else {
+            $baseDescription = $event->is_online ? __('Online event for the Cyprus startup community') : __('Event in') . ' ' . $eventCity . ' ' . __('for the Cyprus startup community');
+            $meta->metas[$meta->locale]->description = $priceText . $baseDescription . ($primaryCategory ? ' ' . __('focusing on') . ' ' . strtolower($primaryCategory) : '') . '. ' . $formattedDateTime . '.';
+        }
+        $keywords = [$eventName, __('event'), __('startup event'), __('Cyprus'), __('SFC.CY')];
+        if (!$event->is_online) {
+            $keywords[] = $eventCity;
+            $keywords[] = __('networking');
+        } else {
+            $keywords[] = __('online event');
+            $keywords[] = __('virtual event');
+        }
+        if ($primaryCategory) {
+            $keywords[] = $primaryCategory;
+            $keywords[] = $primaryCategory . ' '. __('event');
+        }
+        $keywords[] = $formattedDate;
+        $keywords[] = $eventDate->format('Y');
+        $keywords[] = strtolower($eventDate->format('F'));
+        if ($event->is_free || empty($event->price)) {
+            $keywords[] = __('free event');
+        }
+        if ($isUpcoming) {
+            $keywords[] = __('upcoming event');
+        } elseif ($isPast) {
+            $keywords[] = __('past event');
+        }
+        if (!empty($event->languages)) {
+            $languageIDs = explode('][', trim($event->languages, '[]'));
+            $allLanguages = config('languages.locales');
+            foreach ($languageIDs as $languageID) {
+                if (isset($allLanguages[$languageID])) {
+                    $keywords[] = $allLanguages[$languageID]['name'] . ' ' . __('event');
+                }
+            }
+        }
+        $meta->metas[$meta->locale]->keywords = implode(', ', $keywords);
         return view('event', [
             'meta' => $meta,
             'afternoons' => $afternoons,
