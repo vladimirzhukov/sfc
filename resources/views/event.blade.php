@@ -149,8 +149,6 @@
                         @endif
                     @endif
                 </div>
-
-                <!-- Location -->
                 <div class="flex items-center text-lg text-gray-300">
                     <svg class="size-6 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -162,56 +160,31 @@
                         {{ $event->location ?? ($event->city->name ?? __('Cyprus')) }}
                     @endif
                 </div>
-
-                <!-- Price -->
                 <div class="flex items-center text-lg text-gray-300">
-                    <svg class="size-6 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                    </svg>
+                    <svg class="size-6 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>
                     @if ($event->is_free || empty($event->price))
                         <span class="text-green-400 font-semibold">{{ __('FREE') }}</span>
                     @else
-                        <span class="font-semibold">€{{ number_format($event->price, 2) }} EUR</span>
+                        <span class="font-semibold">€{{ number_format($event->price, 2) }} {{ $event->currency }}</span>
                     @endif
                 </div>
             </div>
-
-            <!-- Action Buttons -->
             <div class="mt-10 flex flex-wrap gap-4">
                 @if ($event->is_online && $event->link)
-                    <a href="{{ $event->link }}" target="_blank" class="rounded-md bg-orange-500 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500">
-                        {{ __('Join Online') }}
-                    </a>
+                    <a href="{{ $event->link }}" target="_blank" class="rounded-md bg-orange-500 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500">{{ __('Join Online') }}</a>
                 @endif
-                <button id="addCalendar" class="rounded-md bg-white/10 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                    {{ __('Add to Calendar') }}
-                </button>
-                <button id="shareButton" class="rounded-md bg-white/10 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                    {{ __('Share') }}
-                </button>
+                <button id="addCalendar" class="rounded-md bg-white/10 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{{ __('Add to Calendar') }}</button>
+                <button id="shareButton" class="rounded-md bg-white/10 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">{{ __('Share') }}</button>
             </div>
         </div>
-
-        <!-- Background decoration -->
         <div aria-hidden="true" class="pointer-events-none absolute top-1/2 left-12 -z-10 -translate-y-1/2 transform-gpu blur-3xl lg:top-auto lg:-bottom-48 lg:translate-y-0">
             <div style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" class="aspect-1155/678 w-288.75 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-25"></div>
         </div>
     </div>
-
-    <!-- Main Content -->
     <div class="bg-white">
         <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
             <div class="lg:grid lg:grid-cols-12 lg:gap-12">
-                <!-- Main Content -->
                 <div class="lg:col-span-8">
-                    <!-- Event Image -->
-                    @if ($event->img)
-                        <div class="mb-8">
-                            <img src="https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/{{ substr($event->img, 0, 1) }}/{{ substr($event->img, 0, 2) }}/{{ substr($event->img, 0, 3) }}/{{ $event->img }}" alt="{{ $event->name }}" class="w-full h-64 sm:h-96 object-cover rounded-lg shadow-lg">
-                        </div>
-                    @endif
-
-                    <!-- Event Description -->
                     <div class="prose prose-lg max-w-none">
                         <h2 class="text-2xl font-bold text-gray-900 mb-6">{{ __('About this Event') }}</h2>
                         @if ($event->description_html)
@@ -222,14 +195,58 @@
                             <p class="text-gray-500 italic">{{ __('No description available for this event.') }}</p>
                         @endif
                     </div>
-
-                    <!-- Event Categories -->
+                    <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-4">{{ __('Event Details') }}</h3>
+                    <dl class="space-y-4">
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">{{ __('Date & Time') }}</dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                @if (date('Y-m-d', strtotime($event->start_date)) != date('Y-m-d', strtotime($event->end_date)))
+                                    {{ \Carbon\Carbon::parse($event->start_date)->format('M j, Y H:i') }}
+                                    @if ($event->end_date)
+                                        <br>{{ \Carbon\Carbon::parse($event->end_date)->format('M j, Y H:i') }}
+                                    @endif
+                                @else
+                                    {{ \Carbon\Carbon::parse($event->start_date)->format('M j, Y') }}<br>
+                                    {{ \Carbon\Carbon::parse($event->start_date)->format('H:i') }}
+                                    @if ($event->end_date)
+                                        - {{ \Carbon\Carbon::parse($event->end_date)->format('H:i') }}
+                                    @endif
+                                @endif
+                            </dd>
+                        </div>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">{{ __('Location') }}</dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                @if ($event->is_online)
+                                    {{ __('Online Event') }}
+                                @else
+                                    {{ $event->location ?? ($event->city->name ?? __('Cyprus')) }}
+                                @endif
+                            </dd>
+                        </div>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">{{ __('Price') }}</dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                @if ($event->is_free || empty($event->price))
+                                    <span class="text-green-600 font-semibold">{{ __('FREE') }}</span>
+                                @else
+                                    <span class="font-semibold">€{{ number_format($event->price, 2) }} EUR</span>
+                                @endif
+                            </dd>
+                        </div>
+                        @if (!empty($event->city))
+                            <div>
+                                <dt class="text-sm font-medium text-gray-500">{{ __('City') }}</dt>
+                                <dd class="mt-1 text-sm text-gray-900">{{ $event->city->name }}</dd>
+                            </div>
+                        @endif
+                    </dl>
                     @if (!empty($event->categories))
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Categories') }}</h3>
                             <div class="flex flex-wrap gap-2">
                                 @php
-                                    $categoryIDs = explode('][', trim($event->categories, '[]'));
+                                $categoryIDs = explode('][', trim($event->categories, '[]'));
                                 @endphp
                                 @foreach ($categoryIDs as $categoryID)
                                     @if (!empty($allCategories[$categoryID]))
@@ -241,14 +258,13 @@
                             </div>
                         </div>
                     @endif
-
-                    <!-- Event Languages -->
                     @if (!empty($event->languages))
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Languages') }}</h3>
                             <div class="flex flex-wrap gap-2">
                                 @php
-                                    $languageIDs = explode('][', trim($event->languages, '[]'));
+                                $allLanguages = config('languages.locales');
+                                $languageIDs = explode('][', trim($event->languages, '[]'));
                                 @endphp
                                 @foreach ($languageIDs as $languageID)
                                     @if (isset($allLanguages[$languageID]))
@@ -262,61 +278,13 @@
                         </div>
                     @endif
                 </div>
-
-                <!-- Sidebar -->
                 <div class="mt-12 lg:mt-0 lg:col-span-4">
                     <div class="sticky top-8 space-y-6">
-                        <!-- Event Details Card -->
-                        <div class="bg-gray-50 rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Event Details') }}</h3>
-                            <dl class="space-y-4">
-                                <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('Date & Time') }}</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">
-                                        @if (date('Y-m-d', strtotime($event->start_date)) != date('Y-m-d', strtotime($event->end_date)))
-                                            {{ \Carbon\Carbon::parse($event->start_date)->format('M j, Y H:i') }}
-                                            @if ($event->end_date)
-                                                <br>{{ \Carbon\Carbon::parse($event->end_date)->format('M j, Y H:i') }}
-                                            @endif
-                                        @else
-                                            {{ \Carbon\Carbon::parse($event->start_date)->format('M j, Y') }}<br>
-                                            {{ \Carbon\Carbon::parse($event->start_date)->format('H:i') }}
-                                            @if ($event->end_date)
-                                                - {{ \Carbon\Carbon::parse($event->end_date)->format('H:i') }}
-                                            @endif
-                                        @endif
-                                    </dd>
-                                </div>
-                                <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('Location') }}</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">
-                                        @if ($event->is_online)
-                                            {{ __('Online Event') }}
-                                        @else
-                                            {{ $event->location ?? ($event->city->name ?? __('Cyprus')) }}
-                                        @endif
-                                    </dd>
-                                </div>
-                                <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('Price') }}</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">
-                                        @if ($event->is_free || empty($event->price))
-                                            <span class="text-green-600 font-semibold">{{ __('FREE') }}</span>
-                                        @else
-                                            <span class="font-semibold">€{{ number_format($event->price, 2) }} EUR</span>
-                                        @endif
-                                    </dd>
-                                </div>
-                                @if (!empty($event->city))
-                                    <div>
-                                        <dt class="text-sm font-medium text-gray-500">{{ __('City') }}</dt>
-                                        <dd class="mt-1 text-sm text-gray-900">{{ $event->city->name }}</dd>
-                                    </div>
-                                @endif
-                            </dl>
-                        </div>
-
-                        <!-- Map for offline events -->
+                        @if ($event->img)
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <img src="https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/{{ substr($event->img, 0, 1) }}/{{ substr($event->img, 0, 2) }}/{{ substr($event->img, 0, 3) }}/{{ $event->img }}" alt="{{ $event->name }}" class="w-full object-cover rounded-lg shadow-lg">
+                            </div>
+                        @endif
                         @if (!$event->is_online && $event->lat && $event->lon)
                             <div class="bg-gray-50 rounded-lg p-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Location') }}</h3>
@@ -324,73 +292,43 @@
                                 <p class="mt-2 text-sm text-gray-600">{{ $event->location }}</p>
                             </div>
                         @endif
-
-                        <!-- Organizer Info -->
-                        @if (!empty($event->organizer))
+                        @if (!empty($event->user->profile->id))
                             <div class="bg-gray-50 rounded-lg p-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Organizer') }}</h3>
                                 <div class="flex items-center space-x-3">
-                                    @if ($event->organizer->avatar)
-                                        <img src="{{ $event->organizer->avatar }}" alt="{{ $event->organizer->name }}" class="size-10 rounded-full">
+                                    @if ($event->user->img)
+                                        <img src="{{ (!empty($event->user->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/avatars/' . substr($event->user->img, 0, 1) . '/' . substr($event->user->img, 0, 2) . '/' . substr($event->user->img, 0, 3) . '/th_' . $event->user->img : '/assets/images/no-user-image-icon.png') }}" alt="{{ trim($event->user->profile->first_name . ' '. $event->user->profile->last_name) }}" class="size-10 rounded-full">
                                     @else
                                         <div class="size-10 bg-gray-300 rounded-full flex items-center justify-center">
-                                            <svg class="size-6 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                                            </svg>
+                                            <svg class="size-6 text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
                                         </div>
                                     @endif
                                     <div>
-                                        <p class="font-medium text-gray-900">{{ $event->organizer->name }}</p>
-                                        @if ($event->organizer->company)
+                                        <p class="font-medium text-gray-900">{{ trim($event->user->profile->first_name . ' '. $event->user->profile->last_name) }}</p>
+                                        {{--@if ($event->organizer->company)
                                             <p class="text-sm text-gray-500">{{ $event->organizer->company }}</p>
-                                        @endif
+                                        @endif--}}
                                     </div>
                                 </div>
                             </div>
                         @endif
-
-                        <!-- Share Options -->
                         <div class="bg-gray-50 rounded-lg p-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Share this Event') }}</h3>
                             <div class="flex space-x-3">
-                                <!-- Facebook Share -->
-                                <a href="#" id="facebook-share" target="_blank" rel="noopener noreferrer"
-                                   class="flex items-center justify-center size-10 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-                                    <svg class="size-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clip-rule="evenodd" />
-                                    </svg>
+                                <a href="#" id="facebook-share" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center size-10 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                                    <svg class="size-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clip-rule="evenodd" /></svg>
                                 </a>
-
-                                <!-- Twitter/X Share -->
-                                <a href="#" id="twitter-share" target="_blank" rel="noopener noreferrer"
-                                   class="flex items-center justify-center size-10 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors">
-                                    <svg class="size-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
-                                    </svg>
+                                <a href="#" id="twitter-share" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center size-10 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition-colors">
+                                    <svg class="size-5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" /></svg>
                                 </a>
-
-                                <!-- WhatsApp Share -->
-                                <a href="#" id="whatsapp-share" target="_blank" rel="noopener noreferrer"
-                                   class="flex items-center justify-center size-10 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
-                                    <svg class="size-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
-                                    </svg>
+                                <a href="#" id="whatsapp-share" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center size-10 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
+                                    <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" /></svg>
                                 </a>
-
-                                <!-- Copy Link Button -->
-                                <button id="copy-link-btn"
-                                        class="flex items-center justify-center size-10 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors">
-                                    <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
-                                    </svg>
+                                <button id="copy-link-btn" class="flex items-center justify-center size-10 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors">
+                                    <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" /></svg>
                                 </button>
-
-                                <!-- LinkedIn Share (Optional addition) -->
-                                <a href="#" id="linkedin-share" target="_blank" rel="noopener noreferrer"
-                                   class="flex items-center justify-center size-10 bg-blue-800 text-white rounded-md hover:bg-blue-900 transition-colors">
-                                    <svg class="size-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" clip-rule="evenodd" />
-                                    </svg>
+                                <a href="#" id="linkedin-share" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center size-10 bg-blue-800 text-white rounded-md hover:bg-blue-900 transition-colors">
+                                    <svg class="size-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" clip-rule="evenodd" /></svg>
                                 </a>
                             </div>
                         </div>
@@ -399,92 +337,140 @@
             </div>
         </div>
     </div>
-    @if (!empty($relatedEvents) && $relatedEvents->isNotEmpty())
-        <div class="bg-gray-50 py-16">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-8 text-center">{{ __('Similar Events') }}</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach ($relatedEvents as $relatedEvent)
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                            @if ($relatedEvent->img)
-                                <img src="https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/{{ substr($relatedEvent->img, 0, 1) }}/{{ substr($relatedEvent->img, 0, 2) }}/{{ substr($relatedEvent->img, 0, 3) }}/th_{{ $relatedEvent->img }}" alt="{{ $relatedEvent->name }}" class="w-full h-48 object-cover">
-                            @else
-                                <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                                    <svg class="size-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                </div>
-                            @endif
-                            <div class="p-6">
-                                <div class="flex items-center justify-between mb-2">
-                                    @php
-                                    $relatedEventDate = \Carbon\Carbon::parse($relatedEvent->start_date);
-                                    $relatedNow = \Carbon\Carbon::now();
-                                    $relatedIsUpcoming = $relatedEventDate->isFuture();
-                                    $relatedIsPast = $relatedEventDate->isPast();
-                                    $relatedIsToday = $relatedEventDate->isToday();
-                                    @endphp
-                                    @if ($relatedIsToday)
-                                        <span class="inline-flex items-center gap-x-1 rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800">
-                                        <div class="flex-none rounded-full bg-blue-500 p-0.5"><div class="size-1 rounded-full bg-white"></div></div>
-                                        {{ __('Today') }}
-                                    </span>
-                                    @elseif ($relatedIsUpcoming)
-                                        <span class="inline-flex items-center gap-x-1 rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
-                                        <div class="flex-none rounded-full bg-green-500 p-0.5"><div class="size-1 rounded-full bg-white"></div></div>
-                                        {{ __('Upcoming') }}
-                                    </span>
-                                    @else
-                                        <span class="inline-flex items-center gap-x-1 rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
-                                        <div class="flex-none rounded-full bg-gray-500 p-0.5"><div class="size-1 rounded-full bg-white"></div></div>
-                                        {{ __('Past') }}
-                                    </span>
-                                    @endif
-                                    @if ($relatedEvent->is_free || empty($relatedEvent->price))
-                                        <span class="text-sm font-semibold text-green-600">{{ __('FREE') }}</span>
-                                    @else
-                                        <span class="text-sm font-semibold text-gray-900">€{{ number_format($relatedEvent->price, 2) }}</span>
-                                    @endif
-                                </div>
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-                                    <a href="{{ route('web::event', $relatedEvent->slug) }}" class="hover:text-orange-600 transition-colors">{{ $relatedEvent->name }}</a>
-                                </h3>
-                                <div class="flex items-center text-sm text-gray-500 mb-2">
-                                    <svg class="size-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                    {{ \Carbon\Carbon::parse($relatedEvent->start_date)->format('M j, Y') }}
-                                </div>
-                                <div class="flex items-center text-sm text-gray-500 mb-4">
-                                    <svg class="size-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    @if ($relatedEvent->is_online)
-                                        {{ __('Online') }}
-                                    @else
-                                        {{ $relatedEvent->city->name ?? __('Cyprus') }}
-                                    @endif
-                                </div>
-                                <a href="{{ route('web::event', $relatedEvent->slug) }}" class="inline-flex items-center text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors">
-                                    {{ __('Learn more') }}
-                                    <svg class="size-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="mt-12 text-center">
-                    <a href="{{ route('web::events') }}" class="inline-flex items-center rounded-md bg-orange-500 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500">
-                        {{ __('View All Events') }}
-                        <svg class="size-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
-                </div>
+</div>
+<div class="bg-gray-100 py-16 sm:py-24 dark:bg-gray-900">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        @if (!empty($relatedEvents) && $relatedEvents->isNotEmpty())
+            <div class="mx-auto max-w-2xl lg:text-center">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">{{ __('Related Events') }}</h2>
             </div>
-        </div>
-    @endif
+            <div class="bg-white shadow overflow-hidden sm:rounded-md dark:bg-gray-800">
+                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                    @foreach ($relatedEvents as $relatedEvent)
+                        <li class="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6 lg:px-8 dark:hover:bg-white/2.5">
+                            <div class="flex min-w-0 gap-x-4">
+                                <img src="{{ (!empty($relatedEvent->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/' . substr($relatedEvent->img, 0, 1) . '/' . substr($relatedEvent->img, 0, 2) . '/' . substr($relatedEvent->img, 0, 3) . '/th_' . $relatedEvent->img : '/assets/images/no-image-icon.png') }}" alt="{{ $relatedEvent->name }}" class="size-12 flex-none rounded-lg bg-gray-50 object-cover dark:bg-gray-800" />
+                                <div class="min-w-0 flex-auto">
+                                    <p class="text-sm/6 font-semibold text-gray-900 dark:text-white">
+                                        <a href="{{ route('web::event', $relatedEvent->slug) }}">
+                                            <span class="absolute inset-x-0 -top-px bottom-0"></span>
+                                            {{ $relatedEvent->name }}
+                                        </a>
+                                    </p>
+                                    <p class="mt-1 text-xs/5 text-gray-500 dark:text-orange-400">
+                                        @php
+                                        $categories = '';
+                                        if (!empty($relatedEvent->categories)) {
+                                            $categoryIDs = explode('][', trim($relatedEvent->categories, '[]'));
+                                            if (!empty($categoryIDs)) {
+                                                foreach ($categoryIDs as $categoryID) {
+                                                    if (!empty($allCategories[$categoryID]->parent_id)) {
+                                                        if (!empty($categories)) {
+                                                            $categories .= ', ';
+                                                        }
+                                                        $categories .= (!empty($allCategories[$categoryID]->parentCategory->name) ? $allCategories[$categoryID]->parentCategory->name . ' > ' : '') . $allCategories[$categoryID]->name;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        @endphp
+                                        {{ (!empty($categories) ? $categories . ' • ' : '') }}{{ (!empty($relatedEvent->is_online) ? __('Online') : (!empty($relatedEvent->city->name) ? $relatedEvent->city->name . (!empty($relatedEvent->city->region->name) ? ', ' . $relatedEvent->city->region->name : '') : __('Cyprus'))) }}
+                                    </p>
+                                    <div class="mt-2 flex items-center gap-x-4">
+                                        @if (date('Y-m-d', strtotime($relatedEvent->start_date)) != date('Y-m-d', strtotime($relatedEvent->end_date)))
+                                            <div class="flex items-center gap-x-1.5">
+                                                <svg class="size-4 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/></svg>
+                                                <p class="text-xs/5 text-gray-700 dark:text-gray-400">
+                                                    {{ \Carbon\Carbon::parse($relatedEvent->start_date)->format('M j, Y H:i') }}
+                                                    @if ($relatedEvent->end_date)
+                                                        - {{ \Carbon\Carbon::parse($relatedEvent->end_date)->format('M j, Y H:i') }}
+                                                    @endif
+                                                </p>
+                                            </div>
+                                        @else
+                                            <div class="flex items-center gap-x-1.5">
+                                                <svg class="size-4 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/></svg>
+                                                <p class="text-xs/5 text-gray-700 dark:text-gray-400">
+                                                    {{ \Carbon\Carbon::parse($relatedEvent->start_date)->format('M j, Y') }}
+                                                </p>
+                                            </div>
+                                            <div class="flex items-center gap-x-1.5">
+                                                <svg class="size-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                                                <p class="text-xs/5 text-gray-700 dark:text-gray-400">
+                                                    {{ \Carbon\Carbon::parse($relatedEvent->start_date)->format('H:i') }}
+                                                    @if ($relatedEvent->end_date)
+                                                        - {{ \Carbon\Carbon::parse($relatedEvent->end_date)->format('H:i') }}
+                                                    @endif
+                                                </p>
+                                            </div>
+                                        @endif
+                                        @if (!empty($relatedEvent->location))
+                                            <div class="flex items-center gap-x-1.5">
+                                                <svg class="size-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
+                                                <p class="text-xs/5 text-gray-500 dark:text-gray-400">{{ Str::limit($relatedEvent->location, 40) }}</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    @if (!empty($relatedEvent->languages))
+                                        <div class="mt-2 flex items-center gap-x-1">
+                                            @php
+                                            $languageIDs = explode('][', trim($relatedEvent->languages, '[]'));
+                                            @endphp
+                                            @foreach ($languageIDs as $languageID)
+                                                @if (isset($allLanguages[$languageID]))
+                                                    <span class="inline-flex items-center gap-x-1 rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/20 dark:text-blue-400"><img src="{{ asset('assets/flags/language/' . $languageID . '.svg') }}" alt="{{ $allLanguages[$languageID]['name'] }}" class="size-3 rounded-sm" />{{ $allLanguages[$languageID]['name'] }}</span>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="flex shrink-0 items-center gap-x-4">
+                                <div class="hidden sm:flex sm:flex-col sm:items-end">
+                                    @php
+                                    $eventDate = \Carbon\Carbon::parse($relatedEvent->start_date);
+                                    $now = \Carbon\Carbon::now();
+                                    $isUpcoming = $eventDate->isFuture();
+                                    $isPast = $eventDate->isPast();
+                                    $isToday = $eventDate->isToday();
+                                    @endphp
+                                    <div class="flex items-center gap-x-1.5">
+                                        @if ($isToday)
+                                            <div class="flex-none rounded-full bg-blue-500/20 p-1 dark:bg-blue-500/30"><div class="size-1.5 rounded-full bg-blue-500"></div></div>
+                                            <p class="text-xs/5 text-blue-600 dark:text-blue-400 font-medium">{{ __('Today') }}</p>
+                                        @elseif ($isUpcoming)
+                                            <div class="flex-none rounded-full bg-emerald-500/20 p-1 dark:bg-emerald-500/30"><div class="size-1.5 rounded-full bg-emerald-500"></div></div>
+                                            <p class="text-xs/5 text-emerald-600 dark:text-emerald-400 font-medium">{{ __('Upcoming') }}</p>
+                                        @else
+                                            <div class="flex-none rounded-full bg-gray-500/20 p-1 dark:bg-gray-500/30"><div class="size-1.5 rounded-full bg-gray-500"></div></div>
+                                            <p class="text-xs/5 text-gray-500 dark:text-gray-400">{{ __('Past') }}</p>
+                                        @endif
+                                    </div>
+                                    @if (!empty($relatedEvent->is_free))
+                                        <p class="mt-1 text-xs/5 font-semibold text-gray-900 dark:text-white">{{ __('Free') }}</p>
+                                    @else
+                                        <p class="mt-1 text-xs/5 font-semibold text-gray-900 dark:text-white">
+                                            @if (empty($relatedEvent->price))
+                                                {{ __('Free') }}
+                                            @else
+                                                €{{ number_format($relatedEvent->price, 2) }}
+                                            @endif
+                                        </p>
+                                    @endif
+                                    {{--@if ($event->attendees_count)
+                                        <p class="mt-1 text-xs/5 text-gray-500 dark:text-gray-400">
+                                            {{ $event->attendees_count }} {{ __('attending') }}
+                                        </p>
+                                    @endif--}}
+                                </div>
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="size-5 flex-none text-gray-400 dark:text-gray-500"><path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" /></svg>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
 </div>
 @endsection
 

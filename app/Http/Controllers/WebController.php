@@ -146,11 +146,19 @@ class WebController extends Controller
         $meta = $this->getMeta();
         $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
         $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        $allCategories = EventCategory::get()->keyBy('id');
+        $relatedEvents = Event::where([
+            ['id', '!=', $event->id],
+            //['start_date', '>=', date('Y-m-d')],
+            ['active', 1]
+        ])->orderBy('start_date')->orderBy('name')->limit(5)->get();
         return view('event', [
             'meta' => $meta,
             'afternoons' => $afternoons,
             'cities' => $cities,
-            'event' => $event
+            'event' => $event,
+            'allCategories' => $allCategories,
+            'relatedEvents' => $relatedEvents
         ]);
     }
 
