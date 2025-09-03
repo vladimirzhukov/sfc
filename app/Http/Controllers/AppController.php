@@ -551,7 +551,6 @@ class AppController extends Controller
     {
         $meta = $this->getMeta();
         $categoryData = $this->processCategoriesForView('service');
-
         return view('app.service', array_merge([
             'meta' => $meta
         ], $categoryData));
@@ -601,7 +600,7 @@ class AppController extends Controller
                 $service = new Service();
                 $service->user_id = Auth::user()->id;
             } else {
-                $service = Startup::findOrFail($request->id);
+                $service = Service::findOrFail($request->id);
                 if ($service->user_id != Auth::user()->id) {
                     return redirect()->route('app::startups')->withErrors(__('Service not found or access denied'));
                 }
