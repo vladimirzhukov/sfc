@@ -583,7 +583,23 @@ function categorySelector() {
 
         init() {
             // Initialize with existing categories if editing
-            this.selectedCategories = [{!! (!empty($service->categories) ? str_replace(array(']', '['), '"', str_replace('][', '","', $service->categories)) : '') !!}];
+            @php
+            $categories = '';
+            if (!empty($service->categories)) {
+                $categoryIDs = explode('][', trim($service->categories, '[]'));
+                if (!empty($categoryIDs)) {
+                    foreach ($categoryIDs as $categoryID) {
+                        if (empty($parentCategories[$categoryID])) {
+                            if (!empty($categories)) {
+                                $categories .= ', ';
+                            }
+                            $categories .= '"' . $categoryID . '"';
+                        }
+                    }
+                }
+            }
+            @endphp
+            this.selectedCategories = [{!! (!empty($categories) ? $categories : '') !!}];
         }
     }
 }
@@ -595,11 +611,11 @@ function serviceLanguageSelector() {
         selectedLanguages: [], // Array of language codes
 
         languages: [
-                @php
-                    $languages = config('languages.locales');
-                    ksort($languages);
-                @endphp
-                @foreach ($languages as $key => $item)
+            @php
+            $languages = config('languages.locales');
+            ksort($languages);
+            @endphp
+            @foreach ($languages as $key => $item)
             { code: '{{ $key }}', name: '{{ $item['name'] }}', native: '{{ $item['native'] }}', flag: '{{ asset('assets/flags/language/' . $key . '.svg') }}' },
             @endforeach
         ],

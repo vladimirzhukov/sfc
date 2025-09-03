@@ -779,20 +779,20 @@ function categorySelector() {
         selectedCategories: [],
         categories: [
             @php
-                $cats = '';
-                foreach ($parentCategories as $pkey => $parent) {
-                    if (isset($categories[$pkey])) {
-                        foreach ($categories[$pkey] as $key => $category) {
-                            if (!empty($cats)) {
-                                $cats .= ',';
-                            }
-                            $ord = $rawCategories[$key]->ord ?? 0;
-                            $cats .= '{code: "' . $key . '", name: "' . addslashes($category) . '", group: "' . addslashes($parent) . '", description: "' . addslashes($categoryDescriptions[$key] ?? '') . '", ord: ' . $ord . '}';
+            $cats = '';
+            foreach ($parentCategories as $pkey => $parent) {
+                if (isset($categories[$pkey])) {
+                    foreach ($categories[$pkey] as $key => $category) {
+                        if (!empty($cats)) {
+                            $cats .= ',';
                         }
+                        $ord = $rawCategories[$key]->ord ?? 0;
+                        $cats .= '{code: "' . $key . '", name: "' . addslashes($category) . '", group: "' . addslashes($parent) . '", description: "' . addslashes($categoryDescriptions[$key] ?? '') . '", ord: ' . $ord . '}';
                     }
                 }
+            }
             @endphp
-                {!! $cats !!}
+            {!! $cats !!}
         ],
 
         get filteredCategories() {
@@ -885,7 +885,23 @@ function categorySelector() {
         },
 
         init() {
-            this.selectedCategories = [{!! (!empty($business->categories) ? str_replace(array(']', '['), '"', str_replace('][', '","', $business->categories)) : '') !!}];
+            @php
+            $categories = '';
+            if (!empty($business->categories)) {
+                $categoryIDs = explode('][', trim($business->categories, '[]'));
+                if (!empty($categoryIDs)) {
+                    foreach ($categoryIDs as $categoryID) {
+                        if (empty($parentCategories[$categoryID])) {
+                            if (!empty($categories)) {
+                                $categories .= ', ';
+                            }
+                            $categories .= '"' . $categoryID . '"';
+                        }
+                    }
+                }
+            }
+            @endphp
+            this.selectedCategories = [{!! (!empty($categories) ? $categories : '') !!}];
         }
     }
 }
@@ -899,12 +915,12 @@ function businessLanguageSelector() {
         languages: [
             // These would be dynamically populated from your Laravel config
             // Using the same structure as the event language selector
-                @php
-                    $languages = config('languages.locales');
-                    ksort($languages);
-                @endphp
-                @foreach ($languages as $key => $item)
-            { code: '{{ $key }}', name: '{{ $item['name'] }}', native: '{{ $item['native'] }}', flag: '{{ asset('assets/flags/language/' . $key . '.svg') }}' },
+            @php
+            $languages = config('languages.locales');
+            ksort($languages);
+            @endphp
+            @foreach ($languages as $key => $item)
+                { code: '{{ $key }}', name: '{{ $item['name'] }}', native: '{{ $item['native'] }}', flag: '{{ asset('assets/flags/language/' . $key . '.svg') }}' },
             @endforeach
         ],
 
