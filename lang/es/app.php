@@ -69,4 +69,9 @@ return [
     'business_tip_6' => '&bull; Incluye los idiomas hablados por los miembros de tu equipo',
     'business_tip_7' => '&bull; Ten en cuenta la demografía de tus clientes objetivo',
     'business_tip_8' => '&bull; Esto ayuda a los clientes a encontrar empresas que hablen su idioma',
+    'service_language_1' => 'Ha seleccionado el máximo de 10 idiomas para este servicio. Elimine un idioma para seleccionar otro.',
+    'service_tip_5' => '&bull; Seleccione los idiomas en los que usted o su equipo puedan comunicarse con fluidez con los clientes',
+    'service_tip_6' => '&bull; Incluya el idioma principal de su negocio y cualquier idioma adicional para un mayor alcance',
+    'service_tip_7' => '&bull; Considere los idiomas que habla su mercado objetivo en Chipre',
+    'service_tip_8' => '&bull; Puede actualizar la selección de idiomas en cualquier momento a medida que cambien las capacidades de su servicio',
 ];

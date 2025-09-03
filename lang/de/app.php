@@ -69,4 +69,9 @@ return [
     'business_tip_6' => '&bull; Fügen Sie Sprachen hinzu, die von Ihren Teammitgliedern gesprochen werden',
     'business_tip_7' => '&bull; Berücksichtigen Sie die demografischen Merkmale Ihrer Zielkunden',
     'business_tip_8' => '&bull; Dies hilft Kunden, Unternehmen zu finden, die ihre Sprache sprechen',
+    'service_language_1' => 'Sie haben die maximale Anzahl von 10 Sprachen für diesen Dienst ausgewählt. Entfernen Sie eine Sprache, um eine andere auszuwählen.',
+    'service_tip_5' => '&bull; Wählen Sie Sprachen aus, in denen Sie oder Ihr Team fließend mit Kunden kommunizieren können',
+    'service_tip_6' => '&bull; Fügen Sie Ihre primäre Geschäftssprache und zusätzliche Sprachen für eine größere Reichweite hinzu',
+    'service_tip_7' => '&bull; Berücksichtigen Sie die Sprachen, die von Ihrem Zielmarkt auf Zypern gesprochen werden',
+    'service_tip_8' => '&bull; Sie können die Sprachauswahl jederzeit aktualisieren, wenn sich Ihre Servicefähigkeiten ändern',
 ];

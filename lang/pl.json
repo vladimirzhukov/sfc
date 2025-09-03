@@ -502,5 +502,9 @@
     "Select business languages...": "Wybierz języki biznesowe...",
     "Select Top 10": "Wybierz najlepsze 10",
     "of 10 languages": "z 10 języków",
-    "You have selected the maximum of 10 languages for this business. Remove a language to select a different one.": "Wybrałeś maksymalną liczbę 10 języków dla tej firmy. Usuń język, aby wybrać inny."
+    "You have selected the maximum of 10 languages for this business. Remove a language to select a different one.": "Wybrałeś maksymalną liczbę 10 języków dla tej firmy. Usuń język, aby wybrać inny.",
+    "Service Languages": "Języki obsługi",
+    "Select the languages in which your service can communicate with clients": "Wybierz języki, w których Twoja usługa może komunikować się z klientami",
+    "Select service languages...": "Wybierz języki usług...",
+    "Language Selection Tips:": "Wskazówki dotyczące wyboru języka:"
 }

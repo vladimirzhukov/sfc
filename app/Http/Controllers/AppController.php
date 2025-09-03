@@ -593,6 +593,8 @@ class AppController extends Controller
                 'description' => 'nullable|string|max:4000',
                 'categories' => 'array|max:5', // Max 5 categories
                 'categories.*' => 'string',
+                'languages' => 'array|max:10', // Max 10 languages for services
+                'languages.*' => 'string|size:2', // Each language code should be 2 characters
                 'active' => 'boolean'
             ]);
             if (empty($request->id)) {
@@ -615,7 +617,23 @@ class AppController extends Controller
             } else {
                 $service->description = null;
             }
+            $service->languages = (!empty($request->input('languages')) ? '[' . implode('][', $request->input('languages')) . ']' : null);
             $service->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
+            // Add parent categories automatically
+            if (!empty($service->categories)) {
+                $categoryIDs = explode('][', trim($service->categories, '[]'));
+                foreach ($categoryIDs as $categoryID) {
+                    $category = ServiceCategory::find($categoryID);
+                    if ($category && $category->parent_id != 0) {
+                        $parentID = $category->parent_id;
+                        if (!in_array($parentID, $categoryIDs)) {
+                            $categoryIDs[] = $parentID;
+                        }
+                    }
+                }
+                sort($categoryIDs);
+                $service->categories = '[' . implode('][', $categoryIDs) . ']';
+            }
             $service->active = $request->boolean('active');
             if (!$service->slug || $service->isDirty('name')) {
                 $service->slug = $this->generateUniqueServiceSlug($request->input('name'), Auth::user()->id, $service->id ?? null);
@@ -987,8 +1005,8 @@ class AppController extends Controller
             $business->languages = (!empty($validated['languages']) ? '[' . implode('][', $validated['languages']) . ']' : null);
             $business->categories = (!empty($request->categories) ? '[' . implode('][', $request->categories) . ']' : null);
             // Add parent categories automatically
-            if (!empty($event->categories)) {
-                $categoryIDs = explode('][', trim($event->categories, '[]'));
+            if (!empty($business->categories)) {
+                $categoryIDs = explode('][', trim($business->categories, '[]'));
                 foreach ($categoryIDs as $categoryID) {
                     $category = BusinessCategory::find($categoryID);
                     if ($category && $category->parent_id != 0) {
@@ -999,7 +1017,7 @@ class AppController extends Controller
                     }
                 }
                 sort($categoryIDs);
-                $event->categories = '[' . implode('][', $categoryIDs) . ']';
+                $business->categories = '[' . implode('][', $categoryIDs) . ']';
             }
             $business->lat = $validated['is_online'] ? 0 : ($validated['lat'] ?? 0);
             $business->lon = $validated['is_online'] ? 0 : ($validated['lon'] ?? 0);

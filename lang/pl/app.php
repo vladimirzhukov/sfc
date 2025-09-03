@@ -69,4 +69,9 @@ return [
     'business_tip_6' => '&bull; Uwzględnij języki, którymi posługują się członkowie Twojego zespołu',
     'business_tip_7' => '&bull; Weź pod uwagę demografię docelowych klientów',
     'business_tip_8' => '&bull; To pomaga klientom znaleźć firmy, które mówią w ich języku',
+    'service_language_1' => 'Wybrano maksymalną liczbę 10 języków dla tej usługi. Usuń język, aby wybrać inny.',
+    'service_tip_5' => '&bull; Wybierz języki, w których Ty lub Twój zespół możecie płynnie komunikować się z klientami',
+    'service_tip_6' => '&bull; Uwzględnij główny język Twojej firmy oraz wszelkie dodatkowe języki, aby uzyskać szerszy zasięg',
+    'service_tip_7' => '&bull; Weź pod uwagę języki używane przez Twoją grupę docelową na Cyprze',
+    'service_tip_8' => '&bull; Możesz zaktualizować wybór języków w dowolnym momencie, gdy zmienią się możliwości Twojej usługi',
 ];

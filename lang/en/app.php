@@ -69,4 +69,9 @@ return [
     'business_tip_6' => '&bull; Include languages spoken by your team members',
     'business_tip_7' => '&bull; Consider your target customer demographics',
     'business_tip_8' => '&bull; This helps customers find businesses that speak their language',
+    'service_language_1' => 'You have selected the maximum of 10 languages for this service. Remove a language to select a different one.',
+    'service_tip_5' => '&bull; Select languages you or your team can fluently communicate in with clients',
+    'service_tip_6' => '&bull; Include your primary business language and any additional languages for wider reach',
+    'service_tip_7' => '&bull; Consider the languages spoken by your target market in Cyprus',
+    'service_tip_8' => '&bull; You can update language selection anytime as your service capabilities change',
 ];
