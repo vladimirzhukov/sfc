@@ -779,8 +779,6 @@ class WebController extends Controller
         $allCategories = BusinessCategory::get()->keyBy('id');
         $businesses = Business::where('active', 1)->orderBy('name')->paginate(20);
         $afternoons = WorkingAfternoon::where('country_id', 55)->get();
-        $meta->subtitle = __('Cyprus Startups');
-        $meta->subnote = __('web.startups_1');
         return view('businesses', [
             'meta' => $meta,
             'cities' => $cities,
