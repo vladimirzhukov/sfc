@@ -203,9 +203,9 @@
                         <div>
                             <h3 class="text-sm/6 font-semibold text-white">{{ __('Ecosystem') }}</h3>
                             <ul role="list" class="mt-6 space-y-4">
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Members') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Businesses') }}</a></li>
-                                <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Services') }}</a></li>
+                                <li><a href="{{ route('web::members') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Members') }}</a></li>
+                                <li><a href="{{ route('web::businesses') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Businesses') }}</a></li>
+                                <li><a href="{{ route('web::services') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Services') }}</a></li>
                                 <li><a href="{{ route('web::wa') }}" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Working Afternoons') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Investors') }}</a></li>
                                 <li><a href="#" class="text-sm/6 text-gray-400 hover:text-white">{{ __('Event Organizers') }}</a></li>

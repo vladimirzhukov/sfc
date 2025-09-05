@@ -149,7 +149,7 @@ if (Route::currentRouteName() == 'web::events::filter') {
                         </div>
                         <div class="flex-1 overflow-y-auto p-6 space-y-8">
                             <div class="bg-white dark:bg-gray-800">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('Browse by Industry') }}</h3>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('Browse by Category') }}</h3>
                                 <div class="space-y-2">
                                     @if (!empty($currentCategory->id) && empty($currentCategory->parent_id))
                                         @php
@@ -342,8 +342,8 @@ if (Route::currentRouteName() == 'web::events::filter') {
                                 @endif
                             </ol>
                         </nav>
-                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $meta->subtitle }}</h2>
-                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{{ $meta->subnote }}</p>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $meta->subtitle ?? '' }}</h2>
+                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{{ $meta->subnote ?? '' }}</p>
                     </div>
                     {{--<div class="flex items-center gap-4">
                         <select class="rounded-md border-0 py-1.5 pl-3 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-orange-500 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-600">
@@ -413,7 +413,7 @@ if (Route::currentRouteName() == 'web::events::filter') {
                                 @foreach ($events as $event)
                                     <li class="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6 lg:px-8 dark:hover:bg-white/2.5">
                                         <div class="flex min-w-0 gap-x-4">
-                                            <img src="{{ (!empty($event->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/' . substr($event->img, 0, 1) . '/' . substr($event->img, 0, 2) . '/' . substr($event->img, 0, 3) . '/th_' . $event->img : '/assets/images/no-image-icon.png') }}" alt="{{ $event->name }}" class="size-12 flex-none rounded-lg bg-gray-50 object-cover dark:bg-gray-800" />
+                                            <img src="{{ (!empty($event->img) ? 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/events/' . substr($event->img, 0, 1) . '/' . substr($event->img, 0, 2) . '/' . substr($event->img, 0, 3) . '/th_' . $event->img : '/assets/images/no-image-icon.png') }}" alt="{{ $event->name }}" class="size-12 mt-2 flex-none rounded-lg bg-gray-50 object-cover dark:bg-gray-800" />
                                             <div class="min-w-0 flex-auto">
                                                 <p class="text-sm/6 font-semibold text-gray-900 dark:text-white">
                                                     <a href="{{ route('web::event', $event->slug) }}">

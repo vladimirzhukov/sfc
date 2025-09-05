@@ -123,9 +123,9 @@ input[type="date"] {
                     <label class="block text-sm/6 font-medium text-gray-900">{{ __('Event Categories') }} ({{ __('Maximum 5') }})</label>
                     <div class="relative mt-2">
                         <button type="button" @click="open = !open" class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-3 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" :aria-expanded="open">
-                    <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-                        <span class="block truncate" x-text="selectedCategories.length > 0 ? `{{ __('Categories selected') }}: ${selectedCategories.length}/5` : '{{ __('Select event categories') }} ({{ __('max 5') }})...'"></span>
-                    </span>
+                            <span class="col-start-1 row-start-1 flex items-center gap-3 pr-6">
+                                <span class="block truncate" x-text="selectedCategories.length > 0 ? `{{ __('Categories selected') }}: ${selectedCategories.length}/5` : '{{ __('Select event categories') }} ({{ __('max 5') }})...'"></span>
+                            </span>
                             <svg class="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4 transition-transform duration-200" :class="{ 'rotate-180': open }" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd" /></svg>
                         </button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" @click.away="open = false" class="absolute z-10 bg-white max-h-80 w-full overflow-auto rounded-md shadow-lg border-1 border-gray-300 mt-1">
@@ -256,20 +256,16 @@ input[type="date"] {
                                 <p class="font-medium mb-1">{{ __('Pricing Tips:') }}</p>
                                 <ul class="text-xs space-y-1">
                                     <template x-if="isFree">
-                                        <div>
-                                            <li>{!! __('app.event_tip_5') !!}</li>
-                                            <li>{!! __('app.event_tip_6') !!}</li>
-                                            <li>{!! __('app.event_tip_7') !!}</li>
-                                            <li>{!! __('app.event_tip_8') !!}</li>
-                                        </div>
+                                        <li>{!! __('app.event_tip_5') !!}</li>
+                                        <li>{!! __('app.event_tip_6') !!}</li>
+                                        <li>{!! __('app.event_tip_7') !!}</li>
+                                        <li>{!! __('app.event_tip_8') !!}</li>
                                     </template>
                                     <template x-if="!isFree">
-                                        <div>
-                                            <li>{!! __('app.event_tip_9') !!}</li>
-                                            <li>{!! __('app.event_tip_10') !!}</li>
-                                            <li>{!! __('app.event_tip_11') !!}</li>
-                                            <li>{!! __('app.event_tip_12') !!}</li>
-                                        </div>
+                                        <li>{!! __('app.event_tip_9') !!}</li>
+                                        <li>{!! __('app.event_tip_10') !!}</li>
+                                        <li>{!! __('app.event_tip_11') !!}</li>
+                                        <li>{!! __('app.event_tip_12') !!}</li>
                                     </template>
                                 </ul>
                             </div>
@@ -465,12 +461,10 @@ input[type="date"] {
                             <div class="text-sm text-blue-800">
                                 <p class="font-medium mb-1">{{ __('Event Visibility:') }}</p>
                                 <ul class="text-xs space-y-1">
-                                    <div>
-                                        <li>{!! __('app.event_tip_1') !!}</li>
-                                        <li>{!! __('app.event_tip_2') !!}</li>
-                                        <li>{!! __('app.event_tip_3') !!}</li>
-                                        <li>{!! __('app.event_tip_4') !!}</li>
-                                    </div>
+                                    <li>{!! __('app.event_tip_1') !!}</li>
+                                    <li>{!! __('app.event_tip_2') !!}</li>
+                                    <li>{!! __('app.event_tip_3') !!}</li>
+                                    <li>{!! __('app.event_tip_4') !!}</li>
                                 </ul>
                             </div>
                         </div>

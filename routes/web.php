@@ -42,6 +42,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function() {
     Route::get('/startup/{link}', [WebController::class, 'startup'])->name('web::startup');
     Route::get('/startups/{link}', [WebController::class, 'startupsFilter'])->name('web::startups::filter');
     Route::get('/startups/{link}/{category}', [WebController::class, 'startupsFilterCategory'])->name('web::startups::filter::category');
+    Route::get('/members', [WebController::class, 'members'])->name('web::members');
+    Route::get('/members/{link}', [WebController::class, 'membersFilter'])->name('web::members::filter');
+    Route::get('/businesses', [WebController::class, 'businesses'])->name('web::businesses');
+    Route::get('/business/{link}', [WebController::class, 'business'])->name('web::business');
+    Route::get('/businesses/{link}', [WebController::class, 'businessesFilter'])->name('web::businesses::filter');
+    Route::get('/businesses/{link}/{category}', [WebController::class, 'businessesFilterCategory'])->name('web::businesses::filter::category');
+    Route::get('/services', [WebController::class, 'services'])->name('web::services');
+    Route::get('/service/{link}', [WebController::class, 'service'])->name('web::service');
+    Route::get('/services/{link}', [WebController::class, 'servicesFilter'])->name('web::services::filter');
+    Route::get('/services/{link}/{category}', [WebController::class, 'servicesFilterCategory'])->name('web::services::filter::category');
     // Dashboard routes
     Route::get('/app', [AppController::class, 'index'])->name('app::index')->middleware(['auth', 'last.seen']);
     Route::get('/app/profile', [AppController::class, 'profile'])->name('app::profile')->middleware(['auth', 'last.seen']);

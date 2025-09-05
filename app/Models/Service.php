@@ -7,6 +7,11 @@ use League\CommonMark\CommonMarkConverter;
 
 class Service extends Model
 {
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getDescriptionHtmlAttribute()
     {
         if (empty($this->description)) {

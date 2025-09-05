@@ -379,12 +379,10 @@ input[type="date"] {
                             <div class="text-sm text-blue-800">
                                 <p class="font-medium mb-1">{{ __('Business Visibility:') }}</p>
                                 <ul class="text-xs space-y-1">
-                                    <div>
-                                        <li>{!! __('app.business_tip_1') !!}</li>
-                                        <li>{!! __('app.business_tip_2') !!}</li>
-                                        <li>{!! __('app.business_tip_3') !!}</li>
-                                        <li>{!! __('app.business_tip_4') !!}</li>
-                                    </div>
+                                    <li>{!! __('app.business_tip_1') !!}</li>
+                                    <li>{!! __('app.business_tip_2') !!}</li>
+                                    <li>{!! __('app.business_tip_3') !!}</li>
+                                    <li>{!! __('app.business_tip_4') !!}</li>
                                 </ul>
                             </div>
                         </div>

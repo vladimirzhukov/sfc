@@ -2,9 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Business;
+use App\Models\BusinessCategory;
+use App\Models\BusinessMeta;
 use App\Models\Event;
 use App\Models\EventMeta;
+use App\Models\Service;
+use App\Models\ServiceCategory;
+use App\Models\ServiceMeta;
 use App\Models\Startup;
+use App\Models\StartupMeta;
+use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Meta;
@@ -269,13 +278,41 @@ class WebController extends Controller
             }
             echo '<hr>';
         }*/
+        /*$parentCategories = StartupCategory::where('parent_id', 0)->get();
+        foreach ($parentCategories as $category) {
+            echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            $subCategories = StartupCategory::where('parent_id', $category->id)->get();
+            foreach ($subCategories as $subCategory) {
+                echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+            }
+            echo '<hr>';
+        }*/
+        /*$parentCategories = BusinessCategory::where('parent_id', 0)->get();
+        foreach ($parentCategories as $category) {
+            echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            $subCategories = BusinessCategory::where('parent_id', $category->id)->get();
+            foreach ($subCategories as $subCategory) {
+                echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+            }
+            echo '<hr>';
+        }*/
+        /*$parentCategories = ServiceCategory::where('parent_id', 0)->get();
+        foreach ($parentCategories as $category) {
+            echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            $subCategories = ServiceCategory::where('parent_id', $category->id)->get();
+            foreach ($subCategories as $subCategory) {
+                echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+            }
+            echo '<hr>';
+        }*/
         /*$cities = City::where('country_id', 55)->get();
         foreach ($cities as $key => $city) {
             echo $city->name . (!empty($city->region->name) ? ' (' . $city->region->name . ')' : '') . ' - "parameter_link": ' . $city->slug . '<br>';
-            if (!empty($key) && $key % 10 == 0) {
+            if (!empty($key) && $key % 30 == 0) {
                 echo '<hr>';
             }
         }*/
+        //exit;
         $meta = new \StdClass();
         $meta->locale = LaravelLocalization::getCurrentLocale();
         $meta->language = LaravelLocalization::getCurrentLocaleName();
@@ -446,15 +483,29 @@ class WebController extends Controller
 
     public function startups()
     {
-        $meta = $this->getMeta();
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = StartupMeta::whereNull('parameter_link')->whereNull('parameter_category')->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
         $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
         $categories = StartupCategory::where('parent_id', 0)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
         $subcategories = StartupCategory::where('parent_id', '!=', 0)->count();
         $allCategories = StartupCategory::get()->keyBy('id');
         $startups = Startup::where('active', 1)->orderBy('name')->paginate(20);
         $afternoons = WorkingAfternoon::where('country_id', 55)->get();
-        $meta->subtitle = __('Cyprus Startups');
-        $meta->subnote = __('web.startups_1');
         return view('startups', [
             'meta' => $meta,
             'cities' => $cities,
@@ -468,7 +519,24 @@ class WebController extends Controller
 
     public function startupsFilter(Request $request, $link)
     {
-        $meta = $this->getMeta($link);
+        //$meta = $this->getMeta($link);
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = StartupMeta::where('parameter_link', $link)->whereNull('parameter_category')->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
         $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
         $categories = StartupCategory::where('parent_id', 0)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
         $subcategories = StartupCategory::where('parent_id', '!=', 0)->count();
@@ -479,16 +547,10 @@ class WebController extends Controller
                     ['is_fundraising', 1],
                     ['active', 1]
                 ])->orderBy('name')->paginate(20);
-                $meta->subtitle = __('Online Startup Events');
-                $meta->subnote = __('web.events_3');
             } elseif ($link == 'recent') {
                 $startups = Startup::where('active', 1)->orderBy('id', 'desc')->orderBy('name')->paginate(20);
-                $meta->subtitle = __('Past Startup Events');
-                $meta->subnote = __('web.events_4');
             } elseif ($link == 'cities') {
                 $startups = null;
-                $meta->subtitle = __('Startup Events in Cities');
-                $meta->subnote = __('web.events_6');
                 $allCities = City::where('country_id', 55)->where('population', '<=', 10000)->orderBy('name', 'asc')->get();
                 $majorCities = City::where('country_id', 55)->where('population', '>', 10000)->orderBy('population', 'desc')->orderBy('name', 'asc')->get()->keyBy('id');
             }
@@ -503,8 +565,6 @@ class WebController extends Controller
                 ])->orderBy('name')->paginate(20);
                 $categories = StartupCategory::where('parent_id', $currentCategory->id)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
                 $currentCity = null;
-                $meta->subtitle = __('Cyprus Startup Events');
-                $meta->subnote = __('web.events_1') . ' ' . $currentCategory->name;
             } else {
                 $currentCity = City::where('slug', $link)->firstOrFail();
                 $startups = Startup::where([
@@ -512,8 +572,6 @@ class WebController extends Controller
                     ['active', 1]
                 ])->orderBy('name')->paginate(20);
                 $currentCategory = null;
-                $meta->subtitle = __('Startup Events in') . ' ' . $currentCity->name;
-                $meta->subnote = __('web.events_7') . ' ' . $currentCity->name;
             }
         }
         $afternoons = WorkingAfternoon::where('country_id', 55)->get();
@@ -534,7 +592,24 @@ class WebController extends Controller
 
     public function startupsFilterCategory(Request $request, $link, $category)
     {
-        $meta = $this->getMeta($link);
+        //$meta = $this->getMeta($link);
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = StartupMeta::where('parameter_link', $link)->where('parameter_category', $category)->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
         $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
         $subcategories = StartupCategory::where('parent_id', '!=', 0)->count();
         $allCategories = StartupCategory::get()->keyBy('id');
@@ -547,8 +622,6 @@ class WebController extends Controller
         $categories = StartupCategory::where('parent_id', $currentCategory->parent_id)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
         $currentCity = null;
         $afternoons = WorkingAfternoon::where('country_id', 55)->get();
-        $meta->subtitle = __('Cyprus Startup Events');
-        $meta->subnote = __('web.events_1') . ' ' . $currentCategory->name;
         return view('startups', [
             'meta' => $meta,
             'cities' => $cities,
@@ -626,6 +699,346 @@ class WebController extends Controller
             'cities' => $cities,
             'startup' => $startup,
             'allCategories' => $allCategories
+        ]);
+    }
+
+    public function members()
+    {
+        $meta = $this->getMeta();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        $members = UserProfile::whereHas('user', function ($query) {
+            $query->where('active', 1);
+        })->orderBy('id', 'desc')->limit(10)->get();
+        $meta->subtitle = __('Online Startup Events');
+        $meta->subnote = __('web.events_3');
+        return view('members', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities,
+            'members' => $members
+        ]);
+    }
+
+    public function membersFilter(Request $request, $link)
+    {
+        $meta = $this->getMeta($link);
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        if (in_array($link, array('cities'))) {
+            if ($link == 'cities') {
+                $members = null;
+                $meta->subtitle = __('Startup Events in Cities');
+                $meta->subnote = __('web.events_6');
+                $allCities = City::where('country_id', 55)->where('population', '<=', 10000)->orderBy('name', 'asc')->get();
+                $majorCities = City::where('country_id', 55)->where('population', '>', 10000)->orderBy('population', 'desc')->orderBy('name', 'asc')->get()->keyBy('id');
+            }
+            $currentCity = null;
+        } else {
+            $currentCity = City::where('slug', $link)->firstOrFail();
+            $members = UserProfile::whereHas('user', function ($query) use ($currentCity) {
+                $query->where('active', 1)->where('city_id', $currentCity->id);
+            })->orderBy('id', 'desc')->limit(10)->get();
+            $meta->subtitle = __('Startup Events in') . ' ' . $currentCity->name;
+            $meta->subnote = __('web.events_7') . ' ' . $currentCity->name;
+        }
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('members', [
+            'meta' => $meta,
+            'cities' => $cities,
+            'afternoons' => $afternoons,
+            'members' => $members,
+            'currentCity' => $currentCity,
+            'allCities' => $allCities ?? null,
+            'majorCities' => $majorCities ?? null
+        ]);
+    }
+
+    public function businesses()
+    {
+        //$meta = $this->getMeta();
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = BusinessMeta::whereNull('parameter_link')->whereNull('parameter_category')->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $categories = BusinessCategory::where('parent_id', 0)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
+        $subcategories = BusinessCategory::where('parent_id', '!=', 0)->count();
+        $allCategories = BusinessCategory::get()->keyBy('id');
+        $businesses = Business::where('active', 1)->orderBy('name')->paginate(20);
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        $meta->subtitle = __('Cyprus Startups');
+        $meta->subnote = __('web.startups_1');
+        return view('businesses', [
+            'meta' => $meta,
+            'cities' => $cities,
+            'afternoons' => $afternoons,
+            'categories' => $categories,
+            'subcategories' => $subcategories,
+            'allCategories' => $allCategories,
+            'businesses' => $businesses
+        ]);
+    }
+
+    public function businessesFilter(Request $request, $link)
+    {
+        //$meta = $this->getMeta($link);
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = BusinessMeta::where('parameter_link', $link)->whereNull('parameter_category')->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $categories = BusinessCategory::where('parent_id', 0)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
+        $subcategories = BusinessCategory::where('parent_id', '!=', 0)->count();
+        $allCategories = BusinessCategory::get()->keyBy('id');
+        if (in_array($link, array('raising', 'recent', 'cities'))) {
+            if ($link == 'raising') {
+                $businesses = Business::where([
+                    ['is_fundraising', 1],
+                    ['active', 1]
+                ])->orderBy('name')->paginate(20);
+            } elseif ($link == 'recent') {
+                $businesses = Business::where('active', 1)->orderBy('id', 'desc')->orderBy('name')->paginate(20);
+            } elseif ($link == 'cities') {
+                $businesses = null;
+                $allCities = City::where('country_id', 55)->where('population', '<=', 10000)->orderBy('name', 'asc')->get();
+                $majorCities = City::where('country_id', 55)->where('population', '>', 10000)->orderBy('population', 'desc')->orderBy('name', 'asc')->get()->keyBy('id');
+            }
+            $currentCategory = null;
+            $currentCity = null;
+        } else {
+            $currentCategory = BusinessCategory::where('slug', $link)->first();
+            if (!empty($currentCategory)) {
+                $businesses = Business::where([
+                    ['categories', 'like', '%[' . $currentCategory->id . ']%'],
+                    ['active', 1]
+                ])->orderBy('name')->paginate(20);
+                $categories = BusinessCategory::where('parent_id', $currentCategory->id)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
+                $currentCity = null;
+            } else {
+                $currentCity = City::where('slug', $link)->firstOrFail();
+                $businesses = Business::where([
+                    ['city_id', $currentCity->id],
+                    ['active', 1]
+                ])->orderBy('name')->paginate(20);
+                $currentCategory = null;
+            }
+        }
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('businesses', [
+            'meta' => $meta,
+            'cities' => $cities,
+            'categories' => $categories,
+            'afternoons' => $afternoons,
+            'subcategories' => $subcategories,
+            'allCategories' => $allCategories,
+            'businesses' => $businesses,
+            'currentCategory' => $currentCategory,
+            'currentCity' => $currentCity,
+            'allCities' => $allCities ?? null,
+            'majorCities' => $majorCities ?? null
+        ]);
+    }
+
+    public function businessesFilterCategory(Request $request, $link, $category)
+    {
+        //$meta = $this->getMeta($link);
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = BusinessMeta::where('parameter_link', $link)->where('parameter_category', $category)->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $subcategories = BusinessCategory::where('parent_id', '!=', 0)->count();
+        $allCategories = BusinessCategory::get()->keyBy('id');
+        $currentCategory = BusinessCategory::where('slug', $category)->firstOrFail();
+        $parentCategory = BusinessCategory::where('slug', $link)->firstOrFail();
+        $businesses = Business::where([
+            ['categories', 'like', '%[' . $currentCategory->id . ']%'],
+            ['active', 1]
+        ])->orderBy('name')->paginate(20);
+        $categories = BusinessCategory::where('parent_id', $currentCategory->parent_id)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
+        $currentCity = null;
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('businesses', [
+            'meta' => $meta,
+            'cities' => $cities,
+            'afternoons' => $afternoons,
+            'categories' => $categories,
+            'subcategories' => $subcategories,
+            'allCategories' => $allCategories,
+            'businesses' => $businesses,
+            'currentCategory' => $currentCategory,
+            'currentCity' => $currentCity
+        ]);
+    }
+
+    public function services()
+    {
+        //$meta = $this->getMeta();
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = ServiceMeta::whereNull('parameter_link')->whereNull('parameter_category')->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $categories = ServiceCategory::where('parent_id', 0)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
+        $subcategories = ServiceCategory::where('parent_id', '!=', 0)->count();
+        $allCategories = ServiceCategory::get()->keyBy('id');
+        $services = Service::where('active', 1)->orderBy('name')->paginate(20);
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('services', [
+            'meta' => $meta,
+            'cities' => $cities,
+            'afternoons' => $afternoons,
+            'categories' => $categories,
+            'subcategories' => $subcategories,
+            'allCategories' => $allCategories,
+            'services' => $services
+        ]);
+    }
+
+    public function servicesFilter(Request $request, $link)
+    {
+        //$meta = $this->getMeta($link);
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = ServiceMeta::where('parameter_link', $link)->whereNull('parameter_category')->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $categories = ServiceCategory::where('parent_id', 0)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
+        $subcategories = ServiceCategory::where('parent_id', '!=', 0)->count();
+        $allCategories = ServiceCategory::get()->keyBy('id');
+        if (in_array($link, array('raising', 'recent', 'cities'))) {
+            if ($link == 'recent') {
+                $services = Service::where('active', 1)->orderBy('id', 'desc')->orderBy('name')->paginate(20);
+            }
+            $currentCategory = null;
+        } else {
+            $currentCategory = ServiceCategory::where('slug', $link)->first();
+            if (!empty($currentCategory)) {
+                $services = Service::where([
+                    ['categories', 'like', '%[' . $currentCategory->id . ']%'],
+                    ['active', 1]
+                ])->orderBy('name')->paginate(20);
+                $categories = ServiceCategory::where('parent_id', $currentCategory->id)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
+            }
+        }
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('services', [
+            'meta' => $meta,
+            'cities' => $cities,
+            'categories' => $categories,
+            'afternoons' => $afternoons,
+            'subcategories' => $subcategories,
+            'allCategories' => $allCategories,
+            'services' => $services,
+            'currentCategory' => $currentCategory
+        ]);
+    }
+
+    public function servicesFilterCategory(Request $request, $link, $category)
+    {
+        //$meta = $this->getMeta($link);
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = ServiceMeta::where('parameter_link', $link)->where('parameter_category', $category)->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $subcategories = ServiceCategory::where('parent_id', '!=', 0)->count();
+        $allCategories = ServiceCategory::get()->keyBy('id');
+        $currentCategory = ServiceCategory::where('slug', $category)->firstOrFail();
+        $parentCategory = ServiceCategory::where('slug', $link)->firstOrFail();
+        $services = Service::where([
+            ['categories', 'like', '%[' . $currentCategory->id . ']%'],
+            ['active', 1]
+        ])->orderBy('name')->paginate(20);
+        $categories = ServiceCategory::where('parent_id', $currentCategory->parent_id)->orderBy('ord', 'asc')->orderBy('name', 'asc')->get();
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        return view('services', [
+            'meta' => $meta,
+            'cities' => $cities,
+            'afternoons' => $afternoons,
+            'categories' => $categories,
+            'subcategories' => $subcategories,
+            'allCategories' => $allCategories,
+            'services' => $services,
+            'currentCategory' => $currentCategory
         ]);
     }
 }

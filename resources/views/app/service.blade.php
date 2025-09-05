@@ -293,12 +293,10 @@
                             <div class="text-sm text-blue-800">
                                 <p class="font-medium mb-1">{{ __('Service Visibility:') }}</p>
                                 <ul class="text-xs space-y-1">
-                                    <div>
-                                        <li>{!! __('app.service_tip_1') !!}</li>
-                                        <li>{!! __('app.service_tip_2') !!}</li>
-                                        <li>{!! __('app.service_tip_3') !!}</li>
-                                        <li>{!! __('app.service_tip_4') !!}</li>
-                                    </div>
+                                    <li>{!! __('app.service_tip_1') !!}</li>
+                                    <li>{!! __('app.service_tip_2') !!}</li>
+                                    <li>{!! __('app.service_tip_3') !!}</li>
+                                    <li>{!! __('app.service_tip_4') !!}</li>
                                 </ul>
                             </div>
                         </div>
