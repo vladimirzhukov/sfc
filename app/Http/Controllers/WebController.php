@@ -270,45 +270,91 @@ class WebController extends Controller
 
     public function events()
     {
-        /*$parentCategories = EventCategory::where('parent_id', 0)->get();
+        /*echo 'Event Categories for SEO:<br><br>';
+        $parentCategories = EventCategory::where('parent_id', 0)->get();
         foreach ($parentCategories as $category) {
-            echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            //echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            $eventMeta = EventMeta::where('parameter_link', $category->slug)->whereNull('parameter_category')->first();
+            if (empty($eventMeta->id)) {
+                echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            }
             $subCategories = EventCategory::where('parent_id', $category->id)->get();
             foreach ($subCategories as $subCategory) {
-                echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                //echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                $eventMeta = EventMeta::where('parameter_link', $category->slug)->where('parameter_category', $subCategory->slug)->first();
+                if (empty($eventMeta->id)) {
+                    echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                }
             }
             echo '<hr>';
         }*/
-        /*$parentCategories = StartupCategory::where('parent_id', 0)->get();
+        /*echo 'Startup Categories for SEO:<br><br>';
+        $parentCategories = StartupCategory::where('parent_id', 0)->get();
         foreach ($parentCategories as $category) {
-            echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            //echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            $startupMeta = StartupMeta::where('parameter_link', $category->slug)->whereNull('parameter_category')->first();
+            if (empty($startupMeta->id)) {
+                echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            }
             $subCategories = StartupCategory::where('parent_id', $category->id)->get();
             foreach ($subCategories as $subCategory) {
-                echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                //echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                $startupMeta = StartupMeta::where('parameter_link', $category->slug)->where('parameter_category', $subCategory->slug)->first();
+                if (empty($startupMeta->id)) {
+                    echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                }
             }
             echo '<hr>';
         }*/
-        /*$parentCategories = BusinessCategory::where('parent_id', 0)->get();
+        /*echo 'Business Profiles for SEO:<br><br>';
+        $parentCategories = BusinessCategory::where('parent_id', 0)->get();
         foreach ($parentCategories as $category) {
-            echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            //echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            $businessMeta = BusinessMeta::where('parameter_link', $category->slug)->whereNull('parameter_category')->first();
+            if (empty($businessMeta->id)) {
+                echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            }
             $subCategories = BusinessCategory::where('parent_id', $category->id)->get();
             foreach ($subCategories as $subCategory) {
-                echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                //echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                $businessMeta = BusinessMeta::where('parameter_link', $category->slug)->where('parameter_category', $subCategory->slug)->first();
+                if (empty($businessMeta->id)) {
+                    echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                }
             }
             echo '<hr>';
         }*/
-        /*$parentCategories = ServiceCategory::where('parent_id', 0)->get();
+        /*echo 'Service Categories for SEO:<br><br>';
+        $parentCategories = ServiceCategory::where('parent_id', 0)->get();
         foreach ($parentCategories as $category) {
-            echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            //echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            $serviceMeta = ServiceMeta::where('parameter_link', $category->slug)->whereNull('parameter_category')->first();
+            if (empty($serviceMeta->id)) {
+                echo $category->name . ' - "parameter_link": ' . $category->slug . '<br>';
+            }
             $subCategories = ServiceCategory::where('parent_id', $category->id)->get();
             foreach ($subCategories as $subCategory) {
-                echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                //echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                $serviceMeta = ServiceMeta::where('parameter_link', $category->slug)->where('parameter_category', $subCategory->slug)->first();
+                if (empty($serviceMeta->id)) {
+                    echo $subCategory->name . ' - "parameter_link": ' . $category->slug . ', parameter_category: ' . $subCategory->slug . '<br>';
+                }
             }
             echo '<hr>';
         }*/
         /*$cities = City::where('country_id', 55)->get();
         foreach ($cities as $key => $city) {
-            echo $city->name . (!empty($city->region->name) ? ' (' . $city->region->name . ')' : '') . ' - "parameter_link": ' . $city->slug . '<br>';
+            //echo $city->name . (!empty($city->region->name) ? ' (' . $city->region->name . ')' : '') . ' - "parameter_link": ' . $city->slug . '<br>';
+            //$checkEventMeta = EventMeta::where('parameter_link', $city->slug)->whereNull('parameter_category')->first();
+            //if (empty($checkEventMeta->id)) {
+            //$checkStartupMeta = StartupMeta::where('parameter_link', $city->slug)->whereNull('parameter_category')->first();
+            //if (empty($checkStartupMeta->id)) {
+            //$checkBusinessMeta = BusinessMeta::where('parameter_link', $city->slug)->whereNull('parameter_category')->first();
+            //if (empty($checkBusinessMeta->id)) {
+            $checkMemberMeta = MemberMeta::where('parameter_link', $city->slug)->whereNull('parameter_category')->first();
+            if (empty($checkMemberMeta->id)) {
+                echo $city->name . (!empty($city->region->name) ? ' (' . $city->region->name . ')' : '') . ' - "parameter_link": ' . $city->slug . '<br>';
+            }
             if (!empty($key) && $key % 30 == 0) {
                 echo '<hr>';
             }

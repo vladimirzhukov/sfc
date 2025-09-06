@@ -9179,5 +9179,113 @@
             "page_subnote": "Ta kategoria jest domem dla wszystkich cennych wydarzeń społecznościowych i biznesowych, które nie pasują do naszych głównych klasyfikacji. Nigdy nie wiesz, co możesz znaleźć!",
             "page_seo": "Cypryjski ekosystem startupowy i biznesowy to dynamiczne i kreatywne miejsce, które nieustannie produkuje szeroką gamę wydarzeń. Chociaż staramy się kategoryzować większość wydarzeń, aby pomóc Ci znaleźć to, czego szukasz, niektóre cenne spotkania wymykają się łatwej klasyfikacji. Kategoria „Inne Wydarzenia” jest dla nich domem. Tutaj możesz odkryć jedyny w swoim rodzaju festiwal, który łączy sztukę i technologię, premierę książki lokalnego autora biznesowego, zbiórkę charytatywną organizowaną przez społeczność technologiczną lub dowolną liczbę unikalnych wydarzeń, które łączą ludzi w nowy i interesujący sposób. Zachęcamy do eksploracji tej sekcji, aby znaleźć ukryte perełki i nieoczekiwane możliwości, które sprawiają, że nasza społeczność jest tak wyjątkowa. Odkryj pełen zakres tego, co dzieje się na Cyprze na SFC.CY."
         }
+    },
+    "product-launch-events2": {
+        "en": {
+            "language": "en",
+            "parameter_link": "pitch-competition-events",
+            "parameter_category": "product-launch-events",
+            "meta_title": "Product Launch Events | SFC.CY - Showcase Your Startup",
+            "meta_description": "Discover and participate in product launch events. Showcase your new product to the world and connect with investors and early adopters through SFC.CY.",
+            "meta_keywords": "product launch events, startup launch, new product showcase, tech launch events, entrepreneur product launch",
+            "page_h1": "Product Launch Events",
+            "page_subtitle": "Your platform to unveil innovation and capture the market's attention.",
+            "page_h2": "Showcase Your New Product",
+            "page_subnote": "Find the perfect stage for your product's debut. Connect with a wider audience and gain valuable feedback from the Cyprus startup ecosystem through SFC.CY.",
+            "page_seo": "Product launch events are pivotal for startups, offering a concentrated opportunity to generate buzz, attract media attention, and secure initial customers. These events provide a platform to demonstrate a product's value proposition directly to a target audience, including potential investors, partners, and users. A successful launch event can create significant momentum, driving early sales and establishing a strong market presence. By participating in or hosting a product launch, entrepreneurs can control the narrative around their product, build brand identity, and gather crucial real-world feedback. SFC.CY lists key product launch events across Cyprus, helping startups to connect with the resources and audiences they need to make a powerful market entry."
+        },
+        "de": {
+            "language": "de",
+            "parameter_link": "pitch-competition-events",
+            "parameter_category": "product-launch-events",
+            "meta_title": "Produkteinführungsevents | SFC.CY - Präsentieren Sie Ihr Startup",
+            "meta_description": "Entdecken und nehmen Sie an Produkteinführungsevents teil. Präsentieren Sie Ihr neues Produkt der Welt und vernetzen Sie sich mit Investoren und Early Adopters über SFC.CY.",
+            "meta_keywords": "Produkteinführungsevents, Startup-Launch, Neuproduktvorstellung, Tech-Launch-Events, Unternehmer-Produkteinführung",
+            "page_h1": "Produkteinführungsevents",
+            "page_subtitle": "Ihre Plattform, um Innovationen vorzustellen und die Aufmerksamkeit des Marktes zu gewinnen.",
+            "page_h2": "Präsentieren Sie Ihr neues Produkt",
+            "page_subnote": "Finden Sie die perfekte Bühne für das Debüt Ihres Produkts. Erreichen Sie ein breiteres Publikum und erhalten Sie wertvolles Feedback aus dem Startup-Ökosystem Zyperns über SFC.CY.",
+            "page_seo": "Produkteinführungsveranstaltungen sind für Startups von entscheidender Bedeutung, da sie eine konzentrierte Gelegenheit bieten, Aufsehen zu erregen, die Aufmerksamkeit der Medien auf sich zu ziehen und erste Kunden zu gewinnen. Diese Veranstaltungen bieten eine Plattform, um das Wertversprechen eines Produkts direkt einer Zielgruppe zu demonstrieren, zu der potenzielle Investoren, Partner und Benutzer gehören. Eine erfolgreiche Einführungsveranstaltung kann eine erhebliche Dynamik erzeugen, den frühen Umsatz steigern und eine starke Marktpräsenz aufbauen. Durch die Teilnahme an oder die Ausrichtung einer Produkteinführung können Unternehmer die Erzählung rund um ihr Produkt steuern, eine Markenidentität aufbauen und entscheidendes Feedback aus der Praxis sammeln. SFC.CY listet wichtige Produkteinführungsveranstaltungen auf ganz Zypern auf und hilft Startups, mit den Ressourcen und Zielgruppen in Kontakt zu treten, die sie für einen starken Markteintritt benötigen."
+        },
+        "es": {
+            "language": "es",
+            "parameter_link": "pitch-competition-events",
+            "parameter_category": "product-launch-events",
+            "meta_title": "Eventos de Lanzamiento de Productos | SFC.CY - Muestra tu Startup",
+            "meta_description": "Descubre y participa en eventos de lanzamiento de productos. Muestra tu nuevo producto al mundo y conecta con inversores y primeros adoptantes a través de SFC.CY.",
+            "meta_keywords": "eventos de lanzamiento de productos, lanzamiento de startups, exhibición de nuevos productos, eventos de lanzamiento de tecnología, lanzamiento de productos de emprendedores",
+            "page_h1": "Eventos de Lanzamiento de Productos",
+            "page_subtitle": "Tu plataforma para desvelar la innovación y captar la atención del mercado.",
+            "page_h2": "Muestra tu Nuevo Producto",
+            "page_subnote": "Encuentra el escenario perfecto para el debut de tu producto. Conecta con una audiencia más amplia y obtén valiosos comentarios del ecosistema de startups de Chipre a través de SFC.CY.",
+            "page_seo": "Los eventos de lanzamiento de productos son fundamentales para las startups, ya que ofrecen una oportunidad concentrada para generar expectación, atraer la atención de los medios y conseguir los primeros clientes. Estos eventos proporcionan una plataforma para demostrar la propuesta de valor de un producto directamente a un público objetivo, que incluye a posibles inversores, socios y usuarios. Un evento de lanzamiento exitoso puede crear un impulso significativo, impulsando las ventas iniciales y estableciendo una fuerte presencia en el mercado. Al participar u organizar un lanzamiento de producto, los emprendedores pueden controlar la narrativa en torno a su producto, construir una identidad de marca y recopilar comentarios cruciales del mundo real. SFC.CY enumera los eventos clave de lanzamiento de productos en todo Chipre, ayudando a las startups a conectar con los recursos y las audiencias que necesitan para una entrada potente en el mercado."
+        },
+        "pl": {
+            "language": "pl",
+            "parameter_link": "pitch-competition-events",
+            "parameter_category": "product-launch-events",
+            "meta_title": "Wydarzenia Wprowadzające Produkt na Rynek | SFC.CY - Zaprezentuj Swój Startup",
+            "meta_description": "Odkrywaj i bierz udział w wydarzeniach wprowadzających produkty na rynek. Zaprezentuj swój nowy produkt światu i nawiąż kontakt z inwestorami oraz pierwszymi użytkownikami za pośrednictwem SFC.CY.",
+            "meta_keywords": "wydarzenia wprowadzające produkt, premiera startupu, prezentacja nowego produktu, wydarzenia z premierami technologicznymi, wprowadzenie produktu przez przedsiębiorcę",
+            "page_h1": "Wydarzenia Wprowadzające Produkt na Rynek",
+            "page_subtitle": "Twoja platforma do odkrywania innowacji i przyciągania uwagi rynku.",
+            "page_h2": "Zaprezentuj Swój Nowy Produkt",
+            "page_subnote": "Znajdź idealną scenę na debiut swojego produktu. Dotrzyj do szerszej publiczności i zdobądź cenne opinie od cypryjskiego ekosystemu startupowego dzięki SFC.CY.",
+            "page_seo": "Wydarzenia związane z wprowadzaniem produktów na rynek mają kluczowe znaczenie dla startupów, oferując skoncentrowaną możliwość generowania szumu, przyciągania uwagi mediów i pozyskiwania pierwszych klientów. Wydarzenia te stanowią platformę do zademonstrowania propozycji wartości produktu bezpośrednio docelowej grupie odbiorców, w tym potencjalnym inwestorom, partnerom i użytkownikom. Udane wydarzenie premierowe może wygenerować znaczną dynamikę, napędzając wczesną sprzedaż i ustanawiając silną obecność na rynku. Uczestnicząc w premierze produktu lub organizując ją, przedsiębiorcy mogą kontrolować narrację wokół swojego produktu, budować tożsamość marki i zbierać kluczowe opinie z realnego świata. SFC.CY wymienia kluczowe wydarzenia związane z wprowadzaniem produktów na rynek na całym Cyprze, pomagając startupom nawiązać kontakt z zasobami i odbiorcami, których potrzebują do silnego wejścia na rynek."
+        }
+    },
+    "innovation-challenges2": {
+        "en": {
+            "language": "en",
+            "parameter_link": "pitch-competition-events",
+            "parameter_category": "innovation-challenges",
+            "meta_title": "Innovation Challenges & Hackathons | SFC.CY - Solve & Build",
+            "meta_description": "Participate in innovation challenges and hackathons. Solve real-world problems, build innovative solutions, and win prizes. Connect with innovators on SFC.CY.",
+            "meta_keywords": "innovation challenges, hackathons, open innovation, tech competitions, problem-solving events",
+            "page_h1": "Innovation Challenges",
+            "page_subtitle": "Where brilliant minds meet to solve pressing problems and build the future.",
+            "page_h2": "Solve, Build, and Win",
+            "page_subnote": "Find the latest innovation challenges and hackathons in Cyprus. Test your skills, collaborate with peers, and make an impact. Stay updated with SFC.CY.",
+            "page_seo": "Innovation challenges and hackathons are dynamic events that bring together diverse talents to collaboratively solve specific problems or develop new ideas within a short timeframe. They are a powerful tool for open innovation, allowing organizations to tap into external creativity and expertise. For participants, these events offer a unique opportunity to learn new skills, network with peers and mentors, and potentially win significant prizes or funding. The high-energy, competitive environment fosters rapid prototyping and out-of-the-box thinking, often leading to breakthrough solutions. By participating, individuals can showcase their abilities to potential employers and collaborators, while companies can identify top talent and source innovative concepts. SFC.CY is your guide to the most exciting innovation challenges across Cyprus, connecting problem-solvers with opportunities to create a real-world impact."
+        },
+        "de": {
+            "language": "de",
+            "parameter_link": "pitch-competition-events",
+            "parameter_category": "innovation-challenges",
+            "meta_title": "Innovationswettbewerbe & Hackathons | SFC.CY - Lösen & Bauen",
+            "meta_description": "Nehmen Sie an Innovationswettbewerben und Hackathons teil. Lösen Sie reale Probleme, entwickeln Sie innovative Lösungen und gewinnen Sie Preise. Vernetzen Sie sich mit Innovatoren auf SFC.CY.",
+            "meta_keywords": "Innovationswettbewerbe, Hackathons, Open Innovation, Tech-Wettbewerbe, Problemlösungs-Events",
+            "page_h1": "Innovationswettbewerbe",
+            "page_subtitle": "Wo brillante Köpfe zusammenkommen, um drängende Probleme zu lösen und die Zukunft zu gestalten.",
+            "page_h2": "Lösen, Bauen und Gewinnen",
+            "page_subnote": "Finden Sie die neuesten Innovationswettbewerbe und Hackathons in Zypern. Testen Sie Ihre Fähigkeiten, arbeiten Sie mit Kollegen zusammen und bewirken Sie etwas. Bleiben Sie mit SFC.CY auf dem Laufenden.",
+            "page_seo": "Innovationswettbewerbe und Hackathons sind dynamische Veranstaltungen, die vielfältige Talente zusammenbringen, um gemeinsam spezifische Probleme zu lösen oder neue Ideen innerhalb eines kurzen Zeitrahmens zu entwickeln. Sie sind ein leistungsstarkes Werkzeug für offene Innovation, das es Organisationen ermöglicht, auf externe Kreativität und Expertise zurückzugreifen. Für die Teilnehmer bieten diese Veranstaltungen eine einzigartige Gelegenheit, neue Fähigkeiten zu erlernen, sich mit Kollegen und Mentoren zu vernetzen und potenziell bedeutende Preise oder Finanzierungen zu gewinnen. Die energiegeladene, wettbewerbsorientierte Umgebung fördert schnelles Prototyping und unkonventionelles Denken, was oft zu bahnbrechenden Lösungen führt. Durch die Teilnahme können Einzelpersonen ihre Fähigkeiten potenziellen Arbeitgebern und Kooperationspartnern präsentieren, während Unternehmen Top-Talente identifizieren und innovative Konzepte finden können. SFC.CY ist Ihr Führer zu den aufregendsten Innovationswettbewerben auf ganz Zypern und verbindet Problemlöser mit Möglichkeiten, eine reale Wirkung zu erzielen."
+        },
+        "es": {
+            "language": "es",
+            "parameter_link": "pitch-competition-events",
+            "parameter_category": "innovation-challenges",
+            "meta_title": "Desafíos de Innovación y Hackatones | SFC.CY - Resuelve y Construye",
+            "meta_description": "Participa en desafíos de innovación y hackatones. Resuelve problemas del mundo real, construye soluciones innovadoras y gana premios. Conecta con innovadores en SFC.CY.",
+            "meta_keywords": "desafíos de innovación, hackatones, innovación abierta, competiciones tecnológicas, eventos de resolución de problemas",
+            "page_h1": "Desafíos de Innovación",
+            "page_subtitle": "Donde mentes brillantes se encuentran para resolver problemas urgentes y construir el futuro.",
+            "page_h2": "Resuelve, Construye y Gana",
+            "page_subnote": "Encuentra los últimos desafíos de innovación y hackatones en Chipre. Pon a prueba tus habilidades, colabora con colegas y genera un impacto. Mantente actualizado con SFC.CY.",
+            "page_seo": "Los desafíos de innovación y los hackatones son eventos dinámicos que reúnen a talentos diversos para resolver colaborativamente problemas específicos o desarrollar nuevas ideas en un corto período de tiempo. Son una herramienta poderosa para la innovación abierta, que permite a las organizaciones aprovechar la creatividad y la experiencia externas. Para los participantes, estos eventos ofrecen una oportunidad única para aprender nuevas habilidades, establecer contactos con colegas y mentores, y potencialmente ganar premios o financiación importantes. El entorno de alta energía y competitivo fomenta la creación rápida de prototipos y el pensamiento innovador, lo que a menudo conduce a soluciones revolucionarias. Al participar, las personas pueden mostrar sus habilidades a posibles empleadores y colaboradores, mientras que las empresas pueden identificar a los mejores talentos y obtener conceptos innovadores. SFC.CY es su guía de los desafíos de innovación más emocionantes de todo Chipre, conectando a los solucionadores de problemas con oportunidades para crear un impacto en el mundo real."
+        },
+        "pl": {
+            "language": "pl",
+            "parameter_link": "pitch-competition-events",
+            "parameter_category": "innovation-challenges",
+            "meta_title": "Wyzwania Innowacyjne i Hackathony | SFC.CY - Rozwiązuj i Twórz",
+            "meta_description": "Bierz udział w wyzwaniach innowacyjnych i hackathonach. Rozwiązuj realne problemy, twórz innowacyjne rozwiązania i wygrywaj nagrody. Nawiąż kontakt z innowatorami na SFC.CY.",
+            "meta_keywords": "wyzwania innowacyjne, hackathony, otwarta innowacja, konkursy technologiczne, wydarzenia rozwiązywania problemów",
+            "page_h1": "Wyzwania Innowacyjne",
+            "page_subtitle": "Gdzie genialne umysły spotykają się, aby rozwiązywać palące problemy i budować przyszłość.",
+            "page_h2": "Rozwiązuj, Twórz i Wygrywaj",
+            "page_subnote": "Znajdź najnowsze wyzwania innowacyjne i hackathony na Cyprze. Sprawdź swoje umiejętności, współpracuj z innymi i wywieraj wpływ. Bądź na bieżąco z SFC.CY.",
+            "page_seo": "Wyzwania innowacyjne i hackathony to dynamiczne wydarzenia, które gromadzą różnorodne talenty w celu wspólnego rozwiązywania określonych problemów lub opracowywania nowych pomysłów w krótkim czasie. Są potężnym narzędziem otwartej innowacji, pozwalającym organizacjom czerpać z zewnętrznej kreatywności i wiedzy specjalistycznej. Dla uczestników wydarzenia te oferują wyjątkową okazję do nauczenia się nowych umiejętności, nawiązania kontaktów z rówieśnikami i mentorami oraz potencjalnego wygrania znaczących nagród lub funduszy. Wysokoenergetyczne, konkurencyjne środowisko sprzyja szybkiemu prototypowaniu i nieszablonowemu myśleniu, co często prowadzi do przełomowych rozwiązań. Uczestnicząc, osoby fizyczne mogą zaprezentować swoje umiejętności potencjalnym pracodawcom i współpracownikom, podczas gdy firmy mogą zidentyfikować największe talenty i pozyskać innowacyjne koncepcje. SFC.CY to Twój przewodnik po najbardziej ekscytujących wyzwaniach innowacyjnych na całym Cyprze, łączący osoby rozwiązujące problemy z możliwościami wywierania realnego wpływu na świat."
+        }
     }
 }
