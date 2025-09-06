@@ -983,6 +983,99 @@ class WebController extends Controller
         ]);
     }
 
+    public function business($link)
+    {
+        $business = Business::where('slug', $link)->where('active', 1)->firstOrFail();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        $allCategories = BusinessCategory::get()->keyBy('id');
+        $relatedBusinesses = Business::where([
+            ['id', '!=', $business->id],
+            ['active', 1]
+        ])->inRandomOrder()->limit(5)->get();
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = __('SFC.CY');
+        $businessName = $business->name;
+        $businessCity = $business->is_online ? __('Online') : ($business->city->name ?? __('Cyprus'));
+        $businessLocation = $business->is_online ? __('Online') : ($business->location ?? $businessCity);
+        $primaryCategory = '';
+        if (!empty($business->categories)) {
+            $categoryIDs = explode('][', trim($business->categories, '[]'));
+            if (!empty($categoryIDs[0]) && !empty($allCategories[$categoryIDs[0]])) {
+                $primaryCategory = $allCategories[$categoryIDs[0]]->name;
+            }
+        }
+        if ($business->is_online) {
+            $meta->metas[$meta->locale]->title = $businessName . ($primaryCategory ? ' - ' . $primaryCategory : '') . ' | ' . __('Online Business in Cyprus') . ' | ' . __('SFC.CY');
+        } else {
+            $meta->metas[$meta->locale]->title = $businessName . ' ' . __('in') . ' ' . $businessCity . ($primaryCategory ? ' - ' . $primaryCategory : '') . ' | ' . __('SFC in Cyprus');
+        }
+        $description = strip_tags($business->description ?? '');
+        $shortDescription = Str::limit($description, 120);
+        $languageText = '';
+        if (!empty($business->languages)) {
+            $languageIDs = explode('][', trim($business->languages, '[]'));
+            $allLanguages = config('languages.locales');
+            $languageNames = [];
+            foreach ($languageIDs as $languageID) {
+                if (isset($allLanguages[$languageID])) {
+                    $languageNames[] = $allLanguages[$languageID]['name'];
+                }
+            }
+            if (count($languageNames) > 0) {
+                $languageText = __('Services available in') . ' ' . implode(', ', array_slice($languageNames, 0, 3)) . (count($languageNames) > 3 ? ' +' . (count($languageNames) - 3) . ' ' . __('more') : '') . '. ';
+            }
+        }
+        if ($shortDescription) {
+            $meta->metas[$meta->locale]->description = $languageText . $shortDescription . ' | ' . ($business->is_online ? __('Online business serving Cyprus') : __('Business located in') . ' ' . $businessCity . ', ' . __('Cyprus')) . '.';
+        } else {
+            $baseDescription = $business->is_online ? __('Online business serving the Cyprus market') : __('Business located in') . ' ' . $businessCity . ', ' . __('Cyprus');
+            $meta->metas[$meta->locale]->description = $languageText . $baseDescription . ($primaryCategory ? ' ' . __('specializing in') . ' ' . strtolower($primaryCategory) : '') . '. ' . __('Part of the Cyprus business directory') . '.';
+        }
+        $keywords = [$businessName, __('business'), __('Cyprus'), __('SFC.CY')];
+        if (!$business->is_online) {
+            $keywords[] = $businessCity;
+            $keywords[] = $businessCity . ' ' . __('business');
+        } else {
+            $keywords[] = __('online business');
+            $keywords[] = __('Cyprus online business');
+        }
+        if ($primaryCategory) {
+            $keywords[] = $primaryCategory;
+            $keywords[] = $primaryCategory . ' ' . __('business');
+            $keywords[] = $primaryCategory . ' ' . __('in Cyprus');
+        }
+        if (!empty($business->languages)) {
+            foreach ($languageNames as $languageName) {
+                $keywords[] = $languageName . ' ' . __('business');
+                $keywords[] = $languageName . ' ' . __('services');
+            }
+        }
+        if (!$business->is_online && $businessCity != __('Cyprus')) {
+            $keywords[] = $businessCity . ' ' . __('services');
+            $keywords[] = __('business directory') . ' ' . $businessCity;
+        }
+        $keywords[] = __('Cyprus business directory');
+        $keywords[] = __('local business');
+        $keywords[] = __('business services');
+        $meta->metas[$meta->locale]->keywords = implode(', ', $keywords);
+        if ($business->img) {
+            $meta->image = 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/business/' . substr($business->img, 0, 1) . '/' . substr($business->img, 0, 2) . '/' . substr($business->img, 0, 3) . '/' . $business->img;
+        }
+        return view('business', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities,
+            'business' => $business,
+            'allCategories' => $allCategories,
+            'relatedBusinesses' => $relatedBusinesses
+        ]);
+    }
+
     public function services()
     {
         //$meta = $this->getMeta();
