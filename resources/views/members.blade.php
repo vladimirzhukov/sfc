@@ -306,9 +306,11 @@ if (Route::currentRouteName() == 'web::members::filter') {
                             @endif
                         </ul>
                     </div>
-                    <div class="mt-10 flex flex-wrap justify-center gap-4">
-                        <a href="{{ route('signup') }}" class="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-xs hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500">{{ __('Join community to see all members') }}</a>
-                    </div>
+                    @if (!empty($members) && $members->isNotEmpty())
+                        <div class="mt-10 flex flex-wrap justify-center gap-4">
+                            <a href="{{ route('signup') }}" class="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-xs hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500">{{ __('Join community to see all members') }}</a>
+                        </div>
+                    @endif
                 @endif
                 @if (!empty($members) && $members->isNotEmpty() && method_exists($members, 'links'))
                     <div class="mt-8">

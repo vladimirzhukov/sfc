@@ -7,6 +7,7 @@ use App\Models\BusinessCategory;
 use App\Models\BusinessMeta;
 use App\Models\Event;
 use App\Models\EventMeta;
+use App\Models\MemberMeta;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServiceMeta;
@@ -704,14 +705,29 @@ class WebController extends Controller
 
     public function members()
     {
-        $meta = $this->getMeta();
+        //$meta = $this->getMeta();
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = MemberMeta::whereNull('parameter_link')->whereNull('parameter_category')->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
         $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
         $afternoons = WorkingAfternoon::where('country_id', 55)->get();
         $members = UserProfile::whereHas('user', function ($query) {
             $query->where('active', 1);
         })->orderBy('id', 'desc')->limit(10)->get();
-        $meta->subtitle = __('Online Startup Events');
-        $meta->subnote = __('web.events_3');
         return view('members', [
             'meta' => $meta,
             'afternoons' => $afternoons,
@@ -722,13 +738,28 @@ class WebController extends Controller
 
     public function membersFilter(Request $request, $link)
     {
-        $meta = $this->getMeta($link);
+        //$meta = $this->getMeta($link);
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = 'SFC.CY';
+        $metaData = MemberMeta::where('parameter_link', $link)->whereNull('parameter_category')->where('language', $meta->locale)->first();
+        if (!empty($metaData->id)) {
+            $meta->metas[$meta->locale]->title = $metaData->meta_title;
+            $meta->metas[$meta->locale]->description = $metaData->meta_description;
+            $meta->metas[$meta->locale]->keywords = $metaData->meta_keywords;
+            $meta->h1 = $metaData->page_h1;
+            $meta->subtext = $metaData->page_subtitle;
+            $meta->subtitle = $metaData->page_h2;
+            $meta->subnote = $metaData->page_subnote;
+            $meta->page_seo = $metaData->page_seo;
+        }
         $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
         if (in_array($link, array('cities'))) {
             if ($link == 'cities') {
                 $members = null;
-                $meta->subtitle = __('Startup Events in Cities');
-                $meta->subnote = __('web.events_6');
                 $allCities = City::where('country_id', 55)->where('population', '<=', 10000)->orderBy('name', 'asc')->get();
                 $majorCities = City::where('country_id', 55)->where('population', '>', 10000)->orderBy('population', 'desc')->orderBy('name', 'asc')->get()->keyBy('id');
             }
@@ -738,8 +769,6 @@ class WebController extends Controller
             $members = UserProfile::whereHas('user', function ($query) use ($currentCity) {
                 $query->where('active', 1)->where('city_id', $currentCity->id);
             })->orderBy('id', 'desc')->limit(10)->get();
-            $meta->subtitle = __('Startup Events in') . ' ' . $currentCity->name;
-            $meta->subnote = __('web.events_7') . ' ' . $currentCity->name;
         }
         $afternoons = WorkingAfternoon::where('country_id', 55)->get();
         return view('members', [
