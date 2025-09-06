@@ -1207,4 +1207,79 @@ class WebController extends Controller
             'currentCategory' => $currentCategory
         ]);
     }
+
+    public function service($link)
+    {
+        $service = Service::where('slug', $link)->where('active', 1)->firstOrFail();
+        $cities = City::where('country_id', 55)->orderBy('population', 'desc')->orderBy('name', 'asc')->limit(7)->get()->keyBy('id');
+        $afternoons = WorkingAfternoon::where('country_id', 55)->get();
+        $allCategories = ServiceCategory::get()->keyBy('id');
+        $relatedServices = Service::where([
+            ['id', '!=', $service->id],
+            ['active', 1]
+        ])->inRandomOrder()->limit(5)->get();
+        $meta = new \StdClass();
+        $meta->locale = LaravelLocalization::getCurrentLocale();
+        $meta->language = LaravelLocalization::getCurrentLocaleName();
+        $meta->languages = LaravelLocalization::getSupportedLocales();
+        $meta->metas[$meta->locale] = new \StdClass();
+        $meta->metas[$meta->locale]->name = __('SFC.CY');
+        $serviceName = $service->name;
+        $primaryCategory = '';
+        if (!empty($service->categories)) {
+            $categoryIDs = explode('][', trim($service->categories, '[]'));
+            if (!empty($categoryIDs[0]) && !empty($allCategories[$categoryIDs[0]])) {
+                $primaryCategory = $allCategories[$categoryIDs[0]]->name;
+            }
+        }
+        $meta->metas[$meta->locale]->title = $serviceName . ($primaryCategory ? ' - ' . $primaryCategory : '') . ' | ' . __('Professional Service in Cyprus') . ' | ' . __('SFC.CY');
+        $description = strip_tags($service->description ?? '');
+        $shortDescription = Str::limit($description, 120);
+        $languageText = '';
+        if (!empty($service->languages)) {
+            $languageIDs = explode('][', trim($service->languages, '[]'));
+            $allLanguages = config('languages.locales');
+            $languageNames = [];
+            foreach ($languageIDs as $languageID) {
+                if (isset($allLanguages[$languageID])) {
+                    $languageNames[] = $allLanguages[$languageID]['name'];
+                }
+            }
+            if (count($languageNames) > 0) {
+                $languageText = __('Services available in') . ' ' . implode(', ', array_slice($languageNames, 0, 3)) . (count($languageNames) > 3 ? ' +' . (count($languageNames) - 3) . ' ' . __('more') : '') . '. ';
+            }
+        }
+        if ($shortDescription) {
+            $meta->metas[$meta->locale]->description = $languageText . $shortDescription . ' | ' . __('Professional service in Cyprus') . '.';
+        } else {
+            $baseDescription = __('Professional service provider in Cyprus');
+            $meta->metas[$meta->locale]->description = $languageText . $baseDescription . ($primaryCategory ? ' ' . __('specializing in') . ' ' . strtolower($primaryCategory) : '') . '. ' . __('Part of the Cyprus service directory') . '.';
+        }
+        $keywords = [$serviceName, __('service'), __('professional service'), __('Cyprus'), __('SFC.CY')];
+        if ($primaryCategory) {
+            $keywords[] = $primaryCategory;
+            $keywords[] = $primaryCategory . ' ' . __('service');
+            $keywords[] = $primaryCategory . ' ' . __('in Cyprus');
+        }
+        if (!empty($service->languages)) {
+            foreach ($languageNames as $languageName) {
+                $keywords[] = $languageName . ' ' . __('service');
+            }
+        }
+        $keywords[] = __('Cyprus services');
+        $keywords[] = __('professional services');
+        $keywords[] = __('service provider');
+        $meta->metas[$meta->locale]->keywords = implode(', ', $keywords);
+        if ($service->img) {
+            $meta->image = 'https://fvn.ams3.cdn.digitaloceanspaces.com/sfccy/services/' . substr($service->img, 0, 1) . '/' . substr($service->img, 0, 2) . '/' . substr($service->img, 0, 3) . '/' . $service->img;
+        }
+        return view('service', [
+            'meta' => $meta,
+            'afternoons' => $afternoons,
+            'cities' => $cities,
+            'service' => $service,
+            'allCategories' => $allCategories,
+            'relatedServices' => $relatedServices
+        ]);
+    }
 }
